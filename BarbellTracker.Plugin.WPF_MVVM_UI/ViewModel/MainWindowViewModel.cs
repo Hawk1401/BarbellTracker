@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using WPF_UI_HelperClasses;
 
-namespace WPF_UI_Plugin_MVVM.ViewModel
+namespace BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel
 {
     class MainWindowViewModel : PropertyChangedNotifier
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace WPF_UI_Plugin_MVVM
+namespace BarbellTracker.Plugin.WPF_MVVM_UI
 {
     /// <summary>
     /// Interaction logic for App.xaml

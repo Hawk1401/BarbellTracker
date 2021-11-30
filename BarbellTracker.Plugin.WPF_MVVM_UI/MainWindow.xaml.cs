@@ -10,19 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel;
 
-namespace WPF_UI_Plugin_MVVM.View
+namespace BarbellTracker.Plugin.WPF_MVVM_UI
 {
     /// <summary>
-    /// Interaction logic for SettingsControl.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class SettingsControl : UserControl
+    public partial class MainWindow : Window
     {
-        public SettingsControl()
+        public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowViewModel();
         }
     }
 }

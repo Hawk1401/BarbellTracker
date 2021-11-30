@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPF_UI_Plugin_MVVM.DataStructures
+namespace BarbellTracker.Plugin.WPF_MVVM_UI.DataStructures
 {
     class PluginStatus
     {

@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPF_UI_Plugin_MVVM.DataStructures;
+using BarbellTracker.Plugin.WPF_MVVM_UI.DataStructures;
 using WPF_UI_HelperClasses;
 
-namespace WPF_UI_Plugin_MVVM.ViewModel
+namespace BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel
 {
     internal class PluginSettingsControlViewModel : PropertyChangedNotifier
     {

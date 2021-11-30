@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF_UI_Plugin_MVVM.View
+namespace BarbellTracker.Plugin.WPF_MVVM_UI.View
 {
     /// <summary>
     /// Interaction logic for PluginPage.xaml
