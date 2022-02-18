@@ -3,17 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BarbellTracker.DomainCode;
 
 namespace BarbellTracker.ApplicationCode
 {
     public enum Event
     {
-        ExtracedVideoInfos,
-        PluginLoaded
+        StartExtractVideoInfo,
+        ExtracedVideoInfo,
+        PluginLoaded,
+        ActivatePlugin,
+        DeactivatePlugin,
+        ActivateService,
+        DeactivateService,
+        SelectFile,
+        FileSelected,
+        AdapterAdded
     }
 
     public class EventSystem
     {
+        private static Dictionary<Event, Type> ArgDefinitonForEvents = new Dictionary<Event, Type>() {
+            { Event.StartExtractVideoInfo, typeof(string) },
+            { Event.ExtracedVideoInfo, typeof(TrackedInformation) },
+            { Event.PluginLoaded, typeof(string) },
+            { Event.ActivatePlugin, typeof(string) },
+            { Event.DeactivatePlugin, typeof(string)},
+            { Event.ActivateService, typeof(string) },
+            { Event.DeactivateService, typeof(string) },
+            { Event.SelectFile, null }, 
+            { Event.FileSelected, typeof(string) },
+            { Event.AdapterAdded, typeof(string) },
+        };
+
+
         private readonly object m_sync = new object();
         private readonly Dictionary<Event, List<Func<EventContext, Task>>> m_registry = new Dictionary<Event, List<Func<EventContext, Task>>>();
 
@@ -62,16 +85,21 @@ namespace BarbellTracker.ApplicationCode
             }
         }
 
-        public static void Fire(object sender, Event @event, params object[] args)
+        public static void Fire(object sender, Event @event, object arg)
         {
-            Fire(sender, Default, @event, args);
+            Fire(sender, Default, @event, arg);
         }
 
-        public static async void Fire(object sender, EventSystem system, Event @event, params object[] args)
+        public static async void Fire(object sender, EventSystem system, Event @event, object arg)
         {
             try
             {
-                await Task.Run(async () => await PushAsync(sender, system, @event, args));
+                if(ArgDefinitonForEvents[@event] != arg.GetType())
+                {
+                    throw new ArgumentException("bla");
+                }
+
+                await Task.Run(async () => await PushAsync(sender, system, @event, arg));
             }
             catch (Exception ex)
             {
@@ -79,12 +107,12 @@ namespace BarbellTracker.ApplicationCode
             }
         }
 
-        public static Task PushAsync(object sender, Event @event, params object[] args)
+        public static Task PushAsync(object sender, Event @event, object arg)
         {
-            return PushAsync(sender, Default, @event, args);
+            return PushAsync(sender, Default, @event, arg);
         }
 
-        public static Task PushAsync(object sender, EventSystem system, Event @event, params object[] args)
+        public static Task PushAsync(object sender, EventSystem system, Event @event, object arg)
         {
             if (system == All)
                 throw new Exception("The all event system is a subscribe only event system");
@@ -98,10 +126,12 @@ namespace BarbellTracker.ApplicationCode
                 allCallbacks = All.m_registry[@event].ToArray();
             }
 
-            var originTask = originCallbacks.Any() ? new EventContext(system, @event, sender, args, originCallbacks).Task : Task.CompletedTask;
-            var allTask = allCallbacks.Any() ? new EventContext(system, @event, sender, args, allCallbacks).Task : Task.CompletedTask;
+            var originTask = originCallbacks.Any() ? new EventContext(system, @event, sender, arg, originCallbacks).Task : Task.CompletedTask;
+            var allTask = allCallbacks.Any() ? new EventContext(system, @event, sender, arg, allCallbacks).Task : Task.CompletedTask;
 
             return Task.WhenAll(originTask, allTask);
         }
     }
+
+
 }

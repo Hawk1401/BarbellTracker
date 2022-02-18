@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BarbellTracker.Adapter
+namespace BarbellTracker.Adapter.Interface
 {
-    internal interface IProcessingPlugin :IPlugin
+    public interface IProcessingPlugin :IPlugin
     {
+
         public bool IsActiv();
 
         public bool Activate();

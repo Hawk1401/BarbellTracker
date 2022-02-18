@@ -10,13 +10,13 @@ namespace BarbellTracker.ApplicationCode
     {
         private readonly List<Action> m_doneActions = new List<Action>();
 
-        internal EventContext(EventSystem system, Event @event, object sender, object[] args, Func<EventContext, Task>[] callbacks, EventSystem origin = null)
+        internal EventContext(EventSystem system, Event @event, object sender, object arg, Func<EventContext, Task>[] callbacks, EventSystem origin = null)
         {
             System = system;
             Origin = origin;
             Event = @event;
             Sender = sender;
-            Args = args;
+            Arg = arg;
             Task = Task.WhenAll(callbacks.Select(c => c(this)));
             InvokeDoneTasks();
         }
@@ -38,9 +38,9 @@ namespace BarbellTracker.ApplicationCode
         public Event Event { get; }
 
         /// <summary>
-        /// Event arguments
+        /// Event argument
         /// </summary>
-        public object[] Args { get; }
+        public object Arg { get; }
 
         /// <summary>
         /// Completition task of all subscribers (most likely to be null in event handler)
