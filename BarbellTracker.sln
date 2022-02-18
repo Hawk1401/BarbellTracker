@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.AbstractionCode", "src\BarbellTracker.AbstractionCode\BarbellTracker.AbstractionCode.csproj", "{FE4180FC-17EB-4F48-B28A-3DC528C070C1}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.Plugin.WPF_UI_HelperClasses", "src\BarbellTracker.Plugin.WPF_UI_HelperClasses\BarbellTracker.Plugin.WPF_UI_HelperClasses.csproj", "{F7091A27-0C66-4D7F-AEB6-577CBC494EED}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.Plugin.WPF_MVVM_UI", "src\BarbellTracker.Plugin.WPF_MVVM_UI\BarbellTracker.Plugin.WPF_MVVM_UI.csproj", "{024CB2D8-2F02-4D02-AF4E-4AFD0D706D29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbellTracker.Plugins", "BarbellTracker.Plugins\BarbellTracker.Plugins.csproj", "{BCB2A136-D212-40B0-88A3-173CEAC6A9AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{024CB2D8-2F02-4D02-AF4E-4AFD0D706D29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{024CB2D8-2F02-4D02-AF4E-4AFD0D706D29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{024CB2D8-2F02-4D02-AF4E-4AFD0D706D29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCB2A136-D212-40B0-88A3-173CEAC6A9AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCB2A136-D212-40B0-88A3-173CEAC6A9AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCB2A136-D212-40B0-88A3-173CEAC6A9AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCB2A136-D212-40B0-88A3-173CEAC6A9AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

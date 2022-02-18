@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace BarbellTracker.DomainCode
 {
-    class TrackedInformation
+    public class TrackedInformation
     {
-        public string Name { get; set; }
-        public Vector2D[] Positions { get; set; }
-        public int FrameRate { get; private set; }
-
-        public int PixelPerCm { get; set; }
+        public string Name { get; init; }
+        public Vector2D[] Positions { get; init; }
+        public int FrameRate { get; init; }
+        public int PixelPerCm { get; init; }
     }
 }
