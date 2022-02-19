@@ -9,9 +9,11 @@ namespace BarbellTracker.DomainCode
 {
     public class TrackedInformation
     {
+        public string Id { get; init; }
         public string Name { get; init; }
         public Vector2D[] Positions { get; init; }
         public int FrameRate { get; init; }
         public int PixelPerCm { get; init; }
+
     }
 }
