@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BarbellTracker.Adapter\BarbellTracker.Adapter.csproj" />
     <ProjectReference Include="..\BarbellTracker.ApplicationCode\BarbellTracker.ApplicationCode.csproj" />
   </ItemGroup>
 
