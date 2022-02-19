@@ -24,7 +24,7 @@ namespace BarbellTracker.ApplicationCode
     public class EventSystem
     {
         private static Dictionary<Event, Type> ArgDefinitonForEvents = new Dictionary<Event, Type>() {
-            { Event.StartExtractVideoInfo, typeof(string) },
+            { Event.StartExtractVideoInfo, typeof(StartExtractionInformation) },
             { Event.ExtracedVideoInfo, typeof(TrackedInformation) },
             { Event.PluginLoaded, typeof(string) },
             { Event.ActivatePlugin, typeof(string) },
