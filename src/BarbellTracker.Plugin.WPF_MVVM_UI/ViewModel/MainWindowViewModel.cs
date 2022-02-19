@@ -1,11 +1,11 @@
-﻿using System;
+﻿using BarbellTracker.Plugin.WPF_UI_HelperClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using WPF_UI_HelperClasses;
 
 namespace BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel
 {

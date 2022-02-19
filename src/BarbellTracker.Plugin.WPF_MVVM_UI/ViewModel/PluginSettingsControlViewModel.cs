@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BarbellTracker.Plugin.WPF_MVVM_UI.DataStructures;
-using WPF_UI_HelperClasses;
+using BarbellTracker.Plugin.WPF_UI_HelperClasses;
 
 namespace BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace WPF_UI_HelperClasses
+namespace BarbellTracker.Plugin.WPF_UI_HelperClasses
 {
     public class RelayCommand : ICommand
     {
