@@ -12,9 +12,9 @@ namespace BarbellTracker.Adapter.Interface
 
         public bool IsActiv();
 
-        public bool Activate();
+        public Task Activate(EventContext eventContext);
 
-        public bool Deactivate();
+        public Task Deactivate(EventContext eventContext);
 
         public Task ProcessData(EventContext eventContext);
     }
