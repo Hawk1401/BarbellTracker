@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
-using BarbellTracker.Plugin.WPF_UI_HelperClasses;
+using BarbellTracker.WPF_HelperClasses;
 
-namespace BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel
+namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
     class HeaderControlViewModel
     {
@@ -11,8 +11,7 @@ namespace BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel
         public HeaderControlViewModel()
         {
             ClickCommandStartButton = new RelayCommand(IsStartEnabeld, StartAnalysis);
-            ClickCommandAbortButton = new RelayCommand(IsAbortEnabled, AbortAnalysis);
-        }
+            ClickCommandAbortButton = new RelayCommand(IsAbortEnabled, AbortAnalysis);        }
 
         public ICommand ClickCommandStartButton { get; }
         public ICommand ClickCommandAbortButton { get; }

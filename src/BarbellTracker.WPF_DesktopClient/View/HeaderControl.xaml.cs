@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
-using BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel;
+using BarbellTracker.WPF_DesktopClient.ViewModel;
 
-namespace BarbellTracker.Plugin.WPF_MVVM_UI.View
+namespace BarbellTracker.WPF_DesktopClient.View
 {
     /// <summary>
     /// Interaction logic for HeaderControl.xaml

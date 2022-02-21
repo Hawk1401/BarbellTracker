@@ -1,10 +1,10 @@
-﻿<Window x:Class="BarbellTracker.Plugin.WPF_MVVM_UI.MainWindow"
+﻿<Window x:Class="BarbellTracker.WPF_DesktopClient.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BarbellTracker.Plugin.WPF_MVVM_UI.View"
-        xmlns:Converters="clr-namespace:BarbellTracker.Plugin.WPF_UI_HelperClasses;assembly=BarbellTracker.Plugin.WPF_UI_HelperClasses"
+        xmlns:local="clr-namespace:BarbellTracker.WPF_DesktopClient.View"
+        xmlns:Converters="clr-namespace:BarbellTracker.WPF_HelperClasses;assembly=BarbellTracker.WPF_HelperClasses"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 

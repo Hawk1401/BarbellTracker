@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BarbellTracker.Adapter;
-using BarbellTracker.Plugin.WPF_MVVM_UI.DataStructures;
-using BarbellTracker.Plugin.WPF_UI_HelperClasses;
+using BarbellTracker.WPF_DesktopClient.DataStructures;
+using BarbellTracker.WPF_HelperClasses;
 
-namespace BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel
+namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
     internal class PluginSettingsControlViewModel : PropertyChangedNotifier
     {

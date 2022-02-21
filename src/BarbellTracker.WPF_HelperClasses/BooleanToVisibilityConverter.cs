@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace BarbellTracker.Plugin.WPF_UI_HelperClasses
+namespace BarbellTracker.WPF_HelperClasses
 {
     public class BooleanToVisibilityConverter : IValueConverter
     {

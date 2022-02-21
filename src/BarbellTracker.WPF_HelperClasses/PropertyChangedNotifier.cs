@@ -12,7 +12,7 @@ using System.Runtime.CompilerServices;
 /// 
 /// </summary>
 
-namespace BarbellTracker.Plugin.WPF_UI_HelperClasses
+namespace BarbellTracker.WPF_HelperClasses
 {
     public class PropertyChangedNotifier : INotifyPropertyChanged
     {

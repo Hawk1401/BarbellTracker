@@ -12,17 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BarbellTracker.WPF_DesktopClient.ViewModel;
 
-namespace BarbellTracker.Plugin.WPF_MVVM_UI.View
+namespace BarbellTracker.WPF_DesktopClient.View
 {
     /// <summary>
-    /// Interaction logic for SettingsControl.xaml
+    /// Interaction logic for PluginSettingsControl.xaml
     /// </summary>
-    public partial class SettingsControl : UserControl
+    public partial class PluginSettingsControl : UserControl
     {
-        public SettingsControl()
+        public PluginSettingsControl()
         {
             InitializeComponent();
+            this.DataContext = new PluginSettingsControlViewModel();
         }
     }
 }

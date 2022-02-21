@@ -1,4 +1,4 @@
-﻿using BarbellTracker.Plugin.WPF_UI_HelperClasses;
+﻿using BarbellTracker.WPF_HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel
+namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
     class MainWindowViewModel : PropertyChangedNotifier
     {

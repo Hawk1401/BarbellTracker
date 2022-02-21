@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BarbellTracker.Plugin.WPF_MVVM_UI.DataStructures
+namespace BarbellTracker.WPF_DesktopClient.DataStructures
 {
-    class PluginStatus : WPF_UI_HelperClasses.PropertyChangedNotifier
+    class PluginStatus : WPF_HelperClasses.PropertyChangedNotifier
     {
         private string _pluginName;
         private bool _status;
