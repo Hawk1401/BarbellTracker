@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="BarbellTracker.WPF_DesktopClient.View.AdapterControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BarbellTracker.WPF_DesktopClient.View"
+      xmlns:vm="clr-namespace:BarbellTracker.WPF_DesktopClient.ViewModel"
+      xmlns:ds="clr-namespace:BarbellTracker.WPF_DesktopClient.DataStructures"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <TabControl Margin="5" ItemsSource="{Binding AdapterViews}">
+
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type ds:AdapterModel}">
+                    <TextBlock
+                        Text="{Binding AdapterName}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+
+            <TabControl.Resources>
+                <!-- <DataTemplate DataType="{x:Type ds:AdapterModel}"> -->
+                <DataTemplate DataType="{x:Type ds:AdapterModel}">
+                    <local:AdapterVideoPlayerView />
+                </DataTemplate> 
+                <!--
+                <DataTemplate DataType="{x:Type vm:AdapterVideoPlayerViewModel}">
+                    <local:AdapterVelocityTableView />
+                </DataTemplate>
+                -->
+               
+            </TabControl.Resources>
+            
+        </TabControl>
+        
+
+    </Grid>
+</UserControl>

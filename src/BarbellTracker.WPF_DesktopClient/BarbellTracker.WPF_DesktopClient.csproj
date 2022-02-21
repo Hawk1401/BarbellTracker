@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BarbellTracker.Adapter\BarbellTracker.Adapter.csproj" />
+    <ProjectReference Include="..\BarbellTracker.WPF_HelperClasses\BarbellTracker.WPF_HelperClasses.csproj" />
+  </ItemGroup>
+
+</Project>

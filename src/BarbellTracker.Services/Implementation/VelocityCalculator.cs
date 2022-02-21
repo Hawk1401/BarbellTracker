@@ -24,9 +24,9 @@ namespace BarbellTracker.Services.Implementation
         private Dictionary<TrackedInformation, Velocity> cache;
 
 
-        private object locker;
+        private object locker = new object();
 
-        public VelocityCalculator()
+        private VelocityCalculator()
         {
             cache = new Dictionary<TrackedInformation, Velocity>();
         }
