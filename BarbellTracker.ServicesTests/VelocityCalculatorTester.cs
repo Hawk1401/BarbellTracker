@@ -12,32 +12,43 @@ namespace BarbellTracker.ServicesTests
 
         VelocityCalculator _sut = VelocityCalculator.Instance;
 
+
         [Fact]
-        public void Test1()
+        public void TestNameProperty()
         {
+            Assert.Equal("Velocity Calculator", _sut.Name);
+        }
 
-            var vectors = new AbstractionCode.Vector2D[]
+        [Fact]
+        public void TestDescriptionProperty()
+        {
+            Assert.Equal("This service will Calculat the Velocity of the Moving barbell", _sut.Description);
+        }
+
+
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(int.MinValue)]
+        [InlineData(int.MaxValue)]
+        [InlineData(-42)]
+        [InlineData(42)]
+        public void TestFrameRateoutput(int frameRate)
+        {
+            TrackedInformation trackedInfos = new TrackedInformation()
             {
-                new AbstractionCode.Vector2D(0,0),
-                new AbstractionCode.Vector2D(1,0),
-                new AbstractionCode.Vector2D(0,0),
-                new AbstractionCode.Vector2D(0,1),
-                new AbstractionCode.Vector2D(0,0),
-                new AbstractionCode.Vector2D(-1,0),
-                new AbstractionCode.Vector2D(0,0),
-                new AbstractionCode.Vector2D(0,-1),
-                new AbstractionCode.Vector2D(0,0),
+                FrameRate = frameRate,
+                Id = "MyTestId",
+                PixelPerCm = 300,
+                Name = "myTestName",
+                Positions = new Vector2D[] { new Vector2D(0, 0), new Vector2D(1, 0) }
             };
-            //TrackedInformation trackedInfos = new TrackedInformation()
-            //{
-            //    FrameRate = 30,
-            //    Id = "MyTestId",
-            //    PixelPerCm = 300,
-            //    Name = "myTestName",
-            //    Positions = 
-            //}
-            //_sut.GetVelocity();
 
+
+            var velocity = _sut.GetVelocity(trackedInfos);
+
+
+            Assert.Equal(velocity.FPS, frameRate);
         }
 
 
