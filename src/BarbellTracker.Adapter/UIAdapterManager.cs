@@ -8,15 +8,21 @@ using BarbellTracker.ApplicationCode;
 
 namespace BarbellTracker.Adapter
 {
-    public class AdapterManager
+    public class UIAdapterManager
     {
-        public static AdapterManager Instance = new AdapterManager();
+        public static UIAdapterManager Instance = new UIAdapterManager();
         Dictionary<string, IUIAdapter> AdapterStorage = new Dictionary<string, IUIAdapter>();
 
 
-        public IUIAdapter GetAdapterByName(string name)
+        public bool TryGetUIAdapterByName(string name, IUIAdapter adapter)
         {
-            return AdapterStorage[name];
+            if (AdapterStorage.ContainsKey(name))
+            {
+                adapter = AdapterStorage[name];
+                return true;
+            }
+            adapter = null;
+            return false;
         }
 
         public void AddNewAdapter(IUIAdapter adapter)
@@ -33,7 +39,7 @@ namespace BarbellTracker.Adapter
             EventSystem.Fire(this, Event.AdapterAdded, adapter.Name);
         }
 
-        public bool IsType(string adapterName, Type type)
+        public bool TryIsType(string adapterName, Type type)
         {
             try
             {
