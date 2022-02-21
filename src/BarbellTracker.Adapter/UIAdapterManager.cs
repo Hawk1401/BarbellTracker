@@ -14,7 +14,7 @@ namespace BarbellTracker.Adapter
         Dictionary<string, IUIAdapter> AdapterStorage = new Dictionary<string, IUIAdapter>();
 
 
-        public bool TryGetUIAdapterByName(string name, IUIAdapter adapter)
+        public bool TryGetUIAdapterByName(string name, out IUIAdapter adapter)
         {
             if (AdapterStorage.ContainsKey(name))
             {
