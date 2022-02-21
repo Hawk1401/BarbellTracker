@@ -17,7 +17,7 @@ namespace BarbellTracker.ApplicationCode
         public string CruuentExtractionFolder => Path.Combine(FolderPath, CurrendExtractionName);
 
 
-        public FileManager()
+        private FileManager()
         {
             EventSystem.Subscribe(Event.StartExtractVideoInfo, NewExtractionStarted);
         }
@@ -29,7 +29,6 @@ namespace BarbellTracker.ApplicationCode
         {
             return Path.Combine(CruuentExtractionFolder, FileNameWithExtension);
         }
-
 
 
         public bool Write(string FileNameWithExtension, string content, bool Override =true)
