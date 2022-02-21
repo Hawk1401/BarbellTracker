@@ -34,9 +34,9 @@ namespace BarbellTracker.ApplicationCode
 
         public bool Write(string FileNameWithExtension, string content, bool Override =true)
         {
-            var totalPath = getTotalPath(FileNameWithExtension);
             try
             {
+                var totalPath = getTotalPath(FileNameWithExtension);
 
                 if (File.Exists(totalPath) && !Override)
                 {
@@ -52,6 +52,27 @@ namespace BarbellTracker.ApplicationCode
             }
 
         }
+        public bool Write(string FileNameWithExtension, List<string> content, bool Override = true)
+        {
+            try
+            {
+                var totalPath = getTotalPath(FileNameWithExtension);
+
+                if (File.Exists(totalPath) && !Override)
+                {
+                    return false;
+                }
+
+                File.AppendAllLines(totalPath, content);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
         public bool Append(string FileNameWithExtension, string content)
         {
             try
@@ -61,7 +82,7 @@ namespace BarbellTracker.ApplicationCode
 
                 if (!File.Exists(totalPath))
                 {
-                    File.Create(totalPath);
+                    File.Create(totalPath).Close();
                 }
 
                 File.AppendAllText(totalPath, content);
@@ -73,7 +94,23 @@ namespace BarbellTracker.ApplicationCode
         }
         public bool AppendLine (string FileNameWithExtension, string content)
         {
-            return Append(FileNameWithExtension, content + Environment.NewLine);
+            try
+            {
+
+                var totalPath = getTotalPath(FileNameWithExtension);
+
+                if (!File.Exists(totalPath))
+                {
+                    File.Create(totalPath).Close();
+                }
+
+                File.AppendAllLines(totalPath, new string[]{ content});
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         public bool ReadContent(string FileNameWithExtension, out string[] content)
         {
