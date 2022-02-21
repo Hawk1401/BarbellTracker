@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BarbellTracker.WPF_DesktopClient.View.AdapterVelocityTableView"
+﻿<UserControl x:Class="BarbellTracker.WPF_DesktopClient.View.AdapterVideoPlayerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,10 +11,9 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid AutoGenerateColumns="True" 
-                  ItemsSource="{Binding CSVVelocityModels}">
-
-        </DataGrid>
+        <MediaElement Margin="5"
+                      Source="{Binding Url}"
+                      LoadedBehavior="Play"/>
 
     </Grid>
 </UserControl>

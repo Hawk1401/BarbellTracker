@@ -1,4 +1,5 @@
 ﻿using BarbellTracker.Adapter;
+using BarbellTracker.Adapter.Model;
 using BarbellTracker.ApplicationCode;
 using BarbellTracker.WPF_DesktopClient.DataStructures;
 using BarbellTracker.WPF_DesktopClient.View;
@@ -18,11 +19,17 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         // Bsp: UIVideo; CSVTabelle;
         // dynamic selection of view(Video, Tabelle, ...)
         private ObservableCollection<AdapterModel> _adapterViews = new ObservableCollection<AdapterModel>();
+        private AdapterVelocityTableViewModel _adapterVelocityTabelViewModel = new AdapterVelocityTableViewModel();
 
 
         public AdapterControlViewModel()
         {
             EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
+
+            // some test data
+            AdapterViews.Add(new AdapterModel("Test"));
+            AdapterViews.Add(new AdapterModel("Test2"));
+            AdapterViews.Add(new AdapterModel("Test3"));
         }
 
         public ObservableCollection<AdapterModel> AdapterViews 
@@ -30,7 +37,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             get { return _adapterViews; }
             set { 
                 _adapterViews = value;
-                OnPropertyChanged("AdapterViews");
+                OnPropertyChanged();
             } 
         }
 
@@ -43,7 +50,13 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             {
                if(adapter is UICSVVelocityAdapter velocityAdapter)
                 {
-                    AdapterViews.Add(new AdapterModel(velocityAdapter.Name, AdapterVelocityTableView));
+                    // to somthing
+                    foreach(CSVVelocityModel cSVVelocityModel in velocityAdapter.Table)
+                    {
+                        _adapterVelocityTabelViewModel.CSVVelocityModels.Add(cSVVelocityModel);
+                    }
+                    AdapterViews.Add(new AdapterModel(velocityAdapter.Name));
+
                     return;
                 }
             }
