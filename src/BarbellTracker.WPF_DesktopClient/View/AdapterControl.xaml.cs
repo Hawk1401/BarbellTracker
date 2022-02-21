@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BarbellTracker.WPF_DesktopClient.ViewModel;
 
 namespace BarbellTracker.WPF_DesktopClient.View
 {
@@ -23,6 +24,7 @@ namespace BarbellTracker.WPF_DesktopClient.View
         public AdapterControl()
         {
             InitializeComponent();
+            this.DataContext = new AdapterControlViewModel();
         }
     }
 }
