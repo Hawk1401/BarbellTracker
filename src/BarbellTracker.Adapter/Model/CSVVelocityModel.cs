@@ -12,6 +12,12 @@ namespace BarbellTracker.Adapter.Model
         public int Length { get; set; }
         public string Vector { get; set; }
 
+        public CSVVelocityModel(string time, int length, string vector)
+        {
+            this.Time = time;
+            this.Vector = vector;
+            this.Length = length;
+        }
 
         public static string GetHeader()
         {
