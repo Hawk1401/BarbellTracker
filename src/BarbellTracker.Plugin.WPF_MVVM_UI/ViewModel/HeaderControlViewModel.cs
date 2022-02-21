@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using WPF_UI_HelperClasses;
+using BarbellTracker.Plugin.WPF_UI_HelperClasses;
 
 namespace BarbellTracker.Plugin.WPF_MVVM_UI.ViewModel
 {

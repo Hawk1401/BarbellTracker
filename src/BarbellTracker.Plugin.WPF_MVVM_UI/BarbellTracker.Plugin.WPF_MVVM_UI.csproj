@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BarbellTracker.Adapter\BarbellTracker.Adapter.csproj" />
     <ProjectReference Include="..\BarbellTracker.Plugin.WPF_UI_HelperClasses\BarbellTracker.Plugin.WPF_UI_HelperClasses.csproj" />
   </ItemGroup>
 

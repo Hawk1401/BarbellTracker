@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BarbellTracker.Plugin.WPF_MVVM_UI.View"
-        xmlns:Converters="clr-namespace:WPF_UI_HelperClasses;assembly=BarbellTracker.Plugin.WPF_UI_HelperClasses"
+        xmlns:Converters="clr-namespace:BarbellTracker.Plugin.WPF_UI_HelperClasses;assembly=BarbellTracker.Plugin.WPF_UI_HelperClasses"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
@@ -51,7 +51,7 @@
                                                 UpdateSourceTrigger=PropertyChanged,
                                                 Converter={StaticResource BooleanToVisibilityConverter}}"/>
             
-            <local:PluginControl Grid.Column="1"
+            <local:AdapterControl Grid.Column="1"
                               Grid.ColumnSpan="3"
                               Grid.Row="1"
                               Grid.RowSpan="2"

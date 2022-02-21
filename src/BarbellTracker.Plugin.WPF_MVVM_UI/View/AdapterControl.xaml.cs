@@ -18,9 +18,9 @@ namespace BarbellTracker.Plugin.WPF_MVVM_UI.View
     /// <summary>
     /// Interaction logic for PluginPage.xaml
     /// </summary>
-    public partial class PluginControl : UserControl
+    public partial class AdapterControl : UserControl
     {
-        public PluginControl()
+        public AdapterControl()
         {
             InitializeComponent();
         }
