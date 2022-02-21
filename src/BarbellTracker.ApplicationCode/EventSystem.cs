@@ -18,7 +18,8 @@ namespace BarbellTracker.ApplicationCode
         DeactivateService,
         SelectFile,
         FileSelected,
-        AdapterAdded
+        AdapterAdded,
+        FileCreated
     }
 
     public class EventSystem
@@ -34,6 +35,7 @@ namespace BarbellTracker.ApplicationCode
             { Event.SelectFile, null }, 
             { Event.FileSelected, typeof(string) },
             { Event.AdapterAdded, typeof(string) },
+            { Event.FileCreated, typeof(string) },
         };
 
 
