@@ -59,7 +59,7 @@ namespace BarbellTracker.Services.Implementation
 
         private void keepCacheClean()
         {
-            if(cache.Count > 4)
+            if(cache.Count > 50)
             {
                 cache.Remove(cache.First().Key);
             }
