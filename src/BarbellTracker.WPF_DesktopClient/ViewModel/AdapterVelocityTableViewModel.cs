@@ -1,4 +1,6 @@
-﻿using BarbellTracker.Adapter.Model;
+﻿using BarbellTracker.Adapter;
+using BarbellTracker.Adapter.Model;
+using BarbellTracker.ApplicationCode;
 using BarbellTracker.WPF_HelperClasses;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,13 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 
         public AdapterVelocityTableViewModel()
         {
+            EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
+
             // some test data
-            CSVVelocityModels.Add(new CSVVelocityModel("10:12Uhr", 1, "12, 8, 65"));
-            CSVVelocityModels.Add(new CSVVelocityModel("10:13Uhr", 2, "16, 4, 5"));
-            CSVVelocityModels.Add(new CSVVelocityModel("10:14Uhr", 99, "22, 43, 68"));
+            CSVVelocityModels.Add(new CSVVelocityModel("123", 5, "99"));
+            CSVVelocityModels.Add(new CSVVelocityModel("456", 5, "88"));
+            CSVVelocityModels.Add(new CSVVelocityModel("789", 5, "55"));
+
         }
 
         public ObservableCollection<CSVVelocityModel> CSVVelocityModels
@@ -29,6 +34,26 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
                 _csvVelocityModels = value;
                 OnPropertyChanged();
             }
+        }
+
+        public async Task HandleAddedAdapter(EventContext eventContext)
+        {
+            string name = eventContext.Arg as string;
+            var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
+            if (success)
+            {
+                if (adapter is UICSVVelocityAdapter velocityAdapter)
+                {
+                    // to somthing
+                    foreach (CSVVelocityModel cSVVelocityModel in velocityAdapter.Table)
+                    {
+                        CSVVelocityModels.Add(cSVVelocityModel);
+                    }
+
+                    return;
+                }
+            }
+
         }
     }
 }

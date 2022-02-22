@@ -14,7 +14,7 @@ using System.Runtime.CompilerServices;
 
 namespace BarbellTracker.WPF_HelperClasses
 {
-    public class PropertyChangedNotifier : INotifyPropertyChanged
+    public abstract class PropertyChangedNotifier : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
