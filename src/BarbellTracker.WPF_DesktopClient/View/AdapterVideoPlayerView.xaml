@@ -8,11 +8,17 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+        
+        <Label Content="Video Player starts automaticly"
+               Grid.Row="0"/>
+        
         <MediaElement Margin="5"
-                      Source="{Binding Url}"
+                      Grid.Column="1"
+                      Grid.Row="1"
+                      Source="{Binding URL}"
                       LoadedBehavior="Play"/>
 
     </Grid>

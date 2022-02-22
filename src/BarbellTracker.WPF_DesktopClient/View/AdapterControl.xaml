@@ -10,6 +10,20 @@
       d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
+
+        <TabControl Margin="5">
+            <TabItem Header="Velocity">
+                <local:AdapterVelocityTableView />
+            </TabItem>
+            <TabItem Header="VideoPlayer">
+                <local:AdapterVideoPlayerView />
+            </TabItem>
+        </TabControl>
+        
+
+        <!-- ????????????????????????
+                wie dynamisch?
+        
         <TabControl Margin="5" ItemsSource="{Binding AdapterViews}">
 
             <TabControl.ItemTemplate>
@@ -20,20 +34,17 @@
             </TabControl.ItemTemplate>
 
             <TabControl.Resources>
-                <!-- <DataTemplate DataType="{x:Type ds:AdapterModel}"> -->
-                <DataTemplate DataType="{x:Type ds:AdapterModel}">
-                    <local:AdapterVideoPlayerView />
-                </DataTemplate> 
-                <!--
+        <DataTemplate DataType="{x:Type ds:AdapterModel}">
+            <local:AdapterVelocityTableView />
+        </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:AdapterVideoPlayerViewModel}">
                     <local:AdapterVelocityTableView />
                 </DataTemplate>
-                -->
-               
-            </TabControl.Resources>
-            
+
+        </TabControl.Resources>
+
         </TabControl>
-        
+        -->
 
     </Grid>
 </UserControl>

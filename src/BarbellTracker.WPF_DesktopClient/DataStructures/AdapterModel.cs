@@ -9,11 +9,13 @@ namespace BarbellTracker.WPF_DesktopClient.DataStructures
     internal class AdapterModel : WPF_HelperClasses.PropertyChangedNotifier
     {
         private string _adapterName;
+        private string _content;
 
 
-        public AdapterModel(string name)
+        public AdapterModel(string name, string content)
         {
             this.AdapterName = name;
+            this.Content = content;
         }
 
         public string AdapterName 
@@ -22,8 +24,14 @@ namespace BarbellTracker.WPF_DesktopClient.DataStructures
             set 
             { 
                 this._adapterName = value;
-                OnPropertyChanged("AdapterName");
+                OnPropertyChanged();
             } 
+        }
+
+        public string Content 
+        { 
+            get { return _content; }
+            set { _content = value; OnPropertyChanged(); }
         }
     }
 }
