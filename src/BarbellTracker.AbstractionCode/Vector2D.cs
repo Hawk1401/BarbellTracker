@@ -41,6 +41,11 @@ namespace BarbellTracker.AbstractionCode
 
         public void normalize()
         {
+            if(length() == 0)
+            {
+                throw new DivideByZeroException($"The length of the vector {this} has the length of zero an can not be normalized");
+            }
+
             scalar(1 / length());
         }
 
@@ -76,8 +81,6 @@ namespace BarbellTracker.AbstractionCode
                 );
         }
 
-
-
         public void scalar(double num)
         {
             this.X *= num;
@@ -101,6 +104,7 @@ namespace BarbellTracker.AbstractionCode
         {
             return crossProduct(this, other);
         }
+
         public static double crossProduct(Vector2D first, Vector2D second)
         {
             return (first.X * second.Y) - (second.X * first.Y);
@@ -118,6 +122,7 @@ namespace BarbellTracker.AbstractionCode
             return islinearlyIndependen(this, other, epsilon);
         }
 
+
         public static bool islinearlyIndependen(Vector2D first, Vector2D second)
         {
             return islinearlyIndependen(first, second, EPSILON);
@@ -127,6 +132,8 @@ namespace BarbellTracker.AbstractionCode
         {
             return Math.Abs(crossProduct(first, second)) <= epsilon;
         }
+
+
 
 
         public Vector2D Copy()
@@ -143,14 +150,27 @@ namespace BarbellTracker.AbstractionCode
 
             if(obj is Vector2D vector)
             {
-                return this.X == vector.X && this.Y == vector.Y;
+                var xLowerLimet = this.X - EPSILON;
+                var xUpperLimet = this.X + EPSILON;
+                var yLowerLimet = this.Y - EPSILON;
+                var yUpperLimet = this.Y + EPSILON;
+
+                if(vector.X < xLowerLimet || vector.X > xUpperLimet)
+                {
+                    return false;
+                }
+                if (vector.Y < yLowerLimet || vector.Y > yUpperLimet)
+                {
+                    return false;
+                }
+                return true;
             }
             return false;
         }
 
         public override string ToString()
         {
-            return $"(X: {this.X}, Y: {this.Y})";
+            return $"(X: {this.X.ToString("0.###")}, Y: {this.Y.ToString("0.###")})";
         }
     }
 }
