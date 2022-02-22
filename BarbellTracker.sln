@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31410.223
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.AbstractionCode", "src\BarbellTracker.AbstractionCode\BarbellTracker.AbstractionCode.csproj", "{FE4180FC-17EB-4F48-B28A-3DC528C070C1}"
 EndProject
@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.Services", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.Plugins", "src\BarbellTracker.Plugins\BarbellTracker.Plugins.csproj", "{5499C4A9-6E78-482C-BDEF-3AB6AE563F81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbellTraker.ApplicationCode_Tester", "test\BarbellTraker.ApplicationCode_Tester\BarbellTraker.ApplicationCode_Tester.csproj", "{416C6AE8-FAE5-41B3-A826-A6DA040844E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTraker.ApplicationCode_Tester", "test\BarbellTraker.ApplicationCode_Tester\BarbellTraker.ApplicationCode_Tester.csproj", "{416C6AE8-FAE5-41B3-A826-A6DA040844E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbellTracker.ServicesTests", "BarbellTracker.ServicesTests\BarbellTracker.ServicesTests.csproj", "{5B04B4B7-1AC8-47A9-94BA-8FB4AD9B5B09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.ServicesTests", "test\BarbellTracker.ServicesTests\BarbellTracker.ServicesTests.csproj", "{5B04B4B7-1AC8-47A9-94BA-8FB4AD9B5B09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbellTracker.AbstractionCodeTests", "test\BarbellTracker.AbstractionCodeTests\BarbellTracker.AbstractionCodeTests.csproj", "{935A2881-798A-464C-856B-E9F265272BEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{5B04B4B7-1AC8-47A9-94BA-8FB4AD9B5B09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B04B4B7-1AC8-47A9-94BA-8FB4AD9B5B09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B04B4B7-1AC8-47A9-94BA-8FB4AD9B5B09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{935A2881-798A-464C-856B-E9F265272BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{935A2881-798A-464C-856B-E9F265272BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{935A2881-798A-464C-856B-E9F265272BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{935A2881-798A-464C-856B-E9F265272BEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
