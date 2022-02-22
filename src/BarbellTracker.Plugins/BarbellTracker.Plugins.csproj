@@ -9,4 +9,8 @@
     <ProjectReference Include="..\BarbellTracker.Services\BarbellTracker.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tracker\" />
+  </ItemGroup>
+
 </Project>

@@ -11,7 +11,6 @@ namespace BarbellTracker.Adapter
     {
         public string Name { get; set; }
 
-        public List<CSVVelocityModel> Table { get; set; }
-
+        public List<CSVVelocityModel> Tabel { get; set; }
     }
 }

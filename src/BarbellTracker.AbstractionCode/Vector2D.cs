@@ -148,6 +148,9 @@ namespace BarbellTracker.AbstractionCode
             return false;
         }
 
-        
+        public override string ToString()
+        {
+            return $"(X: {this.X}, Y: {this.Y})";
+        }
     }
 }
