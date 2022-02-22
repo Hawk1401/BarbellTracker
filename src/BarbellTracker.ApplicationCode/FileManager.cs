@@ -74,6 +74,37 @@ namespace BarbellTracker.ApplicationCode
 
         }
 
+
+        /// <summary>
+        /// Will Write the all lines to the designated File.
+        /// It will Create the file if it not Exist
+        /// </summary>
+        /// <param name="FileNameWithExtension">Only the name of the file With Extension</param>
+        /// <param name="lines">The Lines that will be written down into the file</param>
+        /// <param name="Override">this parameter is set to true by default, it indicates whether the file should be overwritten if it already exists. if it is set to false, and the file already exists, nothing is done.</param>
+        /// <returns>Returns whether the content could be written to the file or not.</returns>
+        public bool WriteAllLines(string FileNameWithExtension, List<string> lines, bool Override = true)
+        {
+            var totalPath = getTotalPath(FileNameWithExtension);
+            try
+            {
+
+                if (File.Exists(totalPath) && !Override)
+                {
+                    return false;
+                }
+
+                File.WriteAllLines(totalPath, lines);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
         /// <summary>
         /// Append A new Content To the requested File
         /// It will Create the file if it not Exist

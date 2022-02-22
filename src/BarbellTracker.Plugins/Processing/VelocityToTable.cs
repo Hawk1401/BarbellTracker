@@ -32,13 +32,12 @@ namespace BarbellTracker.Plugins.Processing
             return Activ;
         }
 
-
         public async Task ProcessData(EventContext eventContext)
         {
             var trackedInformation = eventContext.Arg as TrackedInformation;
             var Velocity = velocityCalculator.GetVelocity(trackedInformation);
             var CSV = CreateCSVLines(Velocity);
-            FileManager.Instance.Write("Velocity.CSV", CSV);
+            FileManager.Instance.WriteAllLines("Velocity.CSV", CSV);
         }
         public async Task Activate(EventContext eventContext)
         {
