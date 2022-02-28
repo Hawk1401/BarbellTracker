@@ -108,7 +108,7 @@ namespace BarbellTracker.AbstractionCodeTests
 
             var vector = new Vector2D(0, 0);
 
-            var normalize = () => vector.normalize();
+            Action normalize = () => vector.normalize();
 
 
             Assert.Throws<DivideByZeroException>(normalize);
