@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BarbellTracker.ApplicationCode.EventModel;
 using BarbellTracker.DomainCode;
 
 namespace BarbellTracker.ApplicationCode
@@ -27,15 +28,13 @@ namespace BarbellTracker.ApplicationCode
         private static Dictionary<Event, Type> ArgDefinitonForEvents = new Dictionary<Event, Type>() {
             { Event.StartExtractVideoInfo, typeof(StartExtractionInformation) },
             { Event.ExtracedVideoInfo, typeof(TrackedInformation) },
-            { Event.PluginLoaded, typeof(string) },
-            { Event.ActivatePlugin, typeof(string) },
-            { Event.DeactivatePlugin, typeof(string)},
-            { Event.ActivateService, typeof(string) },
-            { Event.DeactivateService, typeof(string) },
-            { Event.SelectFile, null }, 
-            { Event.FileSelected, typeof(string) },
-            { Event.AdapterAdded, typeof(string) },
-            { Event.FileCreated, typeof(string) },
+            { Event.PluginLoaded, typeof(PluginName) },
+            { Event.ActivatePlugin, typeof(PluginName) },
+            { Event.DeactivatePlugin, typeof(PluginName)},
+            { Event.SelectFile, typeof(string) }, 
+            { Event.FileSelected, typeof(FilePath) },
+            { Event.AdapterAdded, typeof(AdapterPath) },
+            { Event.FileCreated, typeof(FilePath) },
         };
 
 

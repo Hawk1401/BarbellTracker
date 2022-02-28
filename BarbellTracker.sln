@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTraker.ApplicationCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.ServicesTests", "test\BarbellTracker.ServicesTests\BarbellTracker.ServicesTests.csproj", "{5B04B4B7-1AC8-47A9-94BA-8FB4AD9B5B09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbellTracker.AbstractionCodeTests", "test\BarbellTracker.AbstractionCodeTests\BarbellTracker.AbstractionCodeTests.csproj", "{935A2881-798A-464C-856B-E9F265272BEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.AbstractionCodeTests", "test\BarbellTracker.AbstractionCodeTests\BarbellTracker.AbstractionCodeTests.csproj", "{935A2881-798A-464C-856B-E9F265272BEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbellTracker.ConsoleClient", "src\BarbellTracker.ConsoleClient\BarbellTracker.ConsoleClient.csproj", "{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{935A2881-798A-464C-856B-E9F265272BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{935A2881-798A-464C-856B-E9F265272BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{935A2881-798A-464C-856B-E9F265272BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

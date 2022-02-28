@@ -15,5 +15,24 @@ namespace BarbellTracker.DomainCode
         public int FrameRate { get; init; }
         public int PixelPerCm { get; init; }
 
+
+        public override bool Equals(object obj)
+        {
+            if(obj == null)
+            {
+                return false;
+            }
+
+            if(obj is TrackedInformation other)
+            {
+                return Id.Equals(other.Id);
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }
