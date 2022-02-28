@@ -17,31 +17,21 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
     internal class AdapterControlViewModel : ViewModelBase
     {
         // Bsp: UIVideo; CSVTabelle;
-        // dynamic selection of view(Video, Tabelle, ...)
-        private ObservableCollection<AdapterModel> _adapterViews = new();
         private ObservableCollection<ViewModelBase> _tabItemsViewModel = new();
 
 
         public AdapterControlViewModel()
         {
             EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
+            
 
+
+
+            /*
             // some test data
-            AdapterViews.Add(new AdapterModel("Test", "Content1"));
-            AdapterViews.Add(new AdapterModel("Test2", "Content1"));
-            AdapterViews.Add(new AdapterModel("Test3", "Content1"));
-
             TabsItemViewModels.Add(new AdapterVelocityTableViewModel("VelocityTable"));
             TabsItemViewModels.Add(new AdapterVideoPlayerViewModel("VideoPlayer"));
-        }
-
-        public ObservableCollection<AdapterModel> AdapterViews 
-        { 
-            get { return _adapterViews; }
-            set { 
-                _adapterViews = value;
-                OnPropertyChanged();
-            } 
+            */
         }
 
         public ObservableCollection<ViewModelBase> TabsItemViewModels
@@ -64,11 +54,14 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
             if (success)
             {
-               if(adapter is UICSVVelocityAdapter velocityAdapter)
+                if(adapter is UICSVVelocityAdapter velocityAdapter)
                 {
-                    // to somthing
-                    AdapterViews.Add(new AdapterModel(velocityAdapter.Name, "Content99"));
-
+                    TabsItemViewModels.Add(new AdapterVelocityTableViewModel(velocityAdapter.Name));
+                    return;
+                }
+                if(adapter is UIVideoAdapter videoAdapter)
+                {
+                    TabsItemViewModels.Add(new AdapterVideoPlayerViewModel(videoAdapter.Name));
                     return;
                 }
             }
