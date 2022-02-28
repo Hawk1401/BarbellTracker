@@ -1,25 +1,19 @@
 ﻿using BarbellTracker.Adapter;
 using BarbellTracker.Adapter.Model;
 using BarbellTracker.ApplicationCode;
-using BarbellTracker.WPF_HelperClasses;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using static BarbellTracker.Adapter.Model.VectorCSVModel;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
     internal class AdapterVelocityTableViewModel : ViewModelBase
     {
-        private ObservableCollection<VectorCSVItem> _csvVelocityModels = new ObservableCollection<VectorCSVItem>();
+        private ObservableCollection<VectorCSVModel> _csvVelocityModels = new ObservableCollection<VectorCSVModel>();
 
         public AdapterVelocityTableViewModel(string name) : base(name)
         {
-            EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
-            
+            EventSystem.Subscribe(Event.ExtracedVideoInfo, HandleTrakingInformation);
+
             // some test data
             /*
             var testTable = new VectorCSVModel();
@@ -31,10 +25,9 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
                 CSVVelocityModels.Add(item);
             }
             */
-               
         }
 
-        public ObservableCollection<VectorCSVItem> CSVVelocityModels
+        public ObservableCollection<VectorCSVModel> CSVVelocityModels
         {
             get { return _csvVelocityModels; }
             set
@@ -44,24 +37,23 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
         }
 
-        public async Task HandleAddedAdapter(EventContext eventContext)
+        public async Task HandleTrakingInformation(EventContext eventContext)
         {
-            string name = eventContext.Arg as string;
+            var name = eventContext.Arg as string;
             var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
             if (success)
             {
-                if (adapter is UICSVVelocityAdapter velocityAdapter)
+                if(adapter is UICSVVelocityAdapter velocityAdapter)
                 {
-                    // to somthing
-                    //foreach (CSVVelocityModel cSVVelocityModel in velocityAdapter.Table)
-                    //{
-                    //    CSVVelocityModels.Add(cSVVelocityModel);
-                    //}
-
-                    return;
+                    var velocityMetaData = velocityAdapter.Table;
+                    foreach (var item in velocityMetaData)
+                    {
+                        CSVVelocityModels.Add(item);
+                    }
                 }
             }
-
         }
+
+
     }
 }

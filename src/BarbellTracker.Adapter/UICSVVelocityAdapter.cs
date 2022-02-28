@@ -11,6 +11,6 @@ namespace BarbellTracker.Adapter
     {
         public string Name { get; set; }
 
-        public List<VectorCSVModel> Tabel { get; set; }
+        public List<VectorCSVModel> Table { get; set; }
     }
 }
