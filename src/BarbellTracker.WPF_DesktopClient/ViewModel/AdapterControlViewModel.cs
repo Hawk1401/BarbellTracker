@@ -16,7 +16,6 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
     internal class AdapterControlViewModel : ViewModelBase
     {
-        // Bsp: UIVideo; CSVTabelle;
         private ObservableCollection<ViewModelBase> _tabItemsViewModel = new();
 
 
@@ -24,9 +23,6 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         {
             EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
             
-
-
-
             /*
             // some test data
             TabsItemViewModels.Add(new AdapterVelocityTableViewModel("VelocityTable"));
@@ -43,10 +39,6 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        // TODO: remove datacontext from views
-        // TODO: add some viewModels to list
-        // TODO: 
 
         public async Task HandleAddedAdapter(EventContext eventContext)
         {

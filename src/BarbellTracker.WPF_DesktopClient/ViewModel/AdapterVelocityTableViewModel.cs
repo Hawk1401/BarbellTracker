@@ -25,7 +25,6 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
                 CSVVelocityModels.Add(item);
             }
             */
-
         }
 
         public ObservableCollection<VectorCSVModel> CSVVelocityModels
