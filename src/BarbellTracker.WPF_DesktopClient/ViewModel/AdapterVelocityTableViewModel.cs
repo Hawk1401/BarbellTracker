@@ -21,6 +21,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
             
             // some test data
+            /*
             var testTable = new VectorCSVModel();
             testTable.AddItem("456", 5, "38");
             testTable.AddItem("483", 2, "88");
@@ -29,6 +30,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             {
                 CSVVelocityModels.Add(item);
             }
+            */
                
         }
 

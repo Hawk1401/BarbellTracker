@@ -12,8 +12,10 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         private string _url;
         public AdapterVideoPlayerViewModel(string name) : base(name)
         {
+            /*
             // some test data
             URL = @"C:\Users\jmetzger\source\repos\BarbellTracker\src\BarbellTracker.WPF_DesktopClient\file_example_MP4_640_3MG.mp4";
+            */
         }
 
         public string URL 
