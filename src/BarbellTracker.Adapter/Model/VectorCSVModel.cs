@@ -138,7 +138,5 @@ namespace BarbellTracker.Adapter.Model
                 return Time.GetHashCode() ^ Length.GetHashCode() ^ Vector.GetHashCode();
             }
         }
-
-        
     }
 }
