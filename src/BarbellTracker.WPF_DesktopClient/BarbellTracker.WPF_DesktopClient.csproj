@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BarbellTracker.Adapter\BarbellTracker.Adapter.csproj" />
+    <ProjectReference Include="..\BarbellTracker.ApplicationCode\BarbellTracker.ApplicationCode.csproj" />
     <ProjectReference Include="..\BarbellTracker.WPF_HelperClasses\BarbellTracker.WPF_HelperClasses.csproj" />
   </ItemGroup>
 
