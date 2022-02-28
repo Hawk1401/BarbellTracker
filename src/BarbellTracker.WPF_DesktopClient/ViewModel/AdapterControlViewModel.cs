@@ -44,7 +44,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             } 
         }
 
-        public ObservableCollection<PropertyChangedNotifier> TabsItemViewModels
+        public ObservableCollection<ViewModelBase> TabsItemViewModels
         { 
             get { return _tabItemsViewModel; } 
             set

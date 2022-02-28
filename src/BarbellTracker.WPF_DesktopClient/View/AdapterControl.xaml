@@ -24,6 +24,11 @@
 
         <TabControl Margin="5" ItemsSource="{Binding TabsItemViewModels}">
 
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
             <TabControl.Resources>
                 <DataTemplate DataType="{x:Type vm:AdapterVelocityTableViewModel}">
                     <local:AdapterVelocityTableView />

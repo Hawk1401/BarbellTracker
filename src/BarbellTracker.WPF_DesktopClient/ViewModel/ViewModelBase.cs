@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
-    internal class ViewModelBase :  PropertyChangedNotifier
+    abstract class ViewModelBase :  PropertyChangedNotifier
     {
         private string _name;
 

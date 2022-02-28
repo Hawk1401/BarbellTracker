@@ -15,15 +15,20 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
     {
         private ObservableCollection<VectorCSVModel> _csvVelocityModels = new ObservableCollection<VectorCSVModel>();
 
-        public AdapterVelocityTableViewModel()
+        public AdapterVelocityTableViewModel(string name) : base(name)
         {
             EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
-
+            
             // some test data
-            //CSVVelocityModels.Add(new CSVVelocityModel("123", 5, "99"));
-            //CSVVelocityModels.Add(new CSVVelocityModel("456", 5, "88"));
-            //CSVVelocityModels.Add(new CSVVelocityModel("789", 5, "55"));
-
+            var testTable = new VectorCSVModel();
+            testTable.AddItem("456", 5, "38");
+            testTable.AddItem("483", 2, "88");
+            testTable.AddItem("789", 9, "55");
+            foreach (var item in testTable.)
+            {
+                CSVVelocityModels.Add(item);
+            }
+               
         }
 
         public ObservableCollection<VectorCSVModel> CSVVelocityModels
