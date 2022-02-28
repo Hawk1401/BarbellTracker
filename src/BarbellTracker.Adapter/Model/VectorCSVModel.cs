@@ -26,6 +26,18 @@ namespace BarbellTracker.Adapter.Model
         {
             Items.Add(new VectorCSVItem(time, length, vector));
         }
+
+        public List<VectorCSVItem> GetTable()
+        {
+            List<VectorCSVItem> result = new List<VectorCSVItem>();
+            foreach (var item in Items)
+            {
+                result.Add(item.Copy());
+            }
+
+            return result;
+        }
+
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -89,6 +101,17 @@ namespace BarbellTracker.Adapter.Model
                 this.Length = length.ToString("0.###");
             }
 
+            private VectorCSVItem(string time, string length, string vector)
+            {
+                this.Time = time;
+                this.Vector = vector;
+                this.Length = length;
+            }
+
+            public VectorCSVItem Copy()
+            {
+                return new VectorCSVItem(Time, Length, Vector);
+            }
             public override string ToString()
             {
                 return $"{Time};{Length};{Vector}";
