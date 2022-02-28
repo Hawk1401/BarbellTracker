@@ -24,7 +24,6 @@ namespace BarbellTracker.WPF_DesktopClient.View
         public AdapterVideoPlayerView()
         {
             InitializeComponent();
-            this.DataContext = new AdapterVideoPlayerViewModel();
         }
     }
 }

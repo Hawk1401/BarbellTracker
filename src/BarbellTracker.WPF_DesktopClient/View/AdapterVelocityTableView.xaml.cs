@@ -24,7 +24,6 @@ namespace BarbellTracker.WPF_DesktopClient.View
         public AdapterVelocityTableView()
         {
             InitializeComponent();
-            this.DataContext = new AdapterVelocityTableViewModel();
         }
     }
 }

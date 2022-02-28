@@ -45,10 +45,10 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
                 if (adapter is UICSVVelocityAdapter velocityAdapter)
                 {
                     // to somthing
-                    foreach (CSVVelocityModel cSVVelocityModel in velocityAdapter.Table)
-                    {
-                        CSVVelocityModels.Add(cSVVelocityModel);
-                    }
+                    //foreach (CSVVelocityModel cSVVelocityModel in velocityAdapter.Table)
+                    //{
+                    //    CSVVelocityModels.Add(cSVVelocityModel);
+                    //}
 
                     return;
                 }

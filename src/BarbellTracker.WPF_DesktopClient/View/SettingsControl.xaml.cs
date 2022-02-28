@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BarbellTracker.WPF_DesktopClient.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace BarbellTracker.WPF_DesktopClient.View
         public SettingsControl()
         {
             InitializeComponent();
+            this.DataContext = new SettingsControlViewModel();
         }
     }
 }

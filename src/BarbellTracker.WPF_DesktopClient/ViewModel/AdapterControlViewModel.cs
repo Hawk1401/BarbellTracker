@@ -19,6 +19,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         // Bsp: UIVideo; CSVTabelle;
         // dynamic selection of view(Video, Tabelle, ...)
         private ObservableCollection<AdapterModel> _adapterViews = new();
+        private ObservableCollection<PropertyChangedNotifier> _tabItemsViewModel = new();
 
 
         public AdapterControlViewModel()
@@ -29,6 +30,9 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             AdapterViews.Add(new AdapterModel("Test", "Content1"));
             AdapterViews.Add(new AdapterModel("Test2", "Content1"));
             AdapterViews.Add(new AdapterModel("Test3", "Content1"));
+
+            TabsItemViewModels.Add(new AdapterVelocityTableViewModel());
+            TabsItemViewModels.Add(new AdapterVideoPlayerViewModel());
         }
 
         public ObservableCollection<AdapterModel> AdapterViews 
@@ -40,6 +44,19 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             } 
         }
 
+        public ObservableCollection<PropertyChangedNotifier> TabsItemViewModels
+        { 
+            get { return _tabItemsViewModel; } 
+            set
+            {
+                _tabItemsViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // TODO: remove datacontext from views
+        // TODO: add some viewModels to list
+        // TODO: 
 
         public async Task HandleAddedAdapter(EventContext eventContext)
         {
