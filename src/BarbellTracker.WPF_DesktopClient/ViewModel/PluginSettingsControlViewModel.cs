@@ -12,25 +12,25 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
     internal class PluginSettingsControlViewModel : ViewModelBase
     {
-        private ObservableCollection<PluginStatus> _pluginListWithEnableStatus = new ObservableCollection<PluginStatus>();
+        private ObservableCollection<PluginStatus> _pluginsWithStatus = new ObservableCollection<PluginStatus>();
         public PluginSettingsControlViewModel()
         {
             GetPluginInstancesOfProcessingPlugins();
 
             // Example Data for _pluginsListWithEnableStatus
-            PluginWithEnableStatus.Add(new PluginStatus("PluginOne", false));
-            PluginWithEnableStatus.Add(new PluginStatus("PluginTwo", false));
-            PluginWithEnableStatus.Add(new PluginStatus("PluginThree", false));
-            PluginWithEnableStatus.Add(new PluginStatus("PluginFour", false));
+            PluginsWithStatus.Add(new PluginStatus("PluginOne", false));
+            PluginsWithStatus.Add(new PluginStatus("PluginTwo", false));
+            PluginsWithStatus.Add(new PluginStatus("PluginThree", false));
+            PluginsWithStatus.Add(new PluginStatus("PluginFour", false));
         }
 
-        public ObservableCollection<PluginStatus> PluginWithEnableStatus
+        public ObservableCollection<PluginStatus> PluginsWithStatus
         {
-            get { return _pluginListWithEnableStatus; }
+            get { return _pluginsWithStatus; }
             set
             {
-                _pluginListWithEnableStatus = value;
-                OnPropertyChanged("_pluginListWithEnableStatus");
+                _pluginsWithStatus = value;
+                OnPropertyChanged("_pluginsWithStatus");
             }
         }
 
@@ -40,7 +40,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             List<Adapter.Interface.IProcessingPlugin> plugins = PluginManager.Instance.GetProcessingPlugins();
             foreach (Adapter.Interface.IProcessingPlugin plugin in plugins)
             {
-                _pluginListWithEnableStatus.Add(new PluginStatus(plugin.Name, plugin.IsActiv()));
+                PluginsWithStatus.Add(new PluginStatus(plugin.Name, plugin.IsActiv()));
             }
         }
 
