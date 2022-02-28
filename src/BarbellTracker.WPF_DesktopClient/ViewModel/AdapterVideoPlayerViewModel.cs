@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
-    internal class AdapterVideoPlayerViewModel : PropertyChangedNotifier
+    internal class AdapterVideoPlayerViewModel : ViewModelBase
     {
         private string _url;
         public AdapterVideoPlayerViewModel()

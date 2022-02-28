@@ -10,7 +10,7 @@ using BarbellTracker.WPF_HelperClasses;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
-    internal class PluginSettingsControlViewModel : PropertyChangedNotifier
+    internal class PluginSettingsControlViewModel : ViewModelBase
     {
         private ObservableCollection<PluginStatus> _pluginListWithEnableStatus = new ObservableCollection<PluginStatus>();
         public PluginSettingsControlViewModel()

@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
-    class MainWindowViewModel : PropertyChangedNotifier
+    class MainWindowViewModel : ViewModelBase
     {
         private bool _isVisibleSettingsControl;
         private bool _isVisiblePluginPage = true;

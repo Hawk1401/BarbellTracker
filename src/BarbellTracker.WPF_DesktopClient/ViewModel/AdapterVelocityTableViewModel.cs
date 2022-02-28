@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
-    internal class AdapterVelocityTableViewModel : PropertyChangedNotifier
+    internal class AdapterVelocityTableViewModel : ViewModelBase
     {
         private ObservableCollection<VectorCSVModel> _csvVelocityModels = new ObservableCollection<VectorCSVModel>();
 
