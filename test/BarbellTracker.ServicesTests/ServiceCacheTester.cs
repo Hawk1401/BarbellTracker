@@ -64,7 +64,7 @@ namespace BarbellTracker.ServicesTests
 
             // Act
             _sut.AddItemToCache(key, Item1);
-            var AddItem = () => _sut.AddItemToCache(key, Item2);
+            Action AddItem = () => _sut.AddItemToCache(key, Item2);
 
 
             // Assert

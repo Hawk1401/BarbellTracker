@@ -18,17 +18,6 @@ namespace BarbellTracker.ServicesTests
         VelocityCalculator _sut = CreateSUT(); // System Under tests
 
 
-        [Fact]
-        public void TestNameProperty()
-        {
-            Assert.Equal("Velocity Calculator", _sut.Name);
-        }
-
-        [Fact]
-        public void TestDescriptionProperty()
-        {
-            Assert.Equal("This service will Calculat the Velocity of the Moving barbell", _sut.Description);
-        }// kann weg
 
 
 
