@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BarbellTracker.ApplicationCode;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace BarbellTracker.Adapter.Interface
 {
     public interface ITrackerPlugin : IPlugin
     {
+        public Task StartTacking(EventContext eventContext);
     }
 }

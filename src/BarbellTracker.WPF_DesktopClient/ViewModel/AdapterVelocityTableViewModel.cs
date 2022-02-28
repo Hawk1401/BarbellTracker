@@ -13,20 +13,20 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
     internal class AdapterVelocityTableViewModel : PropertyChangedNotifier
     {
-        private ObservableCollection<CSVVelocityModel> _csvVelocityModels = new ObservableCollection<CSVVelocityModel>();
+        private ObservableCollection<VectorCSVModel> _csvVelocityModels = new ObservableCollection<VectorCSVModel>();
 
         public AdapterVelocityTableViewModel()
         {
             EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
 
             // some test data
-            CSVVelocityModels.Add(new CSVVelocityModel("123", 5, "99"));
-            CSVVelocityModels.Add(new CSVVelocityModel("456", 5, "88"));
-            CSVVelocityModels.Add(new CSVVelocityModel("789", 5, "55"));
+            //CSVVelocityModels.Add(new CSVVelocityModel("123", 5, "99"));
+            //CSVVelocityModels.Add(new CSVVelocityModel("456", 5, "88"));
+            //CSVVelocityModels.Add(new CSVVelocityModel("789", 5, "55"));
 
         }
 
-        public ObservableCollection<CSVVelocityModel> CSVVelocityModels
+        public ObservableCollection<VectorCSVModel> CSVVelocityModels
         {
             get { return _csvVelocityModels; }
             set

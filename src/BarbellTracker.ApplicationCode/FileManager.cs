@@ -10,18 +10,14 @@ namespace BarbellTracker.ApplicationCode
 {
     public class FileManager
     {
-        public static FileManager  Instance = new FileManager();
-
         public string FolderPath { get; set; }
         private string CurrendExtractionName;
         public string CruuentExtractionFolder => Path.Combine(FolderPath, CurrendExtractionName);
 
-        /// <summary>
-        /// Private constructor, only called once
-        /// </summary>
-        private FileManager()
+        public FileManager()
         {
             EventSystem.Subscribe(Event.StartExtractVideoInfo, NewExtractionStarted);
+            FolderPath = @"C:\Users\schal\Desktop\TracktInfos";
         }
 
         /// <summary>
@@ -55,6 +51,8 @@ namespace BarbellTracker.ApplicationCode
         /// <returns>Returns whether the content could be written to the file or not.</returns>
         public bool Write(string FileNameWithExtension, string content, bool Override =true)
         {
+            SetUpFolderSetUp(CruuentExtractionFolder);
+
             var totalPath = getTotalPath(FileNameWithExtension);
             try
             {
@@ -85,6 +83,8 @@ namespace BarbellTracker.ApplicationCode
         /// <returns>Returns whether the content could be written to the file or not.</returns>
         public bool WriteAllLines(string FileNameWithExtension, List<string> lines, bool Override = true)
         {
+            SetUpFolderSetUp(CruuentExtractionFolder);
+
             var totalPath = getTotalPath(FileNameWithExtension);
             try
             {
@@ -116,7 +116,7 @@ namespace BarbellTracker.ApplicationCode
         {
             try
             {
-
+                SetUpFolderSetUp(CruuentExtractionFolder);
                 var totalPath = getTotalPath(FileNameWithExtension);
 
                 if (!File.Exists(totalPath))
@@ -164,5 +164,9 @@ namespace BarbellTracker.ApplicationCode
             return true;
         }
 
+        private void SetUpFolderSetUp(string Path)
+        {
+            var p = Directory.CreateDirectory(Path);
+        }
     }
 }

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BarbellTracker.Services.Models;
 
 namespace BarbellTracker.Plugins.Processing
 {
@@ -17,16 +16,19 @@ namespace BarbellTracker.Plugins.Processing
         public string Name { get; set; }
         public string Description { get; set; }
         private bool Activ;
-        public VelocityCalculator velocityCalculator;
 
-
-        public VelocityToTable()
+        private VelocityCSVTranslater translater;
+        private FileManager fileManager;
+        public VelocityToTable(VelocityCSVTranslater translater, FileManager fileManager)
         {
+            this.translater = translater;
+            this.fileManager = fileManager;
+
             EventSystem.Subscribe(Event.ActivatePlugin, Activate);
             EventSystem.Subscribe(Event.DeactivatePlugin, Deactivate);
-            velocityCalculator = VelocityCalculator.Instance;
             Activ = false;
         }
+
         public bool IsActiv()
         {
             return Activ;
@@ -35,37 +37,18 @@ namespace BarbellTracker.Plugins.Processing
         public async Task ProcessData(EventContext eventContext)
         {
             var trackedInformation = eventContext.Arg as TrackedInformation;
-            var Velocity = velocityCalculator.GetVelocity(trackedInformation);
-            var CSV = CreateCSVLines(Velocity);
-            FileManager.Instance.WriteAllLines("Velocity.CSV", CSV);
+            var CSV = translater.GetCSV(trackedInformation);
+            fileManager.Write("Velocity.CSV", CSV.ToString());
         }
         public async Task Activate(EventContext eventContext)
         {
-            EventSystem.Subscribe(Event.ActivatePlugin, Activate);
+            EventSystem.Subscribe(Event.ExtracedVideoInfo, ProcessData);
             Activ = true;
         }
         public async Task Deactivate(EventContext eventContext)
         {
-            EventSystem.Unsubscribe(Event.ActivatePlugin, Activate);
+            EventSystem.Unsubscribe(Event.ExtracedVideoInfo, ProcessData);
             Activ =false;
-        }
-
-
-        private List<string> CreateCSVLines(Velocity velocity)
-        {
-            double TimeStep = 1d / velocity.FPS;
-            List<string> lines = new List<string>();
-            string Header = "Time;velocityAsVecotr;VelocityLength";
-
-            lines.Add(Header);
-
-            for (int i = 0; i < velocity.Vectors.Length; i++)
-            {
-                var line = $"{TimeSpan.FromSeconds(i * TimeStep).ToString(@"mm\:ss\:FF")};{velocity.Vectors[i].ToString()};{velocity.Vectors[i].length()}";
-                lines.Add(line);
-            }
-
-            return lines;
         }
     }
 }

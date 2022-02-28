@@ -4,13 +4,18 @@ using BarbellTracker.AbstractionCode;
 using BarbellTracker.DomainCode;
 using BarbellTracker.Services.Implementation;
 using Xunit;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using BarbellTracker.Services.Interface;
+using BarbellTracker.Adapter.Model;
+using BarbellTracker.Services;
 
 namespace BarbellTracker.ServicesTests
 {
     public class VelocityCalculatorTester
     {
 
-        VelocityCalculator _sut = VelocityCalculator.Instance;
+        VelocityCalculator _sut = CreateSUT(); // System Under tests
 
 
         [Fact]
@@ -38,19 +43,18 @@ namespace BarbellTracker.ServicesTests
             TrackedInformation trackedInfos = new TrackedInformation()
             {
                 FrameRate = frameRate,
-                Id = "MyTestId",
+                Id = $"MyTestIdWithFPS",
                 PixelPerCm = 300,
                 Name = "myTestName",
                 Positions = new Vector2D[] { new Vector2D(0, 0), new Vector2D(1, 0) }
             };
 
 
-            var velocity = _sut.GetVelocity(trackedInfos);
+            var velocity = _sut.GetCalculatedValue(trackedInfos);
 
 
             Assert.Equal(velocity.FPS, frameRate);
         }
-
 
         [Theory]
         [MemberData(nameof(TestDataForTestGetVelocity))]
@@ -66,7 +70,7 @@ namespace BarbellTracker.ServicesTests
             };
 
 
-            var velocity = _sut.GetVelocity(trackedInfos);
+            var velocity = _sut.GetCalculatedValue(trackedInfos);
 
 
             Assert.Equal(velocity.Vectors.Length, Velocity.Length);
@@ -162,6 +166,20 @@ namespace BarbellTracker.ServicesTests
             };
 
             yield return new object[] { DiagonalVectors, DiagonalTestVelocity };
+        }
+
+        public static VelocityCalculator CreateSUT()
+        {
+            using IHost host = Host.CreateDefaultBuilder(new string[0])
+                .ConfigureServices((_, services) =>
+                    services.AddTransient<ServiceCache<Velocity>>()
+                    .AddTransient<VelocityCalculator>())
+                .Build();
+
+            var servieces = host.Services;
+            var Scope = servieces.CreateScope();
+            var provider = Scope.ServiceProvider;
+            return provider.GetRequiredService<VelocityCalculator>();
         }
     }
 }

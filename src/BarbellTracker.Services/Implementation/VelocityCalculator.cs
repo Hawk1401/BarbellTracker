@@ -5,64 +5,51 @@ using System.Text;
 using System.Threading.Tasks;
 using BarbellTracker.AbstractionCode;
 using BarbellTracker.Adapter.Interface;
+using BarbellTracker.Adapter.Model;
 using BarbellTracker.ApplicationCode;
 using BarbellTracker.DomainCode;
 using BarbellTracker.Services.Interface;
-using BarbellTracker.Services.Models;
 
 namespace BarbellTracker.Services.Implementation
 {
-    public class VelocityCalculator : IService
+    public class VelocityCalculator : IService, ICalculator<Velocity>
     {
 
 
         public string Name => "Velocity Calculator";
         public string Description => "This service will Calculat the Velocity of the Moving barbell";
 
-        public static VelocityCalculator Instance = new VelocityCalculator();
-
-        private Dictionary<TrackedInformation, Velocity> cache;
-
-
+        private ServiceCache<Velocity> cache;
         private object locker = new object();
 
-        private VelocityCalculator()
+        public VelocityCalculator(ServiceCache<Velocity> cache)
         {
-            cache = new Dictionary<TrackedInformation, Velocity>();
+            this.cache = cache;
         }
 
-        public Velocity GetVelocity(TrackedInformation trackedInfos)
+        public Velocity GetCalculatedValue(TrackedInformation trackedInfos)
         {
             lock (locker)
             {
-                if (!cache.ContainsKey(trackedInfos))
+                if (cache.TryGetCachedItem(trackedInfos, out Velocity CachedVelocity))
                 {
-                    cache.Add(trackedInfos, CalculatVelocity(trackedInfos));
-                    keepCacheClean();
+                    return CachedVelocity;
                 }
 
-                return cache[trackedInfos];
+                return cache.AddItemToCache(trackedInfos, CalculatVelocity(trackedInfos));
             }
         }
 
-        private Velocity CalculatVelocity(TrackedInformation eventContext)
+        public Velocity CalculatVelocity(TrackedInformation trackedInformation)
         {
             List<Vector2D> velocityList = new List<Vector2D>();
 
-            for (int i = 1; i < eventContext.Positions.Length; i++)
+            for (int i = 1; i < trackedInformation.Positions.Length; i++)
             {
-                velocityList.Add(Vector2D.Sub(eventContext.Positions[i],eventContext.Positions[i - 1]));
+                velocityList.Add(Vector2D.Sub(trackedInformation.Positions[i], trackedInformation.Positions[i - 1]));
             }
 
-            return new Velocity() { FPS = eventContext.FrameRate, Vectors = velocityList.ToArray() };
-        }
-
-        private void keepCacheClean()
-        {
-            if(cache.Count > 50)
-            {
-                cache.Remove(cache.First().Key);
-            }
+            return new Velocity() { FPS = trackedInformation.FrameRate, Vectors = velocityList.ToArray() };
         }
     }
 }

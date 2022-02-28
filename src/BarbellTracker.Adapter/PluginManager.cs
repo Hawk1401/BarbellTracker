@@ -28,7 +28,6 @@ namespace BarbellTracker.Adapter
             return PluginsList.Where(x => x is ITrackerPlugin).Select(x => x as ITrackerPlugin).ToList(); // performance not the best O(n + m); n=list size m=IUIplugins count
         }
 
-
         public bool TryGetProcessingPluginByName(string name, out IProcessingPlugin processingPlugin)
         {
             foreach (var _plugin in PluginsList)
