@@ -10,7 +10,7 @@
       d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        <!-- enable view with visibility??  -->
+        <!-- 
         <TabControl Margin="5">
             <TabItem Header="Velocity">
                 <local:AdapterVelocityTableView />
@@ -19,32 +19,27 @@
                 <local:AdapterVideoPlayerView />
             </TabItem>
         </TabControl>
-        
+         -->
 
-        <!-- ????????????????????????
-                wie dynamisch?
-        
-        <TabControl Margin="5" ItemsSource="{Binding AdapterViews}">
+
+        <TabControl Margin="5" ItemsSource="{Binding TabsItemViewModels}">
 
             <TabControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type ds:AdapterModel}">
-                    <TextBlock
-                        Text="{Binding AdapterName}"/>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </TabControl.ItemTemplate>
-
             <TabControl.Resources>
-        <DataTemplate DataType="{x:Type ds:AdapterModel}">
-            <local:AdapterVelocityTableView />
-        </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:AdapterVelocityTableViewModel}">
+                    <local:AdapterVelocityTableView />
+                </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:AdapterVideoPlayerViewModel}">
                     <local:AdapterVelocityTableView />
                 </DataTemplate>
 
-        </TabControl.Resources>
+            </TabControl.Resources>
 
         </TabControl>
-        -->
 
     </Grid>
 </UserControl>

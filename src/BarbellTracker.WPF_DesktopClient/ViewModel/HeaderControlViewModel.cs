@@ -3,7 +3,7 @@ using BarbellTracker.WPF_HelperClasses;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
-    class HeaderControlViewModel
+    class HeaderControlViewModel : ViewModelBase
     {
         private bool _startEnabled = true;
         private bool _abortEnabled;

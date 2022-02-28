@@ -8,25 +8,33 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BarbellTracker.Adapter.Model.VectorCSVModel;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
-    internal class AdapterVelocityTableViewModel : PropertyChangedNotifier
+    internal class AdapterVelocityTableViewModel : ViewModelBase
     {
-        private ObservableCollection<VectorCSVModel> _csvVelocityModels = new ObservableCollection<VectorCSVModel>();
+        private ObservableCollection<VectorCSVItem> _csvVelocityModels = new ObservableCollection<VectorCSVItem>();
 
-        public AdapterVelocityTableViewModel()
+        public AdapterVelocityTableViewModel(string name) : base(name)
         {
             EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
-
+            
             // some test data
-            //CSVVelocityModels.Add(new CSVVelocityModel("123", 5, "99"));
-            //CSVVelocityModels.Add(new CSVVelocityModel("456", 5, "88"));
-            //CSVVelocityModels.Add(new CSVVelocityModel("789", 5, "55"));
-
+            /*
+            var testTable = new VectorCSVModel();
+            testTable.AddItem("456", 5, "38");
+            testTable.AddItem("483", 2, "88");
+            testTable.AddItem("789", 9, "55");
+            foreach (var item in testTable.GetTable())
+            {
+                CSVVelocityModels.Add(item);
+            }
+            */
+               
         }
 
-        public ObservableCollection<VectorCSVModel> CSVVelocityModels
+        public ObservableCollection<VectorCSVItem> CSVVelocityModels
         {
             get { return _csvVelocityModels; }
             set
