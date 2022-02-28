@@ -8,12 +8,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BarbellTracker.Adapter.Model.VectorCSVModel;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
     internal class AdapterVelocityTableViewModel : ViewModelBase
     {
-        private ObservableCollection<VectorCSVModel> _csvVelocityModels = new ObservableCollection<VectorCSVModel>();
+        private ObservableCollection<VectorCSVItem> _csvVelocityModels = new ObservableCollection<VectorCSVItem>();
 
         public AdapterVelocityTableViewModel(string name) : base(name)
         {
@@ -24,14 +25,14 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             testTable.AddItem("456", 5, "38");
             testTable.AddItem("483", 2, "88");
             testTable.AddItem("789", 9, "55");
-            foreach (var item in testTable.)
+            foreach (var item in testTable.GetTable())
             {
                 CSVVelocityModels.Add(item);
             }
                
         }
 
-        public ObservableCollection<VectorCSVModel> CSVVelocityModels
+        public ObservableCollection<VectorCSVItem> CSVVelocityModels
         {
             get { return _csvVelocityModels; }
             set
