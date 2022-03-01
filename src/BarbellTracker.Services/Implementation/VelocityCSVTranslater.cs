@@ -25,9 +25,15 @@ namespace BarbellTracker.Services.Implementation
 
         public VectorCSVModel GetCSV(TrackedInformation trackedInfos)
         {
+            if (cache.TryGetCachedItem(trackedInfos, out var CachedCSV))
+            {
+                return CachedCSV;
+            }
+
             var Velocity= velocityCalculator.GetCalculatedValue(trackedInfos);
             var CSV = CreateCSV(Velocity);
 
+            cache.AddItemToCache(trackedInfos, CSV);
             return CSV;
         }
 
