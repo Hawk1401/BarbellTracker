@@ -15,12 +15,26 @@ namespace BarbellTracker.Services.Implementation
 
         public string Description => throw new NotImplementedException();
 
-        private AccelerationCalculator accelerationCalculator;
+        private ServiceCache<VectorCSVModel> cache;
+        private ICalculator<Acceleration> accelerationCalculator;
+
+        public AccelerationCSVTranslater(ICalculator<Acceleration> accelerationCalculator, ServiceCache<VectorCSVModel> cache)
+        {
+            this.cache = cache;
+            this.accelerationCalculator = accelerationCalculator;
+
+        }
+
         public VectorCSVModel GetCSV(TrackedInformation trackedInfos)
         {
+            if(cache.TryGetCachedItem(trackedInfos, out var cachedCSV))
+            {
+                return cachedCSV;
+            }
             var Velocity = accelerationCalculator.GetCalculatedValue(trackedInfos);
             var CSV = CreateCSV(Velocity);
 
+            cache.AddItemToCache(trackedInfos, CSV);
             return CSV;
         }
 

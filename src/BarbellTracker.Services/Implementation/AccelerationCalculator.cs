@@ -17,15 +17,16 @@ namespace BarbellTracker.Services.Implementation
         public string Description => throw new NotImplementedException();
 
         private ServiceCache<Acceleration> cache;
-        private VelocityCalculator velocityCalculator;
+        private ICalculator<Velocity> velocityCalculator;
         private object locker = new object();
-        public AccelerationCalculator(ServiceCache<Acceleration> cache, VelocityCalculator velocityCalculator)
+        public AccelerationCalculator(ServiceCache<Acceleration> cache, ICalculator<Velocity> velocityCalculator)
         {
             this.cache = cache;
             this.velocityCalculator = velocityCalculator;
         }
 
-        public Acceleration GetCalculatedValue(TrackedInformation trackedInfos)
+        public Acceleration GetCalculatedValue
+            (TrackedInformation trackedInfos)
         {
             lock (locker)
             {
