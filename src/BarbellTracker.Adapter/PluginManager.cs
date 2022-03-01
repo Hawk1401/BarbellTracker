@@ -10,14 +10,12 @@ namespace BarbellTracker.Adapter
 {
     public class PluginManager
     {
-        public static PluginManager Instance = new PluginManager();
 
         private readonly List<IPlugin> PluginsList;
-        private PluginManager()
+        public PluginManager()
         {
             PluginsList = new List<IPlugin>();
         }
-
 
         public List<IProcessingPlugin> GetProcessingPlugins()
         {

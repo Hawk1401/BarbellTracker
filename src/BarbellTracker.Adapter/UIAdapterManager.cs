@@ -10,9 +10,7 @@ namespace BarbellTracker.Adapter
 {
     public class UIAdapterManager
     {
-        public static UIAdapterManager Instance = new UIAdapterManager();
-        Dictionary<string, IUIAdapter> AdapterStorage = new Dictionary<string, IUIAdapter>();
-
+        private Dictionary<string, IUIAdapter> AdapterStorage = new Dictionary<string, IUIAdapter>();
 
         public bool TryGetUIAdapterByName(string name, out IUIAdapter adapter)
         {
@@ -44,6 +42,7 @@ namespace BarbellTracker.Adapter
             try
             {
                 return AdapterStorage[adapterName].GetType() == type;
+
             }catch(KeyNotFoundException e)
             {
                 return false;
