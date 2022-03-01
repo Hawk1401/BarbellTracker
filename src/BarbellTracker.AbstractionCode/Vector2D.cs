@@ -8,7 +8,7 @@ namespace BarbellTracker.AbstractionCode
 {
     public class Vector2D
     {
-        public static double EPSILON = 0.005;  // Mabey we shoud use some better epsilon
+        private static double EPSILON = 0.005;  // Mabey we shoud use some better epsilon
         public double X { get; set; }
         public double Y { get; set; }
 
@@ -130,7 +130,7 @@ namespace BarbellTracker.AbstractionCode
 
         public static bool islinearlyIndependen(Vector2D first, Vector2D second, double epsilon)
         {
-            return Math.Abs(crossProduct(first, second)) <= epsilon;
+            return Math.Abs(crossProduct(first, second)) > epsilon;
         }
 
 
