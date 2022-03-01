@@ -17,7 +17,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         {
             GetPluginInstancesOfProcessingPlugins();
 
-            // Example Data for _pluginsListWithEnableStatus
+            // Example Data for PluginsWithStatus
             PluginsWithStatus.Add(new PluginStatus("PluginOne", false));
             PluginsWithStatus.Add(new PluginStatus("PluginTwo", false));
             PluginsWithStatus.Add(new PluginStatus("PluginThree", false));
