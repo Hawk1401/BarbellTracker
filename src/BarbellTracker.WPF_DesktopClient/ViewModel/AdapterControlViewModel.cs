@@ -43,20 +43,20 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         public async Task HandleAddedAdapter(EventContext eventContext)
         {
             string name = eventContext.Arg as string;
-            var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
-            if (success)
-            {
-                if(adapter is UICSVVelocityAdapter velocityAdapter)
-                {
-                    TabsItemViewModels.Add(new AdapterVelocityTableViewModel(velocityAdapter.Name));
-                    return;
-                }
-                if(adapter is UIVideoAdapter videoAdapter)
-                {
-                    TabsItemViewModels.Add(new AdapterVideoPlayerViewModel(videoAdapter.Name));
-                    return;
-                }
-            }
+            //var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
+            //if (success)
+            //{
+            //    if(adapter is UICSVVelocityAdapter velocityAdapter)
+            //    {
+            //        TabsItemViewModels.Add(new AdapterVelocityTableViewModel(velocityAdapter.Name));
+            //        return;
+            //    }
+            //    if(adapter is UIVideoAdapter videoAdapter)
+            //    {
+            //        TabsItemViewModels.Add(new AdapterVideoPlayerViewModel(videoAdapter.Name));
+            //        return;
+            //    }
+            //}
 
         }
     }

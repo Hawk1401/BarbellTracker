@@ -40,18 +40,18 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         public async Task HandleTrakingInformation(EventContext eventContext)
         {
             var name = eventContext.Arg as string;
-            var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
-            if (success)
-            {
-                if(adapter is UICSVVelocityAdapter velocityAdapter)
-                {
-                    var velocityMetaData = velocityAdapter.Table;
-                    foreach (var item in velocityMetaData)
-                    {
-                        CSVVelocityModels.Add(item);
-                    }
-                }
-            }
+            //var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
+            //if (success)
+            //{
+            //    if(adapter is UICSVVelocityAdapter velocityAdapter)
+            //    {
+            //        var velocityMetaData = velocityAdapter.Table;
+            //        foreach (var item in velocityMetaData)
+            //        {
+            //            CSVVelocityModels.Add(item);
+            //        }
+            //    }
+            //}
         }
 
 

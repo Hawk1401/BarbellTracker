@@ -26,9 +26,6 @@ namespace BarbellTracker.AbstractionCodeTests
             Assert.Equal(expected, first);
         }
 
-
-
-
         [Theory]
         [MemberData(nameof(GetTestdataForVectorSubtraction))]
         public void StaticSub_OfTowVectors_ReturnDifferenceOfVecors(Vector2D first, Vector2D second, Vector2D expected)
@@ -46,9 +43,6 @@ namespace BarbellTracker.AbstractionCodeTests
 
             Assert.Equal(expected, first);
         }
-
-
-
 
         [Theory]
         [MemberData(nameof(GetTestdataForVectorDotProduct))]
@@ -71,13 +65,22 @@ namespace BarbellTracker.AbstractionCodeTests
 
         [Theory]
         [MemberData(nameof(GetTestdataForVectorCrossProduct))]
+        public void CrossProduct_OfTowVectors_ReturnTheirCrossProduct(Vector2D first, Vector2D second, double expected)
+        {
+            var scalar = first.crossProduct(second);
+
+            Assert.Equal(expected, scalar);
+        }
+
+
+        [Theory]
+        [MemberData(nameof(GetTestdataForVectorCrossProduct))]
         public void StaticCrossProduct_OfTowVectors_ReturnTheirCrossProduct(Vector2D first, Vector2D second, double expected)
         {
             var scalar = Vector2D.crossProduct(first, second);
 
             Assert.Equal(expected, scalar);
         }
-
 
         [Theory]
         [MemberData(nameof(GetTestdataForVectorLength))]
@@ -138,6 +141,27 @@ namespace BarbellTracker.AbstractionCodeTests
         }
 
 
+        [Fact]
+        public void Copy_AVectorUsingConstructor_WillReturnAEqualVector()
+        {
+            var vector = new Vector2D(4, 2);
+
+            var copy = new Vector2D(vector);
+
+            Assert.Equal(vector, copy);
+        }
+
+        [Fact]
+        public void Copy_AVectorUsingConstructor_WillReturnAEqualVectorWithANewReference()
+        {
+            var vector = new Vector2D(4, 2);
+
+            var copy = new Vector2D(vector);
+
+            Assert.StrictEqual(vector, copy);
+        }
+
+
         [Theory]
         [MemberData(nameof(GetTestdataForVectorToString))]
         public void ToString_OfAVector_WillReturnTheCorrespondingString(Vector2D vector, string expected)
@@ -150,18 +174,78 @@ namespace BarbellTracker.AbstractionCodeTests
 
 
 
-
         [Theory]
         [MemberData(nameof(GetTestdataForVectorIslinearlyIndependen))]
-
-        public void IslinearlyIndependen_OfTowLinearlyIndependenVectors_WillReturnTheTrue(Vector2D first, Vector2D second)
+        public void IslinearlyIndependen_OfTowNotLinearlyIndependenVectors_WillReturnTheFalse(Vector2D first, Vector2D second)
         {
             var islinearlyIndependen = first.islinearlyIndependen(second);
 
-
-            Assert.True(islinearlyIndependen);
+            Assert.False(islinearlyIndependen);
         }
 
+        [Theory]
+        [MemberData(nameof(GetTestdataForVectorIslinearlyIndependen))]
+        public void IslinearlyIndependen_OfTowNotLinearlyIndependenVectorsWithCustomEpsilon_WillReturnTheFalse(Vector2D first, Vector2D second)
+        {
+            var Epsilon = 0.5d;
+            var islinearlyIndependen = first.islinearlyIndependen(second, Epsilon);
+
+            Assert.False(islinearlyIndependen);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetTestdataForVectorIslinearlyIndependen))]
+        public void StaticIslinearlyIndependen_OfTowNotLinearlyIndependenVectors_WillReturnTheFalse(Vector2D first, Vector2D second)
+        {
+            var islinearlyIndependen = Vector2D.islinearlyIndependen(first, second);
+
+            Assert.False(islinearlyIndependen);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetTestdataForVectorIslinearlyIndependen))]
+        public void StaticIslinearlyIndependen_OfTowNotLinearlyIndependenVectorsWithCustomEpsilon_WillReturnTheFalse(Vector2D first, Vector2D second)
+        {
+            var Epsilon = 0.5d;
+            var islinearlyIndependen = Vector2D.islinearlyIndependen(first, second, Epsilon);
+
+            Assert.False(islinearlyIndependen);
+        }
+
+
+        [Fact]
+        public void Equals_OfNullAndAVector_willReturnFalse()
+        {
+            var vector = new Vector2D();
+
+            var Result = vector.Equals(null);
+            Assert.False(Result);
+        }
+
+        [Fact]
+        public void Equals_OfaObjectAndAVector_willReturnFalse()
+        {
+            var vector = new Vector2D();
+
+            var Result = vector.Equals(new object());
+            Assert.False(Result);
+        }
+
+        [Theory]
+        [InlineData(1,0)]
+        [InlineData(0, 1)]
+        [InlineData(1, 1)]
+        [InlineData(-1, 0)]
+        [InlineData(0, -1)]
+        [InlineData(-1, -1)]
+        public void Equals_OfTwoDiffrentVectors_willReturnFalse(int x, int y)
+        {
+            var vectorBase = new Vector2D();
+            var DiffrentVector = new    Vector2D(x, y);
+
+            var Result = vectorBase.Equals(DiffrentVector);
+            Assert.False(Result);
+        }
 
         public static IEnumerable<object[]> GetTestdataForVectorIslinearlyIndependen()
         {
@@ -177,7 +261,6 @@ namespace BarbellTracker.AbstractionCodeTests
             yield return new object[] { new Vector2D(1, 1), new Vector2D(int.MaxValue, int.MaxValue) };
             yield return new object[] { new Vector2D(1, 1), new Vector2D(int.MinValue, int.MinValue) };
         }
-
         public static IEnumerable<object[]> GetTestdataForVectorAddition()
         {
             yield return new object[] { new Vector2D(0, 0), new Vector2D(0, 0), new Vector2D(0, 0) };
@@ -238,7 +321,6 @@ namespace BarbellTracker.AbstractionCodeTests
             yield return new object[] { new Vector2D(-5, -10), 11.180 };
 
         }
-
         public static IEnumerable<object[]> GetTestdataForVectorNormalize()
         {
             yield return new object[] { new Vector2D(5, 0)};
@@ -249,7 +331,6 @@ namespace BarbellTracker.AbstractionCodeTests
             yield return new object[] { new Vector2D(-5, -10)};
 
         }
-
         public static IEnumerable<object[]> GetTestdataForVectorToString()
         {
             yield return new object[] { new Vector2D(0, 0), "(X: 0, Y: 0)" };

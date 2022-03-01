@@ -12,7 +12,7 @@ using Xunit;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using BarbellTracker.Services.Interface;
 
 namespace BarbellTracker.ServicesTests
 {
@@ -69,6 +69,30 @@ namespace BarbellTracker.ServicesTests
             }
         }
 
+        [Fact]
+        public void Request_CachedVelocity_WillReturnTheCachedVelocity()
+        {
+            TrackedInformation trackedInfos = new TrackedInformation()
+            {
+                FrameRate = 30,
+                Id = "MyTestId",
+                PixelPerCm = 300,
+                Name = "myTestName",
+                Positions = new Vector2D[]
+                {
+                    new AbstractionCode.Vector2D(0,0),
+                    new AbstractionCode.Vector2D(0,1),
+                    new AbstractionCode.Vector2D(0,3)
+                }
+            };
+
+
+            var Origanal = _sut.GetCalculatedValue(trackedInfos);
+            var Cached = _sut.GetCalculatedValue(trackedInfos);
+
+            Assert.StrictEqual(Origanal, Cached);
+
+        }
         public static IEnumerable<object[]> GetPositionWithVelocityAndAcceleration()
         {
             var VerticalVectors = new Vector2D[]
@@ -83,17 +107,6 @@ namespace BarbellTracker.ServicesTests
                 new AbstractionCode.Vector2D(0,1),
 
             };
-
-            //var VerticalTestVelocity = new Vector2D[]
-            //{
-            //    new Vector2D(0,1),
-            //    new Vector2D(0,-1),
-            //    new Vector2D(0,-1),
-            //    new Vector2D(0,1),
-            //    new Vector2D(0,1),
-            //    new Vector2D(0,-2),
-            //    new Vector2D(0,2),
-            //};
 
             var VerticalTestAcceleration = new Vector2D[]
             {
@@ -122,17 +135,6 @@ namespace BarbellTracker.ServicesTests
                 new Vector2D(1,0),
 
             };
-
-            //var HorizontalTestVelocity = new Vector2D[]
-            //{
-            //    new Vector2D(1,0),
-            //    new Vector2D(-1,0),
-            //    new Vector2D(-1,0),
-            //    new Vector2D(1,0),
-            //    new Vector2D(1,0),
-            //    new Vector2D(-2,0),
-            //    new Vector2D(2,0),
-            //};
 
             var HorizontalTestAcceleration = new Vector2D[]
             {
@@ -195,7 +197,7 @@ namespace BarbellTracker.ServicesTests
                 .ConfigureServices((_, services) =>
                     services.AddTransient<ServiceCache<Velocity>>()
                     .AddTransient<ServiceCache<Acceleration>>()
-                    .AddTransient<VelocityCalculator>()
+                    .AddTransient<ICalculator<Velocity>, VelocityCalculator>()
                     .AddTransient<AccelerationCalculator>())
                 .Build();
 

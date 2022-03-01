@@ -33,6 +33,6 @@ namespace BarbellTracker.DomainCode
         public override int GetHashCode()
         {
             return Id.GetHashCode();
-        }
+        } 
     }
 }

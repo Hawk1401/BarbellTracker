@@ -69,6 +69,26 @@ namespace BarbellTracker.ServicesTests
             }
         }
 
+        [Theory]
+        [MemberData(nameof(TestDataForTestGetVelocity))]
+        public void Request_ACachedVelocity_WillReturnTheCachedVelocity(Vector2D[] Posions, Vector2D[] _)
+        {
+            TrackedInformation trackedInfos = new TrackedInformation()
+            {
+                FrameRate = 30,
+                Id = "MyTestId",
+                PixelPerCm = 300,
+                Name = "myTestName",
+                Positions = Posions
+            };
+
+
+            var expected = _sut.GetCalculatedValue(trackedInfos);
+
+            var acuale = _sut.GetCalculatedValue(trackedInfos);
+            Assert.StrictEqual(expected, acuale);
+        }
+
         public static IEnumerable<object[]> TestDataForTestGetVelocity()
         {
             var VerticalVectors = new AbstractionCode.Vector2D[]

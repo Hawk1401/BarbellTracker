@@ -19,13 +19,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.Services", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.Plugins", "src\BarbellTracker.Plugins\BarbellTracker.Plugins.csproj", "{5499C4A9-6E78-482C-BDEF-3AB6AE563F81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTraker.ApplicationCode_Tester", "test\BarbellTraker.ApplicationCode_Tester\BarbellTraker.ApplicationCode_Tester.csproj", "{416C6AE8-FAE5-41B3-A826-A6DA040844E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.ApplicationCodeTestes", "test\BarbellTraker.ApplicationCode_Tester\BarbellTracker.ApplicationCodeTestes.csproj", "{416C6AE8-FAE5-41B3-A826-A6DA040844E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.ServicesTests", "test\BarbellTracker.ServicesTests\BarbellTracker.ServicesTests.csproj", "{5B04B4B7-1AC8-47A9-94BA-8FB4AD9B5B09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.AbstractionCodeTests", "test\BarbellTracker.AbstractionCodeTests\BarbellTracker.AbstractionCodeTests.csproj", "{935A2881-798A-464C-856B-E9F265272BEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbellTracker.ConsoleClient", "src\BarbellTracker.ConsoleClient\BarbellTracker.ConsoleClient.csproj", "{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.ConsoleClient", "src\BarbellTracker.ConsoleClient\BarbellTracker.ConsoleClient.csproj", "{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.AdapterTests", "BarbellTracker.AdapterTests\BarbellTracker.AdapterTests.csproj", "{0E65214F-4AD6-4C0F-BD04-02AB2D721563}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbellTracker.DomainCodeTests", "BarbellTracker.DomainCodeTests\BarbellTracker.DomainCodeTests.csproj", "{93715F63-7FC9-4867-AF00-3D7E71CB4694}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +85,14 @@ Global
 		{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E65214F-4AD6-4C0F-BD04-02AB2D721563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E65214F-4AD6-4C0F-BD04-02AB2D721563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E65214F-4AD6-4C0F-BD04-02AB2D721563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E65214F-4AD6-4C0F-BD04-02AB2D721563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93715F63-7FC9-4867-AF00-3D7E71CB4694}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93715F63-7FC9-4867-AF00-3D7E71CB4694}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93715F63-7FC9-4867-AF00-3D7E71CB4694}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93715F63-7FC9-4867-AF00-3D7E71CB4694}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

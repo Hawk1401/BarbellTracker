@@ -37,11 +37,11 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 
         public void GetPluginInstancesOfProcessingPlugins()
         {
-            List<Adapter.Interface.IProcessingPlugin> plugins = PluginManager.Instance.GetProcessingPlugins();
-            foreach (Adapter.Interface.IProcessingPlugin plugin in plugins)
-            {
-                PluginsWithStatus.Add(new PluginStatus(plugin.Name, plugin.IsActiv()));
-            }
+            //List<Adapter.Interface.IProcessingPlugin> plugins = PluginManager.Instance.GetProcessingPlugins();
+            //foreach (Adapter.Interface.IProcessingPlugin plugin in plugins)
+            //{
+            //    PluginsWithStatus.Add(new PluginStatus(plugin.Name, plugin.IsActiv()));
+            //}
         }
 
 
