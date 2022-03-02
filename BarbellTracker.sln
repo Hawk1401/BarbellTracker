@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
@@ -27,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.AbstractionC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.ConsoleClient", "src\BarbellTracker.ConsoleClient\BarbellTracker.ConsoleClient.csproj", "{8CE772C2-7C9D-49BF-AAF0-F2F13656177E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.AdapterTests", "BarbellTracker.AdapterTests\BarbellTracker.AdapterTests.csproj", "{0E65214F-4AD6-4C0F-BD04-02AB2D721563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.AdapterTests", "test\BarbellTracker.AdapterTests\BarbellTracker.AdapterTests.csproj", "{0E65214F-4AD6-4C0F-BD04-02AB2D721563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbellTracker.DomainCodeTests", "BarbellTracker.DomainCodeTests\BarbellTracker.DomainCodeTests.csproj", "{93715F63-7FC9-4867-AF00-3D7E71CB4694}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbellTracker.DomainCodeTests", "test\BarbellTracker.DomainCodeTests\BarbellTracker.DomainCodeTests.csproj", "{93715F63-7FC9-4867-AF00-3D7E71CB4694}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
