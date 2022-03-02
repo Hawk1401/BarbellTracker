@@ -83,7 +83,10 @@ namespace BarbellTracker.Adapter.Model
         {
             var hash = 0;
 
-            Items.ForEach(item => hash ^= item.GetHashCode());
+            foreach (var item in Items)
+            {
+                hash ^= item.GetHashCode();
+            }
 
             return  hash;
         }
