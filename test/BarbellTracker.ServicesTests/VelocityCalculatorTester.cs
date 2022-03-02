@@ -86,7 +86,7 @@ namespace BarbellTracker.ServicesTests
             var expected = _sut.GetCalculatedValue(trackedInfos);
 
             var acuale = _sut.GetCalculatedValue(trackedInfos);
-            Assert.StrictEqual(expected, acuale);
+            Assert.Same(expected, acuale);
         }
 
         public static IEnumerable<object[]> TestDataForTestGetVelocity()

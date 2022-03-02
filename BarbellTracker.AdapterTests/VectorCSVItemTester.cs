@@ -91,6 +91,34 @@ namespace BarbellTracker.AdapterTests
             Assert.False(VectorCSVItem1.Equals(VectorCSVItem2));
         }
 
+
+        [Fact]
+        public void TheHash_OfTwoSimilarVectorCSVItems_isTheSame()
+        {
+            var vectorCSVItem = DummyVectorCSVItem();
+            var copy = vectorCSVItem.Copy();
+
+            var OriginalHash = vectorCSVItem.GetHashCode();
+            var CopyHash = copy.GetHashCode();
+            
+
+            Assert.StrictEqual(OriginalHash, CopyHash);
+        }
+
+
+        [Fact]
+        public void TheHash_OfTwoDiffentVectorCSVItems_isTheNotSame()
+        {
+            var vectorCSVItem = DummyVectorCSVItem();
+            var DiffentvectorCSVItem = DiffentDummyVectorCSVItem();
+
+            var OriginalHash = vectorCSVItem.GetHashCode();
+            var DiffentHash = DiffentvectorCSVItem.GetHashCode();
+
+
+            Assert.NotStrictEqual(OriginalHash, DiffentHash);
+        }
+
         public static IEnumerable<object[]> VectorCSVItems()
         {
             Vector2D vector2D1 = new Vector2D(0, 1);
@@ -108,6 +136,13 @@ namespace BarbellTracker.AdapterTests
             Vector2D vector2D1 = new Vector2D(0, 1);
 
             return new VectorCSVItem("00:00:01", 0, vector2D1.ToString());
+        }
+
+        public static VectorCSVItem DiffentDummyVectorCSVItem()
+        {
+            Vector2D vector2D1 = new Vector2D(1, 2);
+
+            return new VectorCSVItem("00:00:02", 1, vector2D1.ToString());
         }
     }
 }
