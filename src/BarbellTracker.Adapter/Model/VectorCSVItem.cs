@@ -48,7 +48,8 @@
 
         public override int GetHashCode()
         {
-            return Time.GetHashCode() ^ Length.GetHashCode() ^ Vector.GetHashCode();
+            var Hash = Time.GetHashCode() ^ Length.GetHashCode() ^ Vector.GetHashCode();
+            return Hash;
         }
     }
 }
