@@ -49,8 +49,6 @@ namespace BarbellTracker.AbstractionCode
             scalar(1 / length());
         }
 
-
-
         public void Add(Vector2D other)
         {
             this.X += other.X;
@@ -64,8 +62,6 @@ namespace BarbellTracker.AbstractionCode
                 first.Y + second.Y
                 );
         }
-
-
 
         public void Sub(Vector2D other)
         {
@@ -87,7 +83,6 @@ namespace BarbellTracker.AbstractionCode
             this.Y *= num;
         }
 
-
         public double dotProduct(Vector2D other) 
         {
             return dotProduct(this, other);
@@ -97,8 +92,6 @@ namespace BarbellTracker.AbstractionCode
         {
             return (first.X * second.X) + (first.Y * second.Y);
         }
-
-
 
         public double crossProduct(Vector2D other)
         {
@@ -110,8 +103,6 @@ namespace BarbellTracker.AbstractionCode
             return (first.X * second.Y) - (second.X * first.Y);
         }
 
-
-
         public bool islinearlyIndependen(Vector2D other)
         {
             return islinearlyIndependen(other, EPSILON);
@@ -122,7 +113,6 @@ namespace BarbellTracker.AbstractionCode
             return islinearlyIndependen(this, other, epsilon);
         }
 
-
         public static bool islinearlyIndependen(Vector2D first, Vector2D second)
         {
             return islinearlyIndependen(first, second, EPSILON);
@@ -132,9 +122,6 @@ namespace BarbellTracker.AbstractionCode
         {
             return Math.Abs(crossProduct(first, second)) > epsilon;
         }
-
-
-
 
         public Vector2D Copy()
         {
