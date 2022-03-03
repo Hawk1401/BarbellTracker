@@ -1,6 +1,7 @@
 using BarbellTracker.AbstractionCode;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Xunit;
 
 namespace BarbellTracker.AbstractionCodeTests
@@ -336,7 +337,16 @@ namespace BarbellTracker.AbstractionCodeTests
             yield return new object[] { new Vector2D(0, 0), "(X: 0, Y: 0)" };
             yield return new object[] { new Vector2D(1, 2), "(X: 1, Y: 2)" };
             yield return new object[] { new Vector2D(-1, -2), "(X: -1, Y: -2)" };
-            yield return new object[] { new Vector2D(1.2345, -1.2345), "(X: 1,235, Y: -1,235)" };
+
+            if(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",")
+            {
+                yield return new object[] { new Vector2D(1.2345, -1.2345), "(X: 1,235, Y: -1,235)" };
+            }
+            
+            if (Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator == ".")
+            {
+                yield return new object[] { new Vector2D(1.2345, -1.2345), "(X: 1.235, Y: -1.235)" };
+            }
 
         }
 
