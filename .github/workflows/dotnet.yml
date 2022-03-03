@@ -23,3 +23,11 @@ jobs:
       run: dotnet build --no-restore
     - name: Test AbstractionCode
       run: dotnet test test\BarbellTracker.AbstractionCodeTests\BarbellTracker.AbstractionCodeTests.csproj
+    - name: Test DomainCode
+      run: dotnet test test\BarbellTracker.DomainCodeTests\BarbellTracker.DomainCodeTests.csproj
+    - name: Test ApplicationCode
+      run: dotnet test test\BarbellTracker.ApplicationCode_Tester\BarbellTracker.ApplicationCodeTestes.csproj
+    - name: Test Adapter
+      run: dotnet test test\BarbellTracker.AdapterTests\BarbellTracker.AdapterTests.csproj
+    - name: Test Services
+      run: dotnet test test\BarbellTracker.ServicesTests\BarbellTracker.ServicesTests.cspro
