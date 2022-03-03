@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.Services", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.Plugins", "src\BarbellTracker.Plugins\BarbellTracker.Plugins.csproj", "{5499C4A9-6E78-482C-BDEF-3AB6AE563F81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.ApplicationCodeTestes", "test\BarbellTraker.ApplicationCode_Tester\BarbellTracker.ApplicationCodeTestes.csproj", "{416C6AE8-FAE5-41B3-A826-A6DA040844E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.ApplicationCodeTestes", "test\BarbellTracker.ApplicationCode_Tester\BarbellTracker.ApplicationCodeTestes.csproj", "{416C6AE8-FAE5-41B3-A826-A6DA040844E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbellTracker.ServicesTests", "test\BarbellTracker.ServicesTests\BarbellTracker.ServicesTests.csproj", "{5B04B4B7-1AC8-47A9-94BA-8FB4AD9B5B09}"
 EndProject
