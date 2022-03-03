@@ -30,4 +30,4 @@ jobs:
     - name: Test Adapter
       run: dotnet test test\BarbellTracker.AdapterTests\BarbellTracker.AdapterTests.csproj
     - name: Test Services
-      run: dotnet test test\BarbellTracker.ServicesTests\BarbellTracker.ServicesTests.cspro
+      run: dotnet test test\BarbellTracker.ServicesTests\BarbellTracker.ServicesTests.csproj
