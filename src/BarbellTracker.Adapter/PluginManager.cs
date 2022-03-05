@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BarbellTracker.Adapter.Interface;
 using BarbellTracker.ApplicationCode;
+using BarbellTracker.ApplicationCode.Event;
 
 namespace BarbellTracker.Adapter
 {
@@ -12,9 +13,11 @@ namespace BarbellTracker.Adapter
     {
 
         private readonly List<IPlugin> PluginsList;
-        public PluginManager()
+        private IEventSystem eventSystem;
+        public PluginManager(IEventSystem eventSystem)
         {
             PluginsList = new List<IPlugin>();
+            this.eventSystem = eventSystem;
         }
 
         public List<IProcessingPlugin> GetProcessingPlugins()
@@ -58,7 +61,7 @@ namespace BarbellTracker.Adapter
         public void AddPlugin(IPlugin plugin)
         {
             PluginsList.Add(plugin);
-            EventSystem.Fire(this, Event.PluginLoaded, plugin.Name);
+            eventSystem.Fire(new PluginLoaded() { PluginName = plugin.Name });
         }
     }
 }

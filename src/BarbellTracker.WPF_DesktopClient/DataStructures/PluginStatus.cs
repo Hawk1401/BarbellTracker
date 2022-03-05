@@ -1,4 +1,5 @@
 ﻿using BarbellTracker.ApplicationCode;
+using BarbellTracker.ApplicationCode.Event;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,13 @@ namespace BarbellTracker.WPF_DesktopClient.DataStructures
     {
         private string _pluginName;
         private bool _status;
-
-        public PluginStatus(string pluginName, bool status)
+        private IEventSystem eventSystem;
+        public PluginStatus(IEventSystem eventSystem, string pluginName, bool status)
         {
             this.PluginName = pluginName;
             this.Status = status;
+            this.eventSystem = eventSystem;
+
         }
 
         public string PluginName 
@@ -37,10 +40,11 @@ namespace BarbellTracker.WPF_DesktopClient.DataStructures
                 OnPropertyChanged("Status");
                 if(Status)
                 {
-                    EventSystem.Fire(this, Event.ActivatePlugin, PluginName);
+                    eventSystem.Fire(new ActivatePlugin() { PluginName = PluginName });
                     return;
                 }
-                EventSystem.Fire(this, Event.DeactivatePlugin, PluginName);
+                eventSystem.Fire(new DeactivatePlugin() { PluginName = PluginName });
+
 
             }
         }

@@ -1,6 +1,8 @@
 ﻿using Autofac.Extras.Moq;
 using BarbellTracker.Adapter;
 using BarbellTracker.Adapter.Interface;
+using BarbellTracker.ApplicationCode;
+using BarbellTracker.ApplicationCode.Event;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +14,33 @@ namespace BarbellTracker.AdapterTests
 {
     public  class PluginManagerTester
     {
-        private PluginManager SUT  = new PluginManager();
+        private PluginManager SUT  = new PluginManager(new ApplicationCode.EventSystem());
 
+        [Fact]
+        public void Add_Aplugin_WillSendTheAddedPluginOverTheEventsystem()
+        {
+
+            var plugin = CreateIProcessingPlugin("pluginName");
+
+            
+            using (var mockAuto = AutoMock.GetStrict())
+            {
+                var pluginLoaded = new PluginLoaded() { PluginName = plugin.Name };
+                mockAuto.Mock<IEventSystem>()
+                    .Setup(x => x.Fire(pluginLoaded))
+                    .Returns(true);
+
+                var repoMock = new Moq.Mock<IEventSystem>();
+                repoMock.Setup(x => x.Fire(Moq.It.Is<PluginLoaded>(x => x.PluginName == plugin.Name))).Returns(true);
+
+                var eventSystem = repoMock.Object;
+
+                var sut = new PluginManager(eventSystem);
+
+                sut.AddPlugin(plugin);
+                repoMock.VerifyAll();
+            }
+        }
 
         [Theory]
         [MemberData(nameof(ListsofIProcessingAndITrackerPlugin))]

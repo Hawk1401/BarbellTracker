@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace BarbellTracker.ApplicationCode.EventModel
 {
-
-    public class Name
+    public class PluginNameClass 
     {
-        public string Value { get; set; }
+        public string PluginName { get; init; }
     }
-    public class PluginName : Name { }
-    public class AdapterPath : Name { }
-    public class FilePath : Name { }
-
-
 }

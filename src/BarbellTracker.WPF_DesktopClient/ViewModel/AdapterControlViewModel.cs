@@ -1,6 +1,7 @@
 ﻿using BarbellTracker.Adapter;
 using BarbellTracker.Adapter.Model;
 using BarbellTracker.ApplicationCode;
+using BarbellTracker.ApplicationCode.Event;
 using BarbellTracker.WPF_DesktopClient.DataStructures;
 using BarbellTracker.WPF_DesktopClient.View;
 using BarbellTracker.WPF_HelperClasses;
@@ -21,7 +22,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 
         public AdapterControlViewModel()
         {
-            EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
+            //EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
             
             /*
             // some test data
@@ -40,9 +41,9 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
         }
 
-        public async Task HandleAddedAdapter(EventContext eventContext)
+        public async Task HandleAddedAdapter(AdapterAdded AdapterAdded)
         {
-            string name = eventContext.Arg as string;
+            //string name = eventContext.Arg as string;
             //var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
             //if (success)
             //{

@@ -12,7 +12,7 @@ namespace BarbellTracker.AdapterTests
 {
     public class UIAdapterManagerTester
     {
-        private UIAdapterManager SUT = new UIAdapterManager();
+        private UIAdapterManager SUT = new UIAdapterManager(new ApplicationCode.EventSystem());
 
 
         [Fact]

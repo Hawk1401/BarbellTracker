@@ -8,129 +8,61 @@ using BarbellTracker.DomainCode;
 
 namespace BarbellTracker.ApplicationCode
 {
-    public enum Event
+    public class EventSystem : IEventSystem
     {
-        StartExtractVideoInfo,
-        ExtracedVideoInfo,
-        PluginLoaded,
-        ActivatePlugin,
-        DeactivatePlugin,
-        ActivateService,
-        DeactivateService,
-        SelectFile,
-        FileSelected,
-        AdapterAdded,
-        FileCreated
-    }
+        //public delegate void EventDelegate<T>(T item);
 
-    public class EventSystem
-    {
-        private static Dictionary<Event, Type> ArgDefinitonForEvents = new Dictionary<Event, Type>() {
-            { Event.StartExtractVideoInfo, typeof(StartExtractionInformation) },
-            { Event.ExtracedVideoInfo, typeof(TrackedInformation) },
-            { Event.PluginLoaded, typeof(PluginName) },
-            { Event.ActivatePlugin, typeof(PluginName) },
-            { Event.DeactivatePlugin, typeof(PluginName)},
-            { Event.SelectFile, typeof(string) }, 
-            { Event.FileSelected, typeof(FilePath) },
-            { Event.AdapterAdded, typeof(AdapterPath) },
-            { Event.FileCreated, typeof(FilePath) },
-        };
+        private Dictionary<Type, HashSet<Delegate>> Map = new Dictionary<Type, HashSet<Delegate>>();
 
+        private object _lock = new object();
 
-        private readonly object m_sync = new object();
-        private readonly Dictionary<Event, List<Func<EventContext, Task>>> m_registry = new Dictionary<Event, List<Func<EventContext, Task>>>();
-
-
-        public static EventSystem Default { get; } = new EventSystem("Default");
-
-        /// <summary>
-        /// All event systems will fire/push to this instance as well
-        /// </summary>
-        public static EventSystem All { get; } = new EventSystem("All");
-
-        public string Name { get; }
-        public EventSystem(string name)
+        public bool Fire(object o)
         {
-            Name = name;
-
-            foreach (var @evn in Enum.GetValues<Event>())
+            lock (_lock)
             {
-                m_registry.Add(@evn, new List<Func<EventContext, Task>>());
-            }
-        }
 
-        public static void Subscribe(Event @event, Func<EventContext, Task> callback)
-        {
-            Subscribe(Default, @event, callback);
-        }
+                var type = o.GetType();
 
-        public static void Subscribe(EventSystem system, Event @event, Func<EventContext, Task> callback)
-        {
-            lock (system.m_sync)
-            {
-                system.m_registry[@event].Add(callback);
-            }
-        }
-
-        public static void Unsubscribe(Event @event, Func<EventContext, Task> callback)
-        {
-            Unsubscribe(Default, @event, callback);
-        }
-
-        public static void Unsubscribe(EventSystem system, Event @event, Func<EventContext, Task> callback)
-        {
-            lock (system.m_sync)
-            {
-                system.m_registry[@event].Remove(callback);
-            }
-        }
-
-        public static void Fire(object sender, Event @event, object arg)
-        {
-            Fire(sender, Default, @event, arg);
-        }
-
-        public static async void Fire(object sender, EventSystem system, Event @event, object arg)
-        {
-            try
-            {
-                if(ArgDefinitonForEvents[@event] != arg.GetType())
+                if (Map.ContainsKey(type))
                 {
-                    throw new ArgumentException("bla");
+                    foreach (var Delegate in Map[type])
+                    {
+                        Delegate.DynamicInvoke(o);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool Subscribe<T>(IEventSystem.EventDelegate<T> SingelDelegate)
+        {
+            lock (_lock)
+            {
+                Type type = typeof(T);
+
+                if (!Map.ContainsKey(type))
+                {
+                    Map.Add(type, new HashSet<Delegate>());
                 }
 
-                await Task.Run(async () => await PushAsync(sender, system, @event, arg));
-            }
-            catch (Exception ex)
-            {
-                //Log.Error(system, ex);
+                return Map[type].Add(SingelDelegate);
             }
         }
 
-        public static Task PushAsync(object sender, Event @event, object arg)
+        public bool Unsubscribe<T>(IEventSystem.EventDelegate<T> SingelDelegate)
         {
-            return PushAsync(sender, Default, @event, arg);
-        }
-
-        public static Task PushAsync(object sender, EventSystem system, Event @event, object arg)
-        {
-            if (system == All)
-                throw new Exception("The all event system is a subscribe only event system");
-
-            Func<EventContext, Task>[] originCallbacks = null;
-            Func<EventContext, Task>[] allCallbacks = null;
-
-            lock (system.m_sync)
+            lock (_lock)
             {
-                originCallbacks = system.m_registry[@event].ToArray();
-                allCallbacks = All.m_registry[@event].ToArray();
+                Type type = typeof(T);
+
+                if (!Map.ContainsKey(type))
+                {
+                    return false;
+                }
+
+                return Map[type].Remove(SingelDelegate);
             }
-
-            var originTask = originCallbacks.Any() ? new EventContext(system, @event, sender, arg, originCallbacks).Task : Task.CompletedTask;
-            var allTask = allCallbacks.Any() ? new EventContext(system, @event, sender, arg, allCallbacks).Task : Task.CompletedTask;
-
-            return Task.WhenAll(originTask, allTask);
         }
     }
 

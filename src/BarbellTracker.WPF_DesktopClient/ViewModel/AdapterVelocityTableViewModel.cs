@@ -1,6 +1,7 @@
 ﻿using BarbellTracker.Adapter;
 using BarbellTracker.Adapter.Model;
 using BarbellTracker.ApplicationCode;
+using BarbellTracker.ApplicationCode.Event;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 
         public AdapterVelocityTableViewModel(string name) : base(name)
         {
-            EventSystem.Subscribe(Event.ExtracedVideoInfo, HandleTrakingInformation);
+            //EventSystem.Subscribe(Event.ExtracedVideoInfo, HandleTrakingInformation);
 
             // some test data
             /*
@@ -37,9 +38,9 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
         }
 
-        public async Task HandleTrakingInformation(EventContext eventContext)
+        public async Task HandleTrakingInformation(ExtracedVideoInfo extracedVideoInfo)
         {
-            var name = eventContext.Arg as string;
+            //var name = eventContext.Arg as string;
             //var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
             //if (success)
             //{

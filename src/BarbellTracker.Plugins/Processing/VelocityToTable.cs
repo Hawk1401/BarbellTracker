@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BarbellTracker.ApplicationCode.Event;
+using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.Plugins.Processing
 {
@@ -19,13 +21,18 @@ namespace BarbellTracker.Plugins.Processing
 
         private VelocityCSVTranslater translater;
         private FileManager fileManager;
-        public VelocityToTable(VelocityCSVTranslater translater, FileManager fileManager)
+        private IEventSystem eventSystem;
+        public VelocityToTable(VelocityCSVTranslater translater, FileManager fileManager, IEventSystem eventSystem)
         {
             this.translater = translater;
             this.fileManager = fileManager;
+            this.eventSystem = eventSystem;
 
-            EventSystem.Subscribe(Event.ActivatePlugin, Activate);
-            EventSystem.Subscribe(Event.DeactivatePlugin, Deactivate);
+            EventDelegate<ActivatePlugin> ActivatePluginDelegate = Activate;
+            EventDelegate<DeactivatePlugin> DeactivatePluginDelegate = Deactivate;
+
+            eventSystem.Subscribe(ActivatePluginDelegate);
+            eventSystem.Subscribe(DeactivatePluginDelegate);
             Activ = false;
         }
 
@@ -34,21 +41,27 @@ namespace BarbellTracker.Plugins.Processing
             return Activ;
         }
 
-        public async Task ProcessData(EventContext eventContext)
+
+
+        public void ProcessData(ExtracedVideoInfo extracedVideoInfo)
         {
-            var trackedInformation = eventContext.Arg as TrackedInformation;
+            var trackedInformation = extracedVideoInfo.trackedInformation;
             var CSV = translater.GetCSV(trackedInformation);
             fileManager.Write("Velocity.CSV", CSV.ToString());
         }
-        public async Task Activate(EventContext eventContext)
+
+        public void Deactivate(DeactivatePlugin deactivatePlugin)
         {
-            EventSystem.Subscribe(Event.ExtracedVideoInfo, ProcessData);
-            Activ = true;
+            EventDelegate<ExtracedVideoInfo> eventDelegate = ProcessData;
+            eventSystem.Unsubscribe(eventDelegate);
+            Activ = false;
         }
-        public async Task Deactivate(EventContext eventContext)
+
+        public void Activate(ActivatePlugin activatePlugin)
         {
-            EventSystem.Unsubscribe(Event.ExtracedVideoInfo, ProcessData);
-            Activ =false;
+            EventDelegate<ExtracedVideoInfo> eventDelegate = ProcessData;
+            eventSystem.Subscribe(eventDelegate);
+            Activ = true;
         }
     }
 }

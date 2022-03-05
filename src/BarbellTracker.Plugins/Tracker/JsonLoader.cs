@@ -1,5 +1,6 @@
 ﻿using BarbellTracker.Adapter.Interface;
 using BarbellTracker.ApplicationCode;
+using BarbellTracker.ApplicationCode.Event;
 using BarbellTracker.ApplicationCode.EventModel;
 using BarbellTracker.DomainCode;
 using System;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.Plugins.Tracker
 {
@@ -17,36 +19,46 @@ namespace BarbellTracker.Plugins.Tracker
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public JsonLoader()
+        private IEventSystem eventSystem;
+        public JsonLoader(IEventSystem eventSystem)
         {
-            EventSystem.Subscribe(Event.StartExtractVideoInfo, StartTacking);
+            this.eventSystem = eventSystem;
+            EventDelegate<StartExtractVideoInfo> StartExtractVideoInfoDelegate = StartTacking;
+            eventSystem.Subscribe(StartExtractVideoInfoDelegate);
+
             Name = "JsonLoader";
         }
-        public async Task StartTacking(EventContext eventContext)
-        {
-            var StartExtractionInformation = eventContext.Arg as StartExtractionInformation;
-            if(StartExtractionInformation.PluginName != this.Name)
-            {
-                return;
-            }
-
-            EventSystem.Subscribe(Event.FileSelected, LoadFile);
-            EventSystem.Fire(this, Event.SelectFile, "");
-        }
-        public async Task LoadFile(EventContext eventContext)
+        public async void LoadFile(FileSelected fileSelected)
         {
             try
             {
-                var conent = File.ReadAllText((eventContext.Arg as FilePath).Value);
+                var conent = File.ReadAllText(fileSelected.FilePath);
                 var trackedInformation = JsonSerializer.Deserialize<TrackedInformation>(conent);
 
-                EventSystem.Fire(this, Event.ExtracedVideoInfo, trackedInformation);
+                eventSystem.Fire(new ExtracedVideoInfo()
+                {
+                    trackedInformation = trackedInformation,
+                });
             }
             catch(Exception ex)
             {
 
             }
             
+        }
+
+        public void StartTacking(StartExtractVideoInfo extracedVideoInfo)
+        {
+
+            var StartExtractionInformation = extracedVideoInfo.StartExtractionInformation;
+            if (StartExtractionInformation.PluginName != this.Name)
+            {
+                return;
+            }
+
+            EventDelegate<FileSelected> FileSelectedDelegate = LoadFile;
+            eventSystem.Subscribe(FileSelectedDelegate);
+            eventSystem.Fire(new SelectFile() { FileExtensionRestriction = new string [] { ".json"} });
         }
     }
 }

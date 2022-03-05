@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BarbellTracker.Adapter.Interface;
 using BarbellTracker.Adapter.Model;
 using BarbellTracker.ApplicationCode;
+using BarbellTracker.ApplicationCode.Event;
 using BarbellTracker.ApplicationCode.EventModel;
 using BarbellTracker.DomainCode;
 using BarbellTracker.Plugins.Processing;
@@ -15,11 +16,13 @@ using BarbellTracker.Services.Implementation;
 using BarbellTracker.Services.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.ConsoleClient
 {
     public class Client
     {
+        static IEventSystem eventSystem;
         public static void Main(string[] args)
         {
             using IHost host = Host.CreateDefaultBuilder(new string[0])
@@ -28,6 +31,7 @@ namespace BarbellTracker.ConsoleClient
                     .AddSingleton<ServiceCache<Acceleration>>()
                     .AddSingleton<ServiceCache<VectorCSVModel>>()
                     .AddSingleton<FileManager>()
+                    .AddSingleton<EventSystem>()
                     .AddTransient<ICalculator<Velocity>, VelocityCalculator>()
                     .AddTransient<ICalculator<Acceleration>, AccelerationCalculator>()
                     .AddTransient<VelocityCSVTranslater>()
@@ -43,6 +47,7 @@ namespace BarbellTracker.ConsoleClient
 
             var tacker = provider.GetRequiredService<JsonLoader>();
             var Processing = provider.GetRequiredService<VelocityToTable>();
+            var eventSystem = provider.GetRequiredService<EventSystem>();
 
             StartExtractionInformation startExtractionInformation = new StartExtractionInformation()
             {
@@ -50,18 +55,18 @@ namespace BarbellTracker.ConsoleClient
                 PluginName = tacker.Name
             };
 
-            EventSystem.Subscribe(Event.SelectFile, handelFile);
+            EventDelegate<SelectFile> handelFileDelegate = handelFile;
+            eventSystem.Subscribe(handelFileDelegate);
 
-            EventSystem.Fire(new object(), Event.ActivatePlugin, new PluginName() { Value = Processing.Name });
-            EventSystem.Fire(new object(), Event.StartExtractVideoInfo, startExtractionInformation);
+            eventSystem.Fire(new ActivatePlugin() { PluginName = Processing.Name });
+            eventSystem.Fire(new StartExtractVideoInfo() { StartExtractionInformation = startExtractionInformation });
 
             while (true) ;
         }
 
-        public static async Task handelFile(EventContext eventContext)
+        public static void handelFile(SelectFile SelectFile)
         {
-            EventSystem.Fire(new object(), Event.FileSelected, new FilePath() { Value = @"C:\Users\schal\Desktop\MyJson.json" } );
-
+            eventSystem.Fire(new FileSelected() { FilePath = @"C:\Users\schal\Desktop\MyJson.json" });
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BarbellTracker.ApplicationCode;
+using BarbellTracker.ApplicationCode.Event;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,10 @@ namespace BarbellTracker.Adapter.Interface
 
         public bool IsActiv();
 
-        public Task Activate(EventContext eventContext);
+        public void Activate(ActivatePlugin activatePlugin);
 
-        public Task Deactivate(EventContext eventContext);
+        public void Deactivate(DeactivatePlugin deactivatePlugin);
 
-        public Task ProcessData(EventContext eventContext);
+        public void ProcessData(ExtracedVideoInfo extracedVideoInfo);
     }
 }

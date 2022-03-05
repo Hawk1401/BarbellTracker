@@ -1,10 +1,12 @@
-﻿using BarbellTracker.DomainCode;
+﻿using BarbellTracker.ApplicationCode.Event;
+using BarbellTracker.DomainCode;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.ApplicationCode
 {
@@ -14,10 +16,15 @@ namespace BarbellTracker.ApplicationCode
         private string CurrendExtractionName;
         public string CruuentExtractionFolder => Path.Combine(FolderPath, CurrendExtractionName);
 
-        public FileManager()
+        private IEventSystem eventSystem;
+        public FileManager(IEventSystem eventSystem)
         {
-            EventSystem.Subscribe(Event.StartExtractVideoInfo, NewExtractionStarted);
-            FolderPath = @"C:\Users\schal\Desktop\TracktInfos";
+            this.eventSystem = eventSystem;
+
+            EventDelegate<StartExtractVideoInfo> StartExtractVideoInfoDelegate = NewExtractionStarted;
+
+            eventSystem.Subscribe(StartExtractVideoInfoDelegate);
+            FolderPath = @"C:\BarbellTracker";
         }
 
         /// <summary>
@@ -25,9 +32,9 @@ namespace BarbellTracker.ApplicationCode
         /// </summary>
         /// <param name="eventContext">The eventContext from the event system, the type of eventContext.Arg is StartExtractionInformation </param>
         /// <returns>Returns a Task that can be Awaited</returns>
-        public async Task NewExtractionStarted(EventContext eventContext)
+        public void NewExtractionStarted(StartExtractVideoInfo startExtractVideoInfo)
         {
-            CurrendExtractionName = (eventContext.Arg as StartExtractionInformation).Id;
+            CurrendExtractionName = startExtractVideoInfo.StartExtractionInformation.Id;
         }
 
         /// <summary>

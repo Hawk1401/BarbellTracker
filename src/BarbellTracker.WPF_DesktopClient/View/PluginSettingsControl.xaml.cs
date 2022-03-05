@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BarbellTracker.ApplicationCode;
 using BarbellTracker.WPF_DesktopClient.ViewModel;
 
 namespace BarbellTracker.WPF_DesktopClient.View
@@ -21,10 +22,12 @@ namespace BarbellTracker.WPF_DesktopClient.View
     /// </summary>
     public partial class PluginSettingsControl : UserControl
     {
-        public PluginSettingsControl()
+        private IEventSystem eventSystem;
+        public PluginSettingsControl(IEventSystem eventSystem)
         {
             InitializeComponent();
-            this.DataContext = new PluginSettingsControlViewModel();
+            this.eventSystem = eventSystem;
+            this.DataContext = new PluginSettingsControlViewModel(eventSystem);
         }
     }
 }

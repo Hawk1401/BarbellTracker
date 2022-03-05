@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BarbellTracker.Adapter;
+using BarbellTracker.ApplicationCode;
 using BarbellTracker.WPF_DesktopClient.DataStructures;
 using BarbellTracker.WPF_HelperClasses;
 
@@ -13,15 +14,17 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
     internal class PluginSettingsControlViewModel : ViewModelBase
     {
         private ObservableCollection<PluginStatus> _pluginsWithStatus = new ObservableCollection<PluginStatus>();
-        public PluginSettingsControlViewModel()
+        private IEventSystem eventSystem;
+        public PluginSettingsControlViewModel(IEventSystem eventSystem)
         {
+            this.eventSystem = eventSystem;
             GetPluginInstancesOfProcessingPlugins();
 
             // Example Data for PluginsWithStatus
-            PluginsWithStatus.Add(new PluginStatus("PluginOne", false));
-            PluginsWithStatus.Add(new PluginStatus("PluginTwo", false));
-            PluginsWithStatus.Add(new PluginStatus("PluginThree", false));
-            PluginsWithStatus.Add(new PluginStatus("PluginFour", false));
+            PluginsWithStatus.Add(new PluginStatus(eventSystem, "PluginOne", false));
+            PluginsWithStatus.Add(new PluginStatus(eventSystem, "PluginTwo", false));
+            PluginsWithStatus.Add(new PluginStatus(eventSystem, "PluginThree", false));
+            PluginsWithStatus.Add(new PluginStatus(eventSystem, "PluginFour", false));
         }
 
         public ObservableCollection<PluginStatus> PluginsWithStatus
