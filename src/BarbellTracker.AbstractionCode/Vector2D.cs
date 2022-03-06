@@ -39,20 +39,19 @@ namespace BarbellTracker.AbstractionCode
             return Math.Sqrt(xSquare + ySquare);
         }
 
-        public void normalize()
+        public Vector2D normalize()
         {
             if(length() == 0)
             {
                 throw new DivideByZeroException($"The length of the vector {this} has the length of zero an can not be normalized");
             }
 
-            scalar(1 / length());
+            return scalar(1 / length());
         }
 
-        public void Add(Vector2D other)
+        public Vector2D Add(Vector2D other)
         {
-            this.X += other.X;
-            this.Y += other.Y;
+            return Add(this, other);
         }
 
         public static Vector2D Add(Vector2D first, Vector2D second)
@@ -63,10 +62,9 @@ namespace BarbellTracker.AbstractionCode
                 );
         }
 
-        public void Sub(Vector2D other)
+        public Vector2D Sub(Vector2D other)
         {
-            this.X -= other.X;
-            this.Y -= other.Y;
+            return Sub(this, other);
         }
 
         public static Vector2D Sub(Vector2D first, Vector2D second)
@@ -77,10 +75,12 @@ namespace BarbellTracker.AbstractionCode
                 );
         }
 
-        public void scalar(double num)
+        public Vector2D scalar(double num)
         {
-            this.X *= num;
-            this.Y *= num;
+            var x = this.X * num;
+            var y = this.Y * num;
+
+            return new Vector2D(x,y);
         }
 
         public double dotProduct(Vector2D other) 

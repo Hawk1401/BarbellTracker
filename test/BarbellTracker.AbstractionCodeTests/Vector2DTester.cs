@@ -22,9 +22,9 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorAddition))]
         public void Add_TowVectors_ReturnSumOfVecors(Vector2D first, Vector2D second, Vector2D expected)
         {
-            first.Add(second);
+            var result = first.Add(second);
 
-            Assert.Equal(expected, first);
+            Assert.Equal(expected, result);
         }
 
         [Theory]
@@ -40,9 +40,9 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorSubtraction))]
         public void Sub_OfTowVectors_ReturnDifferenceOfVecors(Vector2D first, Vector2D second, Vector2D expected)
         {
-            first.Sub(second);
+            var result = first.Sub(second);
 
-            Assert.Equal(expected, first);
+            Assert.Equal(expected, result);
         }
 
         [Theory]
@@ -98,8 +98,8 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorNormalize))]
         public void Normalize_AVector_SacletheVectorToTheLengthOfOne(Vector2D vector)
         {
-            vector.normalize();
-            var length = vector.length();
+            var result = vector.normalize();
+            var length = result.length();
             var precisionOfDecimalPlaces = 1;
 
 
