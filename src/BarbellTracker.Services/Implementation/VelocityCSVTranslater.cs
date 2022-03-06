@@ -14,10 +14,10 @@ namespace BarbellTracker.Services.Implementation
         public string Name => "Velocity Calculator";
         public string Description => "This service will Calculat the Velocity of the Moving barbell";
 
-        private ServiceCache<VectorCSVModel> cache;
+        private ServiceCache<VelocityCSVModel> cache;
         private ICalculator<Velocity> velocityCalculator;
 
-        public VelocityCSVTranslater(ICalculator<Velocity> velocityCalculator, ServiceCache<VectorCSVModel> cache)
+        public VelocityCSVTranslater(ICalculator<Velocity> velocityCalculator, ServiceCache<VelocityCSVModel> cache)
         {
             this.velocityCalculator = velocityCalculator;
             this.cache = cache;
@@ -37,10 +37,10 @@ namespace BarbellTracker.Services.Implementation
             return CSV;
         }
 
-        public VectorCSVModel CreateCSV(Velocity velocity)
+        public VelocityCSVModel CreateCSV(Velocity velocity)
         {
             double TimeStep = 1d / velocity.FPS;
-            VectorCSVModel CSVVelocityModel = new VectorCSVModel();
+            VelocityCSVModel CSVVelocityModel = new VelocityCSVModel();
 
             for (int i = 0; i < velocity.Vectors.Length; i++)
             {

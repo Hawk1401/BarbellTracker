@@ -14,6 +14,7 @@ namespace BarbellTracker.Adapter
 
         private readonly List<IPlugin> PluginsList;
         private IEventSystem eventSystem;
+
         public PluginManager(IEventSystem eventSystem)
         {
             PluginsList = new List<IPlugin>();
@@ -62,6 +63,22 @@ namespace BarbellTracker.Adapter
         {
             PluginsList.Add(plugin);
             eventSystem.Fire(new PluginLoaded() { PluginName = plugin.Name });
+        }
+
+        public void TurnAllProcessingPluginOn()
+        {
+            foreach (var ProcessingPlugin in GetProcessingPlugins())
+            {
+                eventSystem.Fire(new ActivatePlugin() { PluginName = ProcessingPlugin.Name });
+            }
+        }
+
+        public void TurnAllProcessingPluginOff()
+        {
+            foreach (var ProcessingPlugin in GetProcessingPlugins())
+            {
+                eventSystem.Fire(new DeactivatePlugin() { PluginName = ProcessingPlugin.Name });
+            }
         }
     }
 }

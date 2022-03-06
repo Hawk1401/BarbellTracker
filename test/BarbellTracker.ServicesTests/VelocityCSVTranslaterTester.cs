@@ -43,7 +43,7 @@ namespace BarbellTracker.ServicesTests
                     .Returns(velocity);
                  
                 var VelocityCalculatorMock = mockAuto.Create<ICalculator<Velocity>>();
-                var sut = new VelocityCSVTranslater(VelocityCalculatorMock, new ServiceCache<VectorCSVModel>());
+                var sut = new VelocityCSVTranslater(VelocityCalculatorMock, new ServiceCache<VelocityCSVModel>());
 
                 var CSV = sut.GetCSV(tracked);
                 Assert.Equal(expected, CSV);
@@ -70,7 +70,7 @@ namespace BarbellTracker.ServicesTests
                     .Returns(velocity);
 
                 var VelocityCalculatorMock = mockAuto.Create<ICalculator<Velocity>>();
-                var sut = new VelocityCSVTranslater(VelocityCalculatorMock, new ServiceCache<VectorCSVModel>());
+                var sut = new VelocityCSVTranslater(VelocityCalculatorMock, new ServiceCache<VelocityCSVModel>());
 
                 var expected = sut.GetCSV(tracked);
 
@@ -86,7 +86,7 @@ namespace BarbellTracker.ServicesTests
         [Fact]
         public void RequestCSVWithTheCreateCSV_FromAVelocityObject_WillReturnTheRigthCSVObject()
         {
-            var sut = new VelocityCSVTranslater(new VelocityCalculator(new ServiceCache<Velocity>()) , new ServiceCache<VectorCSVModel>());
+            var sut = new VelocityCSVTranslater(new VelocityCalculator(new ServiceCache<Velocity>()) , new ServiceCache<VelocityCSVModel>());
             var FirstVector = new Vector2D() { X = 0, Y = 1 };
             var SecondVector = new Vector2D() { X = 2, Y = 3 };
             var ThirdVector = new Vector2D() { X = 4, Y = 5 };

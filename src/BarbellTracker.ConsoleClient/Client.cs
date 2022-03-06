@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BarbellTracker.Adapter;
 using BarbellTracker.Adapter.Interface;
 using BarbellTracker.Adapter.Model;
 using BarbellTracker.ApplicationCode;
@@ -29,15 +30,21 @@ namespace BarbellTracker.ConsoleClient
                 .ConfigureServices((_, services) =>
                     services.AddSingleton<ServiceCache<Velocity>>()
                     .AddSingleton<ServiceCache<Acceleration>>()
-                    .AddSingleton<ServiceCache<VectorCSVModel>>()
+                    .AddSingleton<ServiceCache<VelocityCSVModel>>()
+                    .AddSingleton<ServiceCache<AccelerationCSVModel>>()
                     .AddSingleton<FileManager>()
-                    .AddSingleton<EventSystem>()
+                    .AddSingleton<IEventSystem, EventSystem>()
+                    .AddSingleton<PluginManager>()
+                    .AddSingleton<UIAdapterManager>()
                     .AddTransient<ICalculator<Velocity>, VelocityCalculator>()
                     .AddTransient<ICalculator<Acceleration>, AccelerationCalculator>()
                     .AddTransient<VelocityCSVTranslater>()
-                    .AddTransient<VelocityToTable>()
+                    .AddTransient<VelocityToCSVFile>()
+                    .AddTransient<VelocityToAdapterTabel>()
+                    .AddTransient<AccelerationCSVTranslater>()
+                    .AddTransient<AccelerationToCSVFile>()
+                    .AddTransient<AccelerationToAdapterTabel>()
                     .AddTransient<JsonLoader>()
-
                     )
                 .Build();
 
@@ -46,8 +53,14 @@ namespace BarbellTracker.ConsoleClient
             var provider = Scope.ServiceProvider;
 
             var tacker = provider.GetRequiredService<JsonLoader>();
-            var Processing = provider.GetRequiredService<VelocityToTable>();
-            var eventSystem = provider.GetRequiredService<EventSystem>();
+            var Processing1 = provider.GetRequiredService<VelocityToCSVFile>();
+            var Processing2 = provider.GetRequiredService<AccelerationToCSVFile>();
+            var Processing3 = provider.GetRequiredService<VelocityToAdapterTabel>();
+            var Processing4 = provider.GetRequiredService<AccelerationToAdapterTabel>();
+            eventSystem = provider.GetRequiredService<IEventSystem>();
+            var manager = provider.GetRequiredService<PluginManager>();
+            var Adaptermanager = provider.GetRequiredService<UIAdapterManager>();
+
 
             StartExtractionInformation startExtractionInformation = new StartExtractionInformation()
             {
@@ -58,9 +71,11 @@ namespace BarbellTracker.ConsoleClient
             EventDelegate<SelectFile> handelFileDelegate = handelFile;
             eventSystem.Subscribe(handelFileDelegate);
 
-            eventSystem.Fire(new ActivatePlugin() { PluginName = Processing.Name });
+            manager.TurnAllProcessingPluginOn();
+
             eventSystem.Fire(new StartExtractVideoInfo() { StartExtractionInformation = startExtractionInformation });
 
+            Console.WriteLine("done");
             while (true) ;
         }
 

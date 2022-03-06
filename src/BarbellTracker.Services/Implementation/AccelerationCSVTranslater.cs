@@ -15,10 +15,10 @@ namespace BarbellTracker.Services.Implementation
 
         public string Description => throw new NotImplementedException();
 
-        private ServiceCache<VectorCSVModel> cache;
+        private ServiceCache<AccelerationCSVModel> cache;
         private ICalculator<Acceleration> accelerationCalculator;
 
-        public AccelerationCSVTranslater(ICalculator<Acceleration> accelerationCalculator, ServiceCache<VectorCSVModel> cache)
+        public AccelerationCSVTranslater(ICalculator<Acceleration> accelerationCalculator, ServiceCache<AccelerationCSVModel> cache)
         {
             this.cache = cache;
             this.accelerationCalculator = accelerationCalculator;
@@ -38,10 +38,10 @@ namespace BarbellTracker.Services.Implementation
             return CSV;
         }
 
-        public VectorCSVModel CreateCSV(Acceleration velocity)
+        public AccelerationCSVModel CreateCSV(Acceleration velocity)
         {
             double TimeStep = 1d / velocity.FPS;
-            VectorCSVModel CSVVelocityModel = new VectorCSVModel();
+            AccelerationCSVModel CSVVelocityModel = new AccelerationCSVModel();
 
             for (int i = 0; i < velocity.Vectors.Length; i++)
             {

@@ -18,21 +18,20 @@ namespace BarbellTracker.ApplicationCode
 
         public bool Fire(object o)
         {
-            lock (_lock)
-            {
+            return FireAsync(o);
+        }
 
+        private bool FireAsync(object o)
+        {
                 var type = o.GetType();
 
                 if (Map.ContainsKey(type))
                 {
-                    foreach (var Delegate in Map[type])
-                    {
-                        Delegate.DynamicInvoke(o);
-                    }
+                    var Delegates = Map[type];
+                    Parallel.ForEach(Delegates, Delegate => Delegate.DynamicInvoke(o));
                     return true;
                 }
                 return false;
-            }
         }
 
         public bool Subscribe<T>(IEventSystem.EventDelegate<T> SingelDelegate)

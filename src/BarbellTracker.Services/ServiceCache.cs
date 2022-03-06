@@ -11,28 +11,44 @@ namespace BarbellTracker.Services
     {
         private Dictionary<TrackedInformation, T> _chache;
         public int Max_Cache_Size { get; init; }
+        private object _lock;
         public ServiceCache()
         {
             Max_Cache_Size = 30;
             _chache = new Dictionary<TrackedInformation, T>();
+            _lock = new object();
         }
 
         public bool TryGetCachedItem(TrackedInformation key, out T item)
         {
-            return _chache.TryGetValue(key, out item);
+            lock (_lock)
+            {
+                return _chache.TryGetValue(key, out item);
+            }
         }
 
         public T AddItemToCache(TrackedInformation key, T Item)
         {
-            if (_chache.ContainsKey(key))
+            lock (_lock)
             {
-                throw new KeyAlreadyExist($"The cache has Already an item with the same Key: {key}");
+                if (_chache.TryGetValue(key, out var value))
+                {
+                    if (value.Equals(Item))
+                    {
+                        return Item;
+                    };
+
+                    var hash1 = _chache.Keys.First().GetHashCode();
+                    var hash2 = key.GetHashCode();
+
+                    throw new KeyAlreadyExist($"The cache has Already an item with the same Key: {key} but a Different Value");
+                }
+
+                _chache.Add(key, Item);
+                RemoveOldItems();
+
+                return Item;
             }
-
-            _chache.Add(key, Item);
-            RemoveOldItems();
-
-            return Item;
         }
 
         private void RemoveOldItems()

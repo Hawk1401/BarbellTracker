@@ -1,33 +1,37 @@
-﻿using BarbellTracker.Adapter.Interface;
+﻿using BarbellTracker.Adapter;
+using BarbellTracker.Adapter.Interface;
 using BarbellTracker.ApplicationCode;
-using BarbellTracker.DomainCode;
+using BarbellTracker.ApplicationCode.Event;
 using BarbellTracker.Services.Implementation;
-using BarbellTracker.Adapter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BarbellTracker.ApplicationCode.Event;
 using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.Plugins.Processing
 {
-    public class VelocityToTable : IProcessingPlugin
+    public class AccelerationToAdapterTabel : IProcessingPlugin
     {
         public string Name { get; set; }
         public string Description { get; set; }
         private bool Activ;
 
-        private VelocityCSVTranslater translater;
-        private FileManager fileManager;
+        private AccelerationCSVTranslater translater;
+        private UIAdapterManager adapterManager;
         private IEventSystem eventSystem;
-        public VelocityToTable(VelocityCSVTranslater translater, FileManager fileManager, IEventSystem eventSystem)
+        private PluginManager pluginManager;
+        public AccelerationToAdapterTabel(PluginManager pluginManager, UIAdapterManager adapterManager, AccelerationCSVTranslater translater, IEventSystem eventSystem)
         {
-            this.translater = translater;
-            this.fileManager = fileManager;
-            this.eventSystem = eventSystem;
+            Name = nameof(AccelerationToAdapterTabel);
 
+            this.translater = translater;
+            this.eventSystem = eventSystem;
+            this.adapterManager = adapterManager;
+            this.pluginManager = pluginManager;
+
+            pluginManager.AddPlugin(this);
             EventDelegate<ActivatePlugin> ActivatePluginDelegate = Activate;
             EventDelegate<DeactivatePlugin> DeactivatePluginDelegate = Deactivate;
 
@@ -41,17 +45,29 @@ namespace BarbellTracker.Plugins.Processing
             return Activ;
         }
 
-
-
         public void ProcessData(ExtracedVideoInfo extracedVideoInfo)
         {
             var trackedInformation = extracedVideoInfo.trackedInformation;
             var CSV = translater.GetCSV(trackedInformation);
-            fileManager.Write("Velocity.CSV", CSV.ToString());
+
+            UICSVVectorAdapter adapter = new UICSVVectorAdapter()
+            {
+                Name = "Acceleration " + extracedVideoInfo.trackedInformation.Name,
+                CSV = CSV
+            };
+
+            adapterManager.AddNewAdapter(adapter);
         }
 
         public void Deactivate(DeactivatePlugin deactivatePlugin)
         {
+
+            if (deactivatePlugin.PluginName != Name)
+            {
+                return;
+            }
+
+
             EventDelegate<ExtracedVideoInfo> eventDelegate = ProcessData;
             eventSystem.Unsubscribe(eventDelegate);
             Activ = false;
@@ -59,6 +75,12 @@ namespace BarbellTracker.Plugins.Processing
 
         public void Activate(ActivatePlugin activatePlugin)
         {
+
+            if (activatePlugin.PluginName != Name)
+            {
+                return;
+            }
+
             EventDelegate<ExtracedVideoInfo> eventDelegate = ProcessData;
             eventSystem.Subscribe(eventDelegate);
             Activ = true;

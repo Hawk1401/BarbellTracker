@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BarbellTracker.Adapter;
 using BarbellTracker.Adapter.Interface;
 using BarbellTracker.ApplicationCode;
 using BarbellTracker.ApplicationCode.Event;
@@ -12,7 +13,7 @@ using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.Plugins.Processing
 {
-    public class AccelerationToTable : IProcessingPlugin
+    public class AccelerationToCSVFile : IProcessingPlugin
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -21,12 +22,19 @@ namespace BarbellTracker.Plugins.Processing
         private AccelerationCSVTranslater translater;
         private FileManager fileManager;
         private IEventSystem eventSystem;
-        public AccelerationToTable(AccelerationCSVTranslater translater, FileManager fileManager, IEventSystem eventSystem)
+        private PluginManager pluginManager;
+
+        public AccelerationToCSVFile(PluginManager pluginManager, AccelerationCSVTranslater translater, FileManager fileManager, IEventSystem eventSystem)
         {
+            Name = nameof(AccelerationToCSVFile);
+
+
             this.translater = translater;
             this.fileManager = fileManager;
             this.eventSystem = eventSystem;
+            this.pluginManager = pluginManager;
 
+            pluginManager.AddPlugin(this);
             EventDelegate<ActivatePlugin> ActivatePluginDelegate = Activate;
             EventDelegate<DeactivatePlugin> DeactivatePluginDelegate = Deactivate;
 
@@ -42,6 +50,11 @@ namespace BarbellTracker.Plugins.Processing
 
         public void Deactivate(DeactivatePlugin deactivatePlugin)
         {
+            if (deactivatePlugin.PluginName != Name)
+            {
+                return;
+            }
+
             EventDelegate<ExtracedVideoInfo> eventDelegate = ProcessData;
             eventSystem.Unsubscribe(eventDelegate);
             Activ = false;
@@ -49,6 +62,11 @@ namespace BarbellTracker.Plugins.Processing
 
         public void Activate(ActivatePlugin activatePlugin)
         {
+            if (activatePlugin.PluginName != Name)
+            {
+                return;
+            }
+
             EventDelegate<ExtracedVideoInfo> eventDelegate = ProcessData;
             eventSystem.Subscribe(eventDelegate);
             Activ = true;

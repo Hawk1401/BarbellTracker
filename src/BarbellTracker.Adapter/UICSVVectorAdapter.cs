@@ -7,10 +7,10 @@ using BarbellTracker.Adapter.Model;
 
 namespace BarbellTracker.Adapter
 {
-    public class UICSVVelocityAdapter : Interface.IUIAdapter
+    public class UICSVVectorAdapter : Interface.IUIAdapter
     {
         public string Name { get; set; }
 
-        public List<VectorCSVModel> Table { get; set; }
+        public VectorCSVModel CSV { get; set; }
     }
 }

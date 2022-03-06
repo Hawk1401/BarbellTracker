@@ -45,7 +45,7 @@ namespace BarbellTracker.ServicesTests
                     .Returns(acceleration);
 
                 var VelocityCalculatorMock = mockAuto.Create<ICalculator<Acceleration>>();
-                var sut = new AccelerationCSVTranslater(VelocityCalculatorMock, new ServiceCache<VectorCSVModel>());
+                var sut = new AccelerationCSVTranslater(VelocityCalculatorMock, new ServiceCache<AccelerationCSVModel>());
 
                 var CSV = sut.GetCSV(tracked);
                 Assert.Equal(expected, CSV);
@@ -74,7 +74,7 @@ namespace BarbellTracker.ServicesTests
                     .Returns(acceleration);
 
                 var VelocityCalculatorMock = mockAuto.Create<ICalculator<Acceleration>>();
-                var sut = new AccelerationCSVTranslater(VelocityCalculatorMock, new ServiceCache<VectorCSVModel>());
+                var sut = new AccelerationCSVTranslater(VelocityCalculatorMock, new ServiceCache<AccelerationCSVModel>());
 
                 var expected = sut.GetCSV(tracked);
                 var CachedVersion = sut.GetCSV(tracked);
@@ -123,7 +123,7 @@ namespace BarbellTracker.ServicesTests
                 .ConfigureServices((_, services) =>
                     services.AddSingleton<ServiceCache<Velocity>>()
                     .AddSingleton<ServiceCache<Acceleration>>()
-                    .AddSingleton<ServiceCache<VectorCSVModel>>()
+                    .AddSingleton<ServiceCache<AccelerationCSVModel>>()
                     .AddTransient<ICalculator<Velocity>, VelocityCalculator>()
                     .AddTransient<ICalculator<Acceleration>, AccelerationCalculator>()
                     .AddTransient<AccelerationCSVTranslater>()
