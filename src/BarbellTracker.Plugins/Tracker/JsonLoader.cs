@@ -23,7 +23,7 @@ namespace BarbellTracker.Plugins.Tracker
         public JsonLoader(IEventSystem eventSystem)
         {
             this.eventSystem = eventSystem;
-            EventDelegate<StartExtractVideoInfo> StartExtractVideoInfoDelegate = StartTacking;
+            EventDelegate<StartExtractVideoInfo> StartExtractVideoInfoDelegate = StartTracking;
             eventSystem.Subscribe(StartExtractVideoInfoDelegate);
 
             Name = "JsonLoader";
@@ -47,7 +47,7 @@ namespace BarbellTracker.Plugins.Tracker
             
         }
 
-        public void StartTacking(StartExtractVideoInfo extracedVideoInfo)
+        public void StartTracking(StartExtractVideoInfo extracedVideoInfo)
         {
 
             var StartExtractionInformation = extracedVideoInfo.StartExtractionInformation;

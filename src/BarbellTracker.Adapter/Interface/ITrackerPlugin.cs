@@ -10,6 +10,6 @@ namespace BarbellTracker.Adapter.Interface
 {
     public interface ITrackerPlugin : IPlugin
     {
-        public void StartTacking(StartExtractVideoInfo extracedVideoInfo);
+        public void StartTracking(StartExtractVideoInfo extracedVideoInfo);
     }
 }
