@@ -38,7 +38,7 @@ namespace BarbellTracker.Adapter.Model
             return result;
         }
 
-         public override string ToString()
+        public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
 

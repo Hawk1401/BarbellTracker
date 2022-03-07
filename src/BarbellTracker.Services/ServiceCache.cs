@@ -9,13 +9,13 @@ namespace BarbellTracker.Services
 {
     public class ServiceCache<T>
     {
-        private Dictionary<TrackedInformation, T> _chache;
+        private Dictionary<TrackedInformation, T> _cache;
         public int Max_Cache_Size { get; init; }
         private object _lock;
         public ServiceCache()
         {
             Max_Cache_Size = 30;
-            _chache = new Dictionary<TrackedInformation, T>();
+            _cache = new Dictionary<TrackedInformation, T>();
             _lock = new object();
         }
 
@@ -23,7 +23,7 @@ namespace BarbellTracker.Services
         {
             lock (_lock)
             {
-                return _chache.TryGetValue(key, out item);
+                return _cache.TryGetValue(key, out item);
             }
         }
 
@@ -31,20 +31,20 @@ namespace BarbellTracker.Services
         {
             lock (_lock)
             {
-                if (_chache.TryGetValue(key, out var value))
+                if (_cache.TryGetValue(key, out var value))
                 {
                     if (value.Equals(Item))
                     {
                         return Item;
                     };
 
-                    var hash1 = _chache.Keys.First().GetHashCode();
+                    var hash1 = _cache.Keys.First().GetHashCode();
                     var hash2 = key.GetHashCode();
 
                     throw new KeyAlreadyExist($"The cache has Already an item with the same Key: {key} but a Different Value");
                 }
 
-                _chache.Add(key, Item);
+                _cache.Add(key, Item);
                 RemoveOldItems();
 
                 return Item;
@@ -53,13 +53,13 @@ namespace BarbellTracker.Services
 
         private void RemoveOldItems()
         {
-            if(_chache.Count < Max_Cache_Size)
+            if(_cache.Count < Max_Cache_Size)
             {
                 return;
             }
 
-            var firstKey = _chache.Keys.First();
-            _chache.Remove(firstKey);
+            var firstKey = _cache.Keys.First();
+            _cache.Remove(firstKey);
         }
     }
 }
