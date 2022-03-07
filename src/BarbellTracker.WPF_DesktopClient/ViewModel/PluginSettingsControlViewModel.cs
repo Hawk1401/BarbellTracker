@@ -15,9 +15,11 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
     {
         private ObservableCollection<PluginStatus> _pluginsWithStatus = new ObservableCollection<PluginStatus>();
         private IEventSystem eventSystem;
-        public PluginSettingsControlViewModel(IEventSystem eventSystem)
+        private PluginManager pluginManager;
+        public PluginSettingsControlViewModel(IEventSystem eventSystem, PluginManager pluginManager)
         {
             this.eventSystem = eventSystem;
+            this.pluginManager = pluginManager;
             GetPluginInstancesOfProcessingPlugins();
 
             // Example Data for PluginsWithStatus
@@ -40,11 +42,11 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 
         public void GetPluginInstancesOfProcessingPlugins()
         {
-            //List<Adapter.Interface.IProcessingPlugin> plugins = PluginManager.Instance.GetProcessingPlugins();
-            //foreach (Adapter.Interface.IProcessingPlugin plugin in plugins)
-            //{
-            //    PluginsWithStatus.Add(new PluginStatus(plugin.Name, plugin.IsActiv()));
-            //}
+            List<Adapter.Interface.IProcessingPlugin> plugins = pluginManager.GetProcessingPlugins();
+            foreach (Adapter.Interface.IProcessingPlugin plugin in plugins)
+            {
+                PluginsWithStatus.Add(new PluginStatus(eventSystem, plugin.Name, plugin.IsActiv()));
+            }
         }
 
 

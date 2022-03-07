@@ -18,12 +18,19 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
     internal class AdapterControlViewModel : ViewModelBase
     {
         private ObservableCollection<ViewModelBase> _tabItemsViewModel = new();
+        private IEventSystem _eventSystem;
+        private UIAdapterManager _adapterManager;
 
-
-        public AdapterControlViewModel()
+        public AdapterControlViewModel(IEventSystem eventSystem, UIAdapterManager uIAdapterManager)
         {
+            this._eventSystem = eventSystem;
+            this._adapterManager = uIAdapterManager;
+
+            IEventSystem.EventDelegate<AdapterAdded> eventDelegate = HandleAddedAdapter;
+
+            eventSystem.Subscribe(eventDelegate);
             //EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
-            
+
             /*
             // some test data
             TabsItemViewModels.Add(new AdapterVelocityTableViewModel("VelocityTable"));
@@ -41,23 +48,23 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
         }
 
-        public async Task HandleAddedAdapter(AdapterAdded AdapterAdded)
+        public void HandleAddedAdapter(AdapterAdded AdapterAdded)
         {
-            //string name = eventContext.Arg as string;
-            //var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
-            //if (success)
-            //{
-            //    if(adapter is UICSVVelocityAdapter velocityAdapter)
-            //    {
-            //        TabsItemViewModels.Add(new AdapterVelocityTableViewModel(velocityAdapter.Name));
-            //        return;
-            //    }
-            //    if(adapter is UIVideoAdapter videoAdapter)
-            //    {
-            //        TabsItemViewModels.Add(new AdapterVideoPlayerViewModel(videoAdapter.Name));
-            //        return;
-            //    }
-            //}
+            string name = AdapterAdded.AdapterName;
+            var success = _adapterManager.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
+            if (success)
+            {
+                if(adapter is UICSVVectorAdapter vectorAdapter)
+                {
+                    TabsItemViewModels.Add(new AdapterVelocityTableViewModel(vectorAdapter.Name));
+                    return;
+                }
+                if(adapter is UIVideoAdapter videoAdapter)
+                {
+                    TabsItemViewModels.Add(new AdapterVideoPlayerViewModel(videoAdapter.Name));
+                    return;
+                }
+            }
 
         }
     }
