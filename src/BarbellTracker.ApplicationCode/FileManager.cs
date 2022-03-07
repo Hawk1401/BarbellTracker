@@ -10,6 +10,10 @@ using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.ApplicationCode
 {
+    // SOLID => S Negativ beispiel
+    // Nicht ausschlag gebend für die Funktion der Applikation
+    // Um dennoch Wartbarkeit zu gewährleisten haben wir alle Methoden kommentiert
+    // mit Parameter und Return werte, sowie eine Beschreibugn was die Methode tut.
     public class FileManager
     {
         public string FolderPath { get; set; }

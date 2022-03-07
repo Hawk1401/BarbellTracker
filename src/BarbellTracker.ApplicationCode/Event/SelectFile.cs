@@ -9,6 +9,7 @@ namespace BarbellTracker.ApplicationCode.Event
     public class SelectFile
     {
         private string[] _FileExtensionRestriction { get; set; }
+        // ?? sinnvoll?? TODO
 
         public string[] FileExtensionRestriction { 
             get 
