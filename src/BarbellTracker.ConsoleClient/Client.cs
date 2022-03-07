@@ -40,10 +40,10 @@ namespace BarbellTracker.ConsoleClient
                     .AddTransient<ICalculator<Acceleration>, AccelerationCalculator>()
                     .AddTransient<VelocityCSVTranslater>()
                     .AddTransient<VelocityToCSVFile>()
-                    .AddTransient<VelocityToAdapterTabel>()
+                    .AddTransient<VelocityToAdapterTable>()
                     .AddTransient<AccelerationCSVTranslater>()
                     .AddTransient<AccelerationToCSVFile>()
-                    .AddTransient<AccelerationToAdapterTabel>()
+                    .AddTransient<AccelerationToAdapterTable>()
                     .AddTransient<JsonLoader>()
                     )
                 .Build();
@@ -55,8 +55,8 @@ namespace BarbellTracker.ConsoleClient
             var tacker = provider.GetRequiredService<JsonLoader>();
             var Processing1 = provider.GetRequiredService<VelocityToCSVFile>();
             var Processing2 = provider.GetRequiredService<AccelerationToCSVFile>();
-            var Processing3 = provider.GetRequiredService<VelocityToAdapterTabel>();
-            var Processing4 = provider.GetRequiredService<AccelerationToAdapterTabel>();
+            var Processing3 = provider.GetRequiredService<VelocityToAdapterTable>();
+            var Processing4 = provider.GetRequiredService<AccelerationToAdapterTable>();
             eventSystem = provider.GetRequiredService<IEventSystem>();
             var manager = provider.GetRequiredService<PluginManager>();
             var Adaptermanager = provider.GetRequiredService<UIAdapterManager>();

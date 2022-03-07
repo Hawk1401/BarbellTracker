@@ -12,7 +12,7 @@ using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.Plugins.Processing
 {
-    public class AccelerationToAdapterTabel : IProcessingPlugin
+    public class AccelerationToAdapterTable : IProcessingPlugin
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -22,9 +22,9 @@ namespace BarbellTracker.Plugins.Processing
         private UIAdapterManager adapterManager;
         private IEventSystem eventSystem;
         private PluginManager pluginManager;
-        public AccelerationToAdapterTabel(PluginManager pluginManager, UIAdapterManager adapterManager, AccelerationCSVTranslater translater, IEventSystem eventSystem)
+        public AccelerationToAdapterTable(PluginManager pluginManager, UIAdapterManager adapterManager, AccelerationCSVTranslater translater, IEventSystem eventSystem)
         {
-            Name = nameof(AccelerationToAdapterTabel);
+            Name = nameof(AccelerationToAdapterTable);
 
             this.translater = translater;
             this.eventSystem = eventSystem;
