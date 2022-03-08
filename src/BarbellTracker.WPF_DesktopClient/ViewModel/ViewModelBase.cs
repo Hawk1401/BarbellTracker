@@ -16,10 +16,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             Name = name;
         }
 
-        public ViewModelBase()
-        {
-
-        }
+        public ViewModelBase(){ }
 
         public string Name 
         { 
