@@ -48,9 +48,9 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
         }
 
-        public void HandleAddedAdapter(AdapterAdded AdapterAdded)
+        public void HandleAddedAdapter(AdapterAdded adapterAdded)
         {
-            string name = AdapterAdded.AdapterName;
+            string name = adapterAdded.AdapterName;
             var success = _adapterManager.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
             if (success)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BarbellTracker.WPF_DesktopClient.DataStructures
 {
-    internal class AdapterModel : WPF_HelperClasses.PropertyChangedNotifier
+    class AdapterModel : WPF_HelperClasses.PropertyChangedNotifier
     {
         private string _adapterName;
         private string _content;
