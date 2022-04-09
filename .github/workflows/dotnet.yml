@@ -13,6 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Another step
+      run: |
+       echo "Branch: ${{GITHUB_SHA::8}}"
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -21,7 +24,7 @@ jobs:
       run: dotnet restore
     - name: Another step
       run: |
-       echo "Branch: ${{ github.sha }}"
+       echo "Branch: ${GITHUB_SHA::8}"
     - name: Build
       run: dotnet build --no-restore   
     - name: Test AbstractionCode
