@@ -42,31 +42,31 @@ namespace BarbellTracker.Services
 
         private void RemoveOldItems()
         {
-            if(_chache.Count < Max_Cache_Size)
+            if(_cache.Count < Max_Cache_Size)
             {
                 return;
             }
 
-            var firstKey = _chache.Keys.First();
-            _chache.Remove(firstKey);
+            var firstKey = _cache.Keys.First();
+            _cache.Remove(firstKey);
         }
 
         private void AddItem(TrackedInformation key, T Item)
         {
-            _chache.Add(key, Item);
+            _cache.Add(key, Item);
             RemoveOldItems();
         }
 
 
         private bool TryGetCachedItemWithoutLock(TrackedInformation key, out T item)
         {
-            return _chache.TryGetValue(key, out item);
+            return _cache.TryGetValue(key, out item);
 
         }
 
         private bool HasItemChached(TrackedInformation key, T Item)
         {
-            if (_chache.TryGetValue(key, out var value))
+            if (_cache.TryGetValue(key, out var value))
             {
                 if (value.Equals(Item))
                 {
