@@ -35,10 +35,10 @@ namespace BarbellTracker.WPF_DesktopClient
                     .AddTransient<ICalculator<Acceleration>, AccelerationCalculator>()
                     .AddTransient<VelocityCSVTranslater>()
                     .AddTransient<VelocityToCSVFile>()
-                    .AddTransient<VelocityToAdapterTabel>()
+                    .AddTransient<VelocityToAdapterTable>()
                     .AddTransient<AccelerationCSVTranslater>()
                     .AddTransient<AccelerationToCSVFile>()
-                    .AddTransient<AccelerationToAdapterTabel>()
+                    .AddTransient<AccelerationToAdapterTable>()
                     .AddTransient<JsonLoader>()
                     )
                 .Build();
