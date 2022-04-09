@@ -68,7 +68,7 @@ namespace BarbellTracker.ApplicationCode
             try
             {
 
-                if (File.Exists(totalPath) && !Override)
+                if (FileExist(totalPath) && !Override)
                 {
                     return false;
                 }
@@ -76,7 +76,7 @@ namespace BarbellTracker.ApplicationCode
                 File.WriteAllText(totalPath, content);
                 return true;
 
-            }catch (Exception ex)
+            }catch (IOException ex)
             {
                 return false;
             }
@@ -100,7 +100,7 @@ namespace BarbellTracker.ApplicationCode
             try
             {
 
-                if (File.Exists(totalPath) && !Override)
+                if (FileExist(totalPath) && !Override)
                 {
                     return false;
                 }
@@ -109,7 +109,7 @@ namespace BarbellTracker.ApplicationCode
                 return true;
 
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 return false;
             }
@@ -130,14 +130,12 @@ namespace BarbellTracker.ApplicationCode
                 SetUpFolderSetUp(CruuentExtractionFolder);
                 var totalPath = getTotalPath(FileNameWithExtension);
 
-                if (!File.Exists(totalPath))
-                {
-                    File.Create(totalPath);
-                }
+                CreateFileIfNotExist(totalPath);
 
                 File.AppendAllText(totalPath, content);
                 return true;
-            }catch(Exception ex)
+
+            }catch(IOException ex)
             {
                 return false;
             }
@@ -166,7 +164,7 @@ namespace BarbellTracker.ApplicationCode
             content = new string[0];
             var totalPath = getTotalPath(FileNameWithExtension);
 
-            if (!File.Exists(totalPath))
+            if (FileDoesNotExist(totalPath))
             {
                 return false;
             }
@@ -177,7 +175,24 @@ namespace BarbellTracker.ApplicationCode
 
         private void SetUpFolderSetUp(string Path)
         {
-            var p = Directory.CreateDirectory(Path);
+            Directory.CreateDirectory(Path);
+        }
+
+        private void CreateFileIfNotExist(string totalPath)
+        {
+            if (!File.Exists(totalPath))
+            {
+                File.Create(totalPath);
+            }
+        }
+
+        private bool FileExist(string path)
+        {
+            return File.Exists(path);
+        }
+        private bool FileDoesNotExist(string path)
+        {
+            return !FileExist(path);
         }
     }
 }

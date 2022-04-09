@@ -45,12 +45,12 @@ namespace BarbellTracker.Services.Implementation
             for (int i = 0; i < velocity.Vectors.Length; i++)
             {
                 var time = TimeSpan.FromSeconds(i * TimeStep).ToString(@"mm\:ss\:FF");
-                var length = velocity.Vectors[i].length();
+                var length = velocity.Vectors[i].Length();
                 var vektor = velocity.Vectors[i].ToString();
 
                 CSVVelocityModel.AddItem(time, length, vektor);
             }
-
+            
             return CSVVelocityModel;
         }
 

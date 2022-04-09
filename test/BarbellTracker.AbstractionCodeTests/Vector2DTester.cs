@@ -49,7 +49,7 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorDotProduct))]
         public void StaticDotProduct_OfTowVectors_ReturnTheirScalar(Vector2D first, Vector2D second, double expected)
         {
-            var scalar = Vector2D.dotProduct(first, second);
+            var scalar = Vector2D.DotProduct(first, second);
 
             Assert.Equal(expected, scalar);
         }
@@ -58,7 +58,7 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorDotProduct))]
         public void DotProduct_OfTowVectors_ReturnTheirScalar(Vector2D first, Vector2D second, double expected)
         {
-            var scalar = first.dotProduct(second);
+            var scalar = first.DotProduct(second);
 
             Assert.Equal(expected, scalar);
         }
@@ -68,7 +68,7 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorCrossProduct))]
         public void CrossProduct_OfTowVectors_ReturnTheirCrossProduct(Vector2D first, Vector2D second, double expected)
         {
-            var scalar = first.crossProduct(second);
+            var scalar = first.CrossProduct(second);
 
             Assert.Equal(expected, scalar);
         }
@@ -78,7 +78,7 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorCrossProduct))]
         public void StaticCrossProduct_OfTowVectors_ReturnTheirCrossProduct(Vector2D first, Vector2D second, double expected)
         {
-            var scalar = Vector2D.crossProduct(first, second);
+            var scalar = Vector2D.CrossProduct(first, second);
 
             Assert.Equal(expected, scalar);
         }
@@ -87,7 +87,7 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorLength))]
         public void Length_OfVectorReturnTheLength(Vector2D vector, double expectedLength)
         {
-            var length = vector.length();
+            var length = vector.Length();
             int precisionOfDecimalPlaces = 3;
 
 
@@ -98,8 +98,8 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorNormalize))]
         public void Normalize_AVector_SacletheVectorToTheLengthOfOne(Vector2D vector)
         {
-            var result = vector.normalize();
-            var length = result.length();
+            var result = vector.Normalize();
+            var length = result.Length();
             var precisionOfDecimalPlaces = 1;
 
 
@@ -112,7 +112,7 @@ namespace BarbellTracker.AbstractionCodeTests
 
             var vector = new Vector2D(0, 0);
 
-            Action normalize = () => vector.normalize();
+            Action normalize = () => vector.Normalize();
 
 
             Assert.Throws<DivideByZeroException>(normalize);
@@ -130,14 +130,16 @@ namespace BarbellTracker.AbstractionCodeTests
         }
 
         [Fact]
-        public void Copy_AVector_WillReturnAEqualVectorWithANewReference()
+        public void Copy_AVector_WillReturnAVectorWithANewReference()
         {
+            // Arrange
             var vector = new Vector2D(4, 2);
 
+            //Act
             var copy = vector.Copy();
 
+            // Assert
             var sameReference = object.ReferenceEquals(vector, copy);
-
             Assert.False(sameReference);
         }
 
@@ -179,7 +181,7 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorIslinearlyIndependen))]
         public void IslinearlyIndependen_OfTowNotLinearlyIndependenVectors_WillReturnTheFalse(Vector2D first, Vector2D second)
         {
-            var islinearlyIndependen = first.islinearlyIndependen(second);
+            var islinearlyIndependen = first.IslinearlyIndependen(second);
 
             Assert.False(islinearlyIndependen);
         }
@@ -189,7 +191,7 @@ namespace BarbellTracker.AbstractionCodeTests
         public void IslinearlyIndependen_OfTowNotLinearlyIndependenVectorsWithCustomEpsilon_WillReturnTheFalse(Vector2D first, Vector2D second)
         {
             var Epsilon = 0.5d;
-            var islinearlyIndependen = first.islinearlyIndependen(second, Epsilon);
+            var islinearlyIndependen = first.IslinearlyIndependen(second, Epsilon);
 
             Assert.False(islinearlyIndependen);
         }
@@ -198,7 +200,7 @@ namespace BarbellTracker.AbstractionCodeTests
         [MemberData(nameof(GetTestdataForVectorIslinearlyIndependen))]
         public void StaticIslinearlyIndependen_OfTowNotLinearlyIndependenVectors_WillReturnTheFalse(Vector2D first, Vector2D second)
         {
-            var islinearlyIndependen = Vector2D.islinearlyIndependen(first, second);
+            var islinearlyIndependen = Vector2D.IslinearlyIndependen(first, second);
 
             Assert.False(islinearlyIndependen);
         }
@@ -208,7 +210,7 @@ namespace BarbellTracker.AbstractionCodeTests
         public void StaticIslinearlyIndependen_OfTowNotLinearlyIndependenVectorsWithCustomEpsilon_WillReturnTheFalse(Vector2D first, Vector2D second)
         {
             var Epsilon = 0.5d;
-            var islinearlyIndependen = Vector2D.islinearlyIndependen(first, second, Epsilon);
+            var islinearlyIndependen = Vector2D.IslinearlyIndependen(first, second, Epsilon);
 
             Assert.False(islinearlyIndependen);
         }

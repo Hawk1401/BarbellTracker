@@ -5,6 +5,7 @@ using BarbellTracker.ApplicationCode.Event;
 using BarbellTracker.WPF_DesktopClient.DataStructures;
 using BarbellTracker.WPF_DesktopClient.View;
 using BarbellTracker.WPF_HelperClasses;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
@@ -21,15 +23,15 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         private IEventSystem _eventSystem;
         private UIAdapterManager _adapterManager;
 
-        public AdapterControlViewModel(IEventSystem eventSystem, UIAdapterManager uIAdapterManager)
+        private IEventSystem eventSystem;
+        private UIAdapterManager uIAdapterManager;
+        public AdapterControlViewModel()
         {
-            this._eventSystem = eventSystem;
-            this._adapterManager = uIAdapterManager;
+            eventSystem = DependencyInjectionHelper.provider.GetRequiredService<IEventSystem>();
+            uIAdapterManager = DependencyInjectionHelper.provider.GetRequiredService<UIAdapterManager>();
+            EventDelegate<AdapterAdded> del = HandleAddedAdapter;
+            eventSystem.Subscribe(del);
 
-            IEventSystem.EventDelegate<AdapterAdded> eventDelegate = HandleAddedAdapter;
-
-            eventSystem.Subscribe(eventDelegate);
-            //EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
 
             /*
             // some test data
@@ -48,18 +50,18 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
         }
 
-        public void HandleAddedAdapter(AdapterAdded adapterAdded)
+        public void HandleAddedAdapter(AdapterAdded AdapterAdded)
         {
-            string name = adapterAdded.AdapterName;
-            var success = _adapterManager.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
+            string name = AdapterAdded.AdapterName;
+            var success = uIAdapterManager.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
             if (success)
             {
-                if(adapter is UICSVVectorAdapter vectorAdapter)
+                if (adapter is UICSVVectorAdapter velocityAdapter)
                 {
-                    TabsItemViewModels.Add(new AdapterVelocityTableViewModel(vectorAdapter.Name));
+                    TabsItemViewModels.Add(new AdapterVelocityTableViewModel(velocityAdapter.Name));
                     return;
                 }
-                if(adapter is UIVideoAdapter videoAdapter)
+                if (adapter is UIVideoAdapter videoAdapter)
                 {
                     TabsItemViewModels.Add(new AdapterVideoPlayerViewModel(videoAdapter.Name));
                     return;

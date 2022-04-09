@@ -31,7 +31,7 @@ namespace BarbellTracker.AbstractionCode
             this.Y = other.Y;
         }
 
-        public double length()
+        public double Length()
         {
             double xSquare = X * X;
             double ySquare = Y * Y;
@@ -39,14 +39,14 @@ namespace BarbellTracker.AbstractionCode
             return Math.Sqrt(xSquare + ySquare);
         }
 
-        public Vector2D normalize()
+        public Vector2D Normalize()
         {
-            if(length() == 0)
+            if(Length() == 0)
             {
                 throw new DivideByZeroException($"The length of the vector {this} has the length of zero an can not be normalized");
             }
 
-            return scalar(1 / length());
+            return Scalar(1 / Length());
         }
 
         public Vector2D Add(Vector2D other)
@@ -75,7 +75,7 @@ namespace BarbellTracker.AbstractionCode
                 );
         }
 
-        public Vector2D scalar(double num)
+        public Vector2D Scalar(double num)
         {
             var x = this.X * num;
             var y = this.Y * num;
@@ -83,44 +83,44 @@ namespace BarbellTracker.AbstractionCode
             return new Vector2D(x,y);
         }
 
-        public double dotProduct(Vector2D other) 
+        public double DotProduct(Vector2D other) 
         {
-            return dotProduct(this, other);
+            return DotProduct(this, other);
         }
 
-        public static double dotProduct(Vector2D first, Vector2D second)
+        public static double DotProduct(Vector2D first, Vector2D second)
         {
             return (first.X * second.X) + (first.Y * second.Y);
         }
 
-        public double crossProduct(Vector2D other)
+        public double CrossProduct(Vector2D other)
         {
-            return crossProduct(this, other);
+            return CrossProduct(this, other);
         }
 
-        public static double crossProduct(Vector2D first, Vector2D second)
+        public static double CrossProduct(Vector2D first, Vector2D second)
         {
             return (first.X * second.Y) - (second.X * first.Y);
         }
 
-        public bool islinearlyIndependen(Vector2D other)
+        public bool IslinearlyIndependen(Vector2D other)
         {
-            return islinearlyIndependen(other, EPSILON);
+            return IslinearlyIndependen(other, EPSILON);
         }
 
-        public bool islinearlyIndependen(Vector2D other, double epsilon)
+        public bool IslinearlyIndependen(Vector2D other, double epsilon)
         {
-            return islinearlyIndependen(this, other, epsilon);
+            return IslinearlyIndependen(this, other, epsilon);
         }
 
-        public static bool islinearlyIndependen(Vector2D first, Vector2D second)
+        public static bool IslinearlyIndependen(Vector2D first, Vector2D second)
         {
-            return islinearlyIndependen(first, second, EPSILON);
+            return IslinearlyIndependen(first, second, EPSILON);
         }
 
-        public static bool islinearlyIndependen(Vector2D first, Vector2D second, double epsilon)
+        public static bool IslinearlyIndependen(Vector2D first, Vector2D second, double epsilon)
         {
-            return Math.Abs(crossProduct(first, second)) > epsilon;
+            return Math.Abs(CrossProduct(first, second)) > epsilon;
         }
 
         public Vector2D Copy()

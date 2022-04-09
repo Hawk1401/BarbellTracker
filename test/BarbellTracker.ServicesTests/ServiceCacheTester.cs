@@ -50,7 +50,7 @@ namespace BarbellTracker.ServicesTests
             Assert.StrictEqual(Item, OutPutItem);
         }
         [Fact]
-        public void AddItem_WithAKeyThatAllreadyExist_willThrowExeption()
+        public void AddItem_WithAKeyThatAllreadyExist_willThrowKeyAlreadyExistExeption()
         {
             // Arrange
             TrackedInformation key = new TrackedInformation()
@@ -83,7 +83,8 @@ namespace BarbellTracker.ServicesTests
 
             var MaxSize = _sut.Max_Cache_Size;
 
-            AddUnknowsItemToDummy(MaxSize - 1);
+            AddUnknowDummyItemsToSUT(MaxSize - 1);
+
             TrackedInformation LastKey = new TrackedInformation()
             {
                 Id = "LastID"
@@ -99,6 +100,8 @@ namespace BarbellTracker.ServicesTests
             Assert.False(containsKey);
             Assert.Null(item);
         }
+
+
         [Fact]
         public void ChangeMaxCacheSize_AtInit_WillChangeMaxCacheSize()
         {
@@ -119,7 +122,7 @@ namespace BarbellTracker.ServicesTests
 
 
 
-        private void AddUnknowsItemToDummy(int TimesToAdd)
+        private void AddUnknowDummyItemsToSUT(int TimesToAdd)
         {
             for (int i = 0; i < TimesToAdd; i++)
             {
