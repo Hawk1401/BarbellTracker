@@ -1,4 +1,5 @@
-﻿using BarbellTracker.Adapter.Interface;
+﻿using BarbellTracker.Adapter;
+using BarbellTracker.Adapter.Interface;
 using BarbellTracker.ApplicationCode;
 using BarbellTracker.ApplicationCode.Event;
 using BarbellTracker.ApplicationCode.EventModel;
@@ -20,9 +21,13 @@ namespace BarbellTracker.Plugins.Tracker
         public string Description { get; set; }
 
         private IEventSystem eventSystem;
-        public JsonLoader(IEventSystem eventSystem)
+        private PluginManager pluginManager;
+
+        public JsonLoader(IEventSystem eventSystem, PluginManager pluginManager)
         {
             this.eventSystem = eventSystem;
+            pluginManager.AddPlugin(this);
+
             EventDelegate<StartExtractVideoInfo> StartExtractVideoInfoDelegate = StartTracking;
             eventSystem.Subscribe(StartExtractVideoInfoDelegate);
 
