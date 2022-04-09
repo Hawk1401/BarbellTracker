@@ -1,4 +1,5 @@
-﻿using BarbellTracker.Plugins.Processing;
+﻿using BarbellTracker.ApplicationCode;
+using BarbellTracker.Plugins.Processing;
 using BarbellTracker.Plugins.Tracker;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -28,6 +29,7 @@ namespace BarbellTracker.WPF_DesktopClient
             var Processing3 = provider.GetRequiredService<VelocityToAdapterTable>();
             var Processing4 = provider.GetRequiredService<AccelerationToAdapterTable>();
 
+            
             base.OnStartup(e);
             new MainWindow().Show();
 

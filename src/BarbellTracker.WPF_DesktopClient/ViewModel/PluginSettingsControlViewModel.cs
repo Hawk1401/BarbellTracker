@@ -22,13 +22,6 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             this.eventSystem = DependencyInjectionHelper.provider.GetRequiredService<IEventSystem>(); 
             this.pluginManager = DependencyInjectionHelper.provider.GetRequiredService<PluginManager>();
             GetPluginInstancesOfProcessingPlugins();
-
-
-            // Example Data for PluginsWithStatus
-            PluginsWithStatus.Add(new PluginStatus(eventSystem, "PluginOne", false));
-            PluginsWithStatus.Add(new PluginStatus(eventSystem, "PluginTwo", false));
-            PluginsWithStatus.Add(new PluginStatus(eventSystem, "PluginThree", false));
-            PluginsWithStatus.Add(new PluginStatus(eventSystem, "PluginFour", false));
         }
 
         public ObservableCollection<PluginStatus> PluginsWithStatus

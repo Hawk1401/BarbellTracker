@@ -2,6 +2,7 @@
 using BarbellTracker.Adapter.Model;
 using BarbellTracker.ApplicationCode;
 using BarbellTracker.ApplicationCode.Event;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -9,26 +10,28 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
     internal class AdapterVelocityTableViewModel : ViewModelBase
     {
-        private ObservableCollection<VectorCSVModel> _csvVelocityModels = new ObservableCollection<VectorCSVModel>();
+        private ObservableCollection<VectorCSVItem> _csvVelocityModels = new ObservableCollection<VectorCSVItem>();
 
         public AdapterVelocityTableViewModel(string name) : base(name)
         {
-            //EventSystem.Subscribe(Event.ExtracedVideoInfo, HandleTrakingInformation);
+            var uiAdapterManager = DependencyInjectionHelper.provider.GetRequiredService<UIAdapterManager>();
 
-            // some test data
-            /*
-            var testTable = new VectorCSVModel();
-            testTable.AddItem("456", 5, "38");
-            testTable.AddItem("483", 2, "88");
-            testTable.AddItem("789", 9, "55");
-            foreach (var item in testTable.GetTable())
+            var success = uiAdapterManager.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
+            if (success)
             {
-                CSVVelocityModels.Add(item);
+                if (adapter is UICSVVectorAdapter velocityAdapter)
+                {
+
+                    foreach (var item in velocityAdapter.CSV.GetTable())
+                    {
+                        CSVVelocityModels.Add(item);
+                    }
+                }
+
             }
-            */
         }
 
-        public ObservableCollection<VectorCSVModel> CSVVelocityModels
+        public ObservableCollection<VectorCSVItem> CSVVelocityModels
         {
             get { return _csvVelocityModels; }
             set
@@ -36,23 +39,6 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
                 _csvVelocityModels = value;
                 OnPropertyChanged();
             }
-        }
-
-        public async Task HandleTrakingInformation(ExtracedVideoInfo extracedVideoInfo)
-        {
-            //var name = eventContext.Arg as string;
-            //var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
-            //if (success)
-            //{
-            //    if(adapter is UICSVVelocityAdapter velocityAdapter)
-            //    {
-            //        var velocityMetaData = velocityAdapter.Table;
-            //        foreach (var item in velocityMetaData)
-            //        {
-            //            CSVVelocityModels.Add(item);
-            //        }
-            //    }
-            //}
         }
 
 
