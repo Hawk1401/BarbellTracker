@@ -24,19 +24,22 @@ namespace BarbellTracker.ApplicationCode
         {
             return FireAsync(o);
         }
-
+        private EventQueue EventQueue = new EventQueue();
         private bool FireAsync(object o)
         {
-                var type = o.GetType();
+            var type = o.GetType();
 
-                if (Map.ContainsKey(type))
-                {
-                    var Delegates = Map[type];
-                    Parallel.ForEach(Delegates, Delegate => Delegate.DynamicInvoke(o));
-                    return true;
-                }
-                return false;
+            if (Map.ContainsKey(type))
+            {
+                var Delegates = Map[type];
+
+                EventQueue.Add(Delegates, o);
+                return true;
+            }
+            return false;
         }
+
+
 
         public bool Subscribe<T>(IEventSystem.EventDelegate<T> SingelDelegate)
         {
