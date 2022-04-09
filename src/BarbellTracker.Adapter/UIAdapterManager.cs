@@ -9,6 +9,8 @@ using BarbellTracker.ApplicationCode.Event;
 
 namespace BarbellTracker.Adapter
 {
+    //SOLID => S
+    // 
     public class UIAdapterManager
     {
         private Dictionary<string, IUIAdapter> AdapterStorage = new Dictionary<string, IUIAdapter>();

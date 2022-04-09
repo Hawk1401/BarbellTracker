@@ -9,13 +9,13 @@ namespace BarbellTracker.Services
 {
     public class ServiceCache<T>
     {
-        private Dictionary<TrackedInformation, T> _chache;
+        private Dictionary<TrackedInformation, T> _cache;
         public int Max_Cache_Size { get; init; }
         private object _lock;
         public ServiceCache()
         {
             Max_Cache_Size = 30;
-            _chache = new Dictionary<TrackedInformation, T>();
+            _cache = new Dictionary<TrackedInformation, T>();
             _lock = new object();
         }
 

@@ -20,6 +20,8 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
     internal class AdapterControlViewModel : ViewModelBase
     {
         private ObservableCollection<ViewModelBase> _tabItemsViewModel = new();
+        private IEventSystem _eventSystem;
+        private UIAdapterManager _adapterManager;
 
         private IEventSystem eventSystem;
         private UIAdapterManager uIAdapterManager;

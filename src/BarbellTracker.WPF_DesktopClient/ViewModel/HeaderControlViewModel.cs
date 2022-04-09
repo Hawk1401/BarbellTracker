@@ -3,14 +3,14 @@ using BarbellTracker.WPF_HelperClasses;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
-    class HeaderControlViewModel : ViewModelBase
+    internal class HeaderControlViewModel : ViewModelBase
     {
         private bool _startEnabled = true;
         private bool _abortEnabled;
 
         public HeaderControlViewModel()
         {
-            ClickCommandStartButton = new RelayCommand(IsStartEnabeld, StartAnalysis);
+            ClickCommandStartButton = new RelayCommand(IsStartEnabled, StartAnalysis);
             ClickCommandAbortButton = new RelayCommand(IsAbortEnabled, AbortAnalysis);        }
 
         public ICommand ClickCommandStartButton { get; }
@@ -22,7 +22,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             _abortEnabled = true;
         }
 
-        private bool IsStartEnabeld()
+        private bool IsStartEnabled()
         {
             return _startEnabled;
         }
