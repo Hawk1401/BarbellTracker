@@ -76,7 +76,7 @@ namespace BarbellTracker.ApplicationCode
                 File.WriteAllText(totalPath, content);
                 return true;
 
-            }catch (Exception ex)
+            }catch (IOException ex)
             {
                 return false;
             }
@@ -109,7 +109,7 @@ namespace BarbellTracker.ApplicationCode
                 return true;
 
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 return false;
             }
@@ -135,7 +135,7 @@ namespace BarbellTracker.ApplicationCode
                 File.AppendAllText(totalPath, content);
                 return true;
 
-            }catch(Exception ex)
+            }catch(IOException ex)
             {
                 return false;
             }
