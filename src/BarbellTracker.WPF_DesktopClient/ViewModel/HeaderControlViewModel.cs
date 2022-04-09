@@ -50,8 +50,6 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 
             eventSystem.Fire(new StartExtractVideoInfo() { StartExtractionInformation = startExtractionInformation });
 
-            // Nimm Processing Plugin in liste
-            // und File Dialog -> wähle JSON File (Whatsapp von Flo)
         }
 
         public void handelFile(SelectFile SelectFile)
