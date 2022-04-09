@@ -19,6 +19,9 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Another step
+      run: |
+       echo "Branch: ${{ github.sha }}"
     - name: Build
       run: dotnet build --no-restore   
     - name: Test AbstractionCode
