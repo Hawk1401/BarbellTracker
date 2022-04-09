@@ -39,8 +39,8 @@ jobs:
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-       tag_name: ${{ RealseTag }}
-       release_name: ${{Realse Name }}
+       tag_name: RealseTag
+       release_name: Realse Name
     - name: upload
       uses: csexton/release-asset-action@v2
       with:
