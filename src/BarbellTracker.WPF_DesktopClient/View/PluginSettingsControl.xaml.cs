@@ -28,5 +28,6 @@ namespace BarbellTracker.WPF_DesktopClient.View
             InitializeComponent();
             this.eventSystem = eventSystem;
             this.DataContext = new PluginSettingsControlViewModel(eventSystem);
+        }
     }
 }
