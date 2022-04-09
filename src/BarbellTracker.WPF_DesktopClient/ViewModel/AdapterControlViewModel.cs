@@ -58,12 +58,12 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             {
                 if (adapter is UICSVVectorAdapter velocityAdapter)
                 {
-                    TabsItemViewModels.Add(new AdapterVelocityTableViewModel(velocityAdapter.Name));
+                    App.Current.Dispatcher.Invoke((Action)delegate { TabsItemViewModels.Add(new AdapterVelocityTableViewModel(velocityAdapter.Name)); });
                     return;
                 }
                 if (adapter is UIVideoAdapter videoAdapter)
                 {
-                    TabsItemViewModels.Add(new AdapterVideoPlayerViewModel(videoAdapter.Name));
+                    App.Current.Dispatcher.Invoke((Action)delegate { TabsItemViewModels.Add(new AdapterVideoPlayerViewModel(videoAdapter.Name)); });
                     return;
                 }
             }
