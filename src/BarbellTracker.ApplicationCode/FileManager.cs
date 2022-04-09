@@ -68,7 +68,7 @@ namespace BarbellTracker.ApplicationCode
             try
             {
 
-                if (File.Exists(totalPath) && !Override)
+                if (FileExist(totalPath) && !Override)
                 {
                     return false;
                 }
@@ -100,7 +100,7 @@ namespace BarbellTracker.ApplicationCode
             try
             {
 
-                if (File.Exists(totalPath) && !Override)
+                if (FileExist(totalPath) && !Override)
                 {
                     return false;
                 }
@@ -134,6 +134,7 @@ namespace BarbellTracker.ApplicationCode
 
                 File.AppendAllText(totalPath, content);
                 return true;
+
             }catch(Exception ex)
             {
                 return false;
@@ -163,7 +164,7 @@ namespace BarbellTracker.ApplicationCode
             content = new string[0];
             var totalPath = getTotalPath(FileNameWithExtension);
 
-            if (!File.Exists(totalPath))
+            if (FileDoesNotExist(totalPath))
             {
                 return false;
             }
@@ -183,6 +184,15 @@ namespace BarbellTracker.ApplicationCode
             {
                 File.Create(totalPath);
             }
+        }
+
+        private bool FileExist(string path)
+        {
+            return File.Exists(path);
+        }
+        private bool FileDoesNotExist(string path)
+        {
+            return !FileExist(path);
         }
     }
 }
