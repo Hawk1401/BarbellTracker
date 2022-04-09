@@ -15,7 +15,7 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ListBox ItemsSource="{Binding PluginWithEnableStatus}"
+        <ListBox ItemsSource="{Binding PluginsWithStatus}"
                  Margin="5">
             <ListBox.ItemTemplate>
                 <DataTemplate>

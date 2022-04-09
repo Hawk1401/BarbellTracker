@@ -19,7 +19,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         private PluginManager pluginManager;
         public PluginSettingsControlViewModel()
         {
-            this.eventSystem = DependencyInjectionHelper.provider.GetRequiredService<IEventSystem>(); ;
+            this.eventSystem = DependencyInjectionHelper.provider.GetRequiredService<IEventSystem>(); 
             this.pluginManager = DependencyInjectionHelper.provider.GetRequiredService<PluginManager>();
             GetPluginInstancesOfProcessingPlugins();
 

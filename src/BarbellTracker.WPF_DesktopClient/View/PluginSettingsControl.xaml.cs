@@ -23,14 +23,12 @@ namespace BarbellTracker.WPF_DesktopClient.View
     /// </summary>
     public partial class PluginSettingsControl : UserControl
     {
-        private IEventSystem eventSystem;
 
         public PluginSettingsControl()
         {
             InitializeComponent();
 
             this.DataContext = new PluginSettingsControlViewModel();
-            this.eventSystem = DependencyInjectionHelper.provider.GetRequiredService<IEventSystem>();
 
         }
     }
