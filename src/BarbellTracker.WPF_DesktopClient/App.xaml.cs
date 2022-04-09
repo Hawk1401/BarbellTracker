@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BarbellTracker.Plugins.Processing;
+using BarbellTracker.Plugins.Tracker;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -18,11 +21,20 @@ namespace BarbellTracker.WPF_DesktopClient
         {
             // 
             DependencyInjectionHelper.SetUP();
+            var provider = DependencyInjectionHelper.provider;
+            var tacker = provider.GetRequiredService<JsonLoader>();
+            var Processing1 = provider.GetRequiredService<VelocityToCSVFile>();
+            var Processing2 = provider.GetRequiredService<AccelerationToCSVFile>();
+            var Processing3 = provider.GetRequiredService<VelocityToAdapterTable>();
+            var Processing4 = provider.GetRequiredService<AccelerationToAdapterTable>();
 
             base.OnStartup(e);
             new MainWindow().Show();
 
+
             // Den Rest hier instanziieren !!
+
+           
 
         }
     }
