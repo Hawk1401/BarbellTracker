@@ -16,9 +16,8 @@ namespace BarbellTracker.WPF_DesktopClient.DataStructures
         public PluginStatus(IEventSystem eventSystem, string pluginName, bool status)
         {
             this.PluginName = pluginName;
-            this.Status = status;
             this.eventSystem = eventSystem;
-
+            this.Status = status;
         }
 
         public string PluginName 

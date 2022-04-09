@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BarbellTracker.ApplicationCode;
 using BarbellTracker.WPF_DesktopClient.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BarbellTracker.WPF_DesktopClient.View
 {
@@ -23,11 +24,14 @@ namespace BarbellTracker.WPF_DesktopClient.View
     public partial class PluginSettingsControl : UserControl
     {
         private IEventSystem eventSystem;
-        public PluginSettingsControl(IEventSystem eventSystem)
+
+        public PluginSettingsControl()
         {
             InitializeComponent();
-            this.eventSystem = eventSystem;
-            this.DataContext = new PluginSettingsControlViewModel(eventSystem);
+
+            this.DataContext = new PluginSettingsControlViewModel();
+            this.eventSystem = DependencyInjectionHelper.provider.GetRequiredService<IEventSystem>();
+
         }
     }
 }

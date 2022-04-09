@@ -12,7 +12,7 @@ namespace BarbellTracker.DomainCodeTests
     {
 
         [Fact]
-        public void Equals_OfTrackedInformationAndNull_ReturnNull()
+        public void Equals_OfTrackedInformationAndNull_ReturnFalse()
         {
             TrackedInformation  trackedInformation = new TrackedInformation()
             {
@@ -24,7 +24,7 @@ namespace BarbellTracker.DomainCodeTests
         }
 
         [Fact]
-        public void Equals_OfTrackedInformationAndObject_ReturnNull()
+        public void Equals_OfTrackedInformationAndObject_ReturnFalse()
         {
             TrackedInformation trackedInformation = new TrackedInformation()
             {
@@ -37,7 +37,7 @@ namespace BarbellTracker.DomainCodeTests
 
 
         [Fact]
-        public void Equals_OfTwoDiffrentsTrackedInformation_ReturnNull()
+        public void Equals_OfTwoDiffrentsTrackedInformation_ReturnFalse()
         {
             TrackedInformation trackedInformation = new TrackedInformation()
             {
@@ -47,8 +47,28 @@ namespace BarbellTracker.DomainCodeTests
             {
                 Id = "SecondID"
             };
+
             var isEqual = trackedInformation.Equals(SecondtrackedInformation);
+
             Assert.False(isEqual);
+        }
+
+
+        [Fact]
+        public void Equals_OfTwoDiffrentsTrackedInformationWithSameId_ReturnTrue()
+        {
+            TrackedInformation trackedInformation = new TrackedInformation()
+            {
+                Id = "SameId"
+            };
+            TrackedInformation SecondtrackedInformation = new TrackedInformation()
+            {
+                Id = "SameId"
+            };
+
+            var isEqual = trackedInformation.Equals(SecondtrackedInformation);
+
+            Assert.True(isEqual);
         }
     }
 }

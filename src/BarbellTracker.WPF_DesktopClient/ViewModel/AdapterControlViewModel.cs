@@ -5,6 +5,7 @@ using BarbellTracker.ApplicationCode.Event;
 using BarbellTracker.WPF_DesktopClient.DataStructures;
 using BarbellTracker.WPF_DesktopClient.View;
 using BarbellTracker.WPF_HelperClasses;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
@@ -19,11 +21,16 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
     {
         private ObservableCollection<ViewModelBase> _tabItemsViewModel = new();
 
-
+        private IEventSystem eventSystem;
+        private UIAdapterManager uIAdapterManager;
         public AdapterControlViewModel()
         {
-            //EventSystem.Subscribe(Event.AdapterAdded, HandleAddedAdapter);
-            
+            eventSystem = DependencyInjectionHelper.provider.GetRequiredService<IEventSystem>();
+            uIAdapterManager = DependencyInjectionHelper.provider.GetRequiredService<UIAdapterManager>();
+            EventDelegate<AdapterAdded> del = HandleAddedAdapter;
+            eventSystem.Subscribe(del);
+
+
             /*
             // some test data
             TabsItemViewModels.Add(new AdapterVelocityTableViewModel("VelocityTable"));
@@ -41,23 +48,23 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
         }
 
-        public async Task HandleAddedAdapter(AdapterAdded AdapterAdded)
+        public void HandleAddedAdapter(AdapterAdded AdapterAdded)
         {
-            //string name = eventContext.Arg as string;
-            //var success = UIAdapterManager.Instance.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
-            //if (success)
-            //{
-            //    if(adapter is UICSVVelocityAdapter velocityAdapter)
-            //    {
-            //        TabsItemViewModels.Add(new AdapterVelocityTableViewModel(velocityAdapter.Name));
-            //        return;
-            //    }
-            //    if(adapter is UIVideoAdapter videoAdapter)
-            //    {
-            //        TabsItemViewModels.Add(new AdapterVideoPlayerViewModel(videoAdapter.Name));
-            //        return;
-            //    }
-            //}
+            string name = AdapterAdded.AdapterName;
+            var success = uIAdapterManager.TryGetUIAdapterByName(name, out Adapter.Interface.IUIAdapter adapter);
+            if (success)
+            {
+                if (adapter is UICSVVectorAdapter velocityAdapter)
+                {
+                    TabsItemViewModels.Add(new AdapterVelocityTableViewModel(velocityAdapter.Name));
+                    return;
+                }
+                if (adapter is UIVideoAdapter videoAdapter)
+                {
+                    TabsItemViewModels.Add(new AdapterVideoPlayerViewModel(videoAdapter.Name));
+                    return;
+                }
+            }
 
         }
     }

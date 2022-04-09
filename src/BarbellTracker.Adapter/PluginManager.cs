@@ -25,6 +25,7 @@ namespace BarbellTracker.Adapter
         {
             return PluginsList.Where(x => x is IProcessingPlugin).Select(x => x as IProcessingPlugin).ToList(); // performance not the best O(n + m); n=list size m=IUIplugins count
         }
+
         public List<ITrackerPlugin> GetTrackerPlugins()
         {
             return PluginsList.Where(x => x is ITrackerPlugin).Select(x => x as ITrackerPlugin).ToList(); // performance not the best O(n + m); n=list size m=IUIplugins count
@@ -44,6 +45,7 @@ namespace BarbellTracker.Adapter
             processingPlugin = null;
             return false;
         }
+
         public bool TryGetTrackerPluginByName(string name, out ITrackerPlugin trackerPlugin)
         {
             foreach (var _plugin in PluginsList)

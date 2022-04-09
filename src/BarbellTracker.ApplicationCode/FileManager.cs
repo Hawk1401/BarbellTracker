@@ -126,10 +126,7 @@ namespace BarbellTracker.ApplicationCode
                 SetUpFolderSetUp(CruuentExtractionFolder);
                 var totalPath = getTotalPath(FileNameWithExtension);
 
-                if (!File.Exists(totalPath))
-                {
-                    File.Create(totalPath);
-                }
+                CreateFileIfNotExist(totalPath);
 
                 File.AppendAllText(totalPath, content);
                 return true;
@@ -173,7 +170,15 @@ namespace BarbellTracker.ApplicationCode
 
         private void SetUpFolderSetUp(string Path)
         {
-            var p = Directory.CreateDirectory(Path);
+            Directory.CreateDirectory(Path);
+        }
+
+        private void CreateFileIfNotExist(string totalPath)
+        {
+            if (!File.Exists(totalPath))
+            {
+                File.Create(totalPath);
+            }
         }
     }
 }

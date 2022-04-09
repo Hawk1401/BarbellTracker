@@ -130,14 +130,16 @@ namespace BarbellTracker.AbstractionCodeTests
         }
 
         [Fact]
-        public void Copy_AVector_WillReturnAEqualVectorWithANewReference()
+        public void Copy_AVector_WillReturnAVectorWithANewReference()
         {
+            // Arrange
             var vector = new Vector2D(4, 2);
 
+            //Act
             var copy = vector.Copy();
 
+            // Assert
             var sameReference = object.ReferenceEquals(vector, copy);
-
             Assert.False(sameReference);
         }
 

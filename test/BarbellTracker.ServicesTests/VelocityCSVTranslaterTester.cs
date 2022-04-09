@@ -51,20 +51,19 @@ namespace BarbellTracker.ServicesTests
 
         }
         [Fact]
-        public void RequestACachedCSV_WithATrackedInformationObject_WillReturnTheCachedVersion()
+        public void GetCSV_WithSameKey_WillReturnTheSameIntance()
         {
-            var tracked = new DomainCode.TrackedInformation() { Id = "myTestID" };
-
-            var FirstVector = new Vector2D() { X = 0, Y = 1 };
-            var SecondVector = new Vector2D() { X = 2, Y = 3 };
-            var ThirdVector = new Vector2D() { X = 4, Y = 5 };
-            var FPS = 1;
-
-            var velocity = CreateVelocityObject(FPS, FirstVector, SecondVector, ThirdVector);
-
-
             using (var mockAuto = AutoMock.GetLoose())
             {
+                var tracked = new DomainCode.TrackedInformation() { Id = "myTestID" };
+
+                var FirstVector = new Vector2D() { X = 0, Y = 1 };
+                var SecondVector = new Vector2D() { X = 2, Y = 3 };
+                var ThirdVector = new Vector2D() { X = 4, Y = 5 };
+                var FPS = 1;
+
+                var velocity = CreateVelocityObject(FPS, FirstVector, SecondVector, ThirdVector);
+
                 mockAuto.Mock<ICalculator<Velocity>>()
                     .Setup(x => x.GetCalculatedValue(tracked))
                     .Returns(velocity);
@@ -72,14 +71,14 @@ namespace BarbellTracker.ServicesTests
                 var VelocityCalculatorMock = mockAuto.Create<ICalculator<Velocity>>();
                 var sut = new VelocityCSVTranslater(VelocityCalculatorMock, new ServiceCache<VelocityCSVModel>());
 
-                var expected = sut.GetCSV(tracked);
 
+
+                var expected = sut.GetCSV(tracked);
                 var CSV = sut.GetCSV(tracked);
 
 
-
-                Assert.StrictEqual(expected, CSV);
-
+                var saneReference = object.ReferenceEquals(expected, CSV);
+                Assert.True(saneReference);
             }
 
         }

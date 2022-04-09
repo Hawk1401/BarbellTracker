@@ -93,8 +93,6 @@ namespace BarbellTracker.AdapterTests
             var IsType = SUT.TryIsType(AdapterName, type);
 
             Assert.False(IsType);
-
-
         }
 
         [Fact]

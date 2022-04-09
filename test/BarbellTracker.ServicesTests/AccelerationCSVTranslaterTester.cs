@@ -127,7 +127,6 @@ namespace BarbellTracker.ServicesTests
                     .AddTransient<ICalculator<Velocity>, VelocityCalculator>()
                     .AddTransient<ICalculator<Acceleration>, AccelerationCalculator>()
                     .AddTransient<AccelerationCSVTranslater>()
-
                     )
                 .Build();
 

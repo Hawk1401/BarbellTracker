@@ -23,7 +23,7 @@ namespace BarbellTracker.Services
         {
             lock (_lock)
             {
-                return _chache.TryGetValue(key, out item);
+                return TryGetCachedItemWithoutLock(key, out item);
             }
         }
 
@@ -31,22 +31,11 @@ namespace BarbellTracker.Services
         {
             lock (_lock)
             {
-                if (_chache.TryGetValue(key, out var value))
+
+                if (HasItemNotChached(key, Item))
                 {
-                    if (value.Equals(Item))
-                    {
-                        return Item;
-                    };
-
-                    var hash1 = _chache.Keys.First().GetHashCode();
-                    var hash2 = key.GetHashCode();
-
-                    throw new KeyAlreadyExist($"The cache has Already an item with the same Key: {key} but a Different Value");
+                    AddItem(key, Item);
                 }
-
-                _chache.Add(key, Item);
-                RemoveOldItems();
-
                 return Item;
             }
         }
@@ -60,6 +49,38 @@ namespace BarbellTracker.Services
 
             var firstKey = _chache.Keys.First();
             _chache.Remove(firstKey);
+        }
+
+        private void AddItem(TrackedInformation key, T Item)
+        {
+            _chache.Add(key, Item);
+            RemoveOldItems();
+        }
+
+
+        private bool TryGetCachedItemWithoutLock(TrackedInformation key, out T item)
+        {
+            return _chache.TryGetValue(key, out item);
+
+        }
+
+        private bool HasItemChached(TrackedInformation key, T Item)
+        {
+            if (_chache.TryGetValue(key, out var value))
+            {
+                if (value.Equals(Item))
+                {
+                    return true;
+                };
+
+                throw new KeyAlreadyExist($"The cache has Already an item with the same Key: {key} but a Different Value");
+            }
+            return false;
+        }
+
+        private bool HasItemNotChached(TrackedInformation key, T Item)
+        {
+            return !HasItemChached(key, Item);
         }
     }
 }

@@ -13,8 +13,12 @@ namespace BarbellTracker.WPF_DesktopClient
     /// </summary>
     public partial class App : Application
     {
+
         protected override void OnStartup(StartupEventArgs e)
         {
+            // 
+            DependencyInjectionHelper.SetUP();
+
             base.OnStartup(e);
             new MainWindow().Show();
 
