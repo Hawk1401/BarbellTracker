@@ -57,7 +57,6 @@ namespace BarbellTracker.Services
             RemoveOldItems();
         }
 
-
         private bool TryGetCachedItemWithoutLock(TrackedInformation key, out T item)
         {
             return _cache.TryGetValue(key, out item);
