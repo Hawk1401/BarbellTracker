@@ -1,0 +1,24 @@
+{
+    "Id": "someId",
+    "Name": "SomeName",
+    "Positions": [
+        { 
+            "X": 0,
+            "Y": 1
+        },
+        { 
+            "X": 2,
+            "Y": 3
+        },
+        { 
+            "X": 4,
+            "Y": -5
+        },
+        { 
+            "X": 6,
+            "Y": 8
+        }
+    ],
+    "FrameRate": 30,
+    "PixelPerCm": 1
+}
