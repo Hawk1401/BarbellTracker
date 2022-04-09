@@ -32,4 +32,4 @@ jobs:
     - name: Test Services
       run: dotnet test test\BarbellTracker.ServicesTests\BarbellTracker.ServicesTests.csproj
     - name: publish
-      run: dotnet publish src\BarbellTracker.WPF_DesktopClient\BarbellTracker.WPF_DesktopClient.csproj -c Release --self-contained -r win-x64 -p:PublishSingleFile=true
+      run: dotnet publish src\BarbellTracker.WPF_DesktopClient\BarbellTracker.WPF_DesktopClient.csproj -c Release --self-contained -r win-x64 -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
