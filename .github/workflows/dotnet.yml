@@ -39,6 +39,7 @@ jobs:
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+       tag_name: windows release
        release_name: windows release
     - name: upload
       uses: csexton/release-asset-action@v2
