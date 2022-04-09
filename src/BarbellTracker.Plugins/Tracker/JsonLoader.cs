@@ -26,6 +26,8 @@ namespace BarbellTracker.Plugins.Tracker
         public JsonLoader(IEventSystem eventSystem, PluginManager pluginManager)
         {
             this.eventSystem = eventSystem;
+            this.pluginManager = pluginManager;
+
             pluginManager.AddPlugin(this);
 
             EventDelegate<StartExtractVideoInfo> StartExtractVideoInfoDelegate = StartTracking;
