@@ -33,3 +33,17 @@ jobs:
       run: dotnet test test\BarbellTracker.ServicesTests\BarbellTracker.ServicesTests.csproj
     - name: publish
       run: dotnet publish src\BarbellTracker.WPF_DesktopClient\BarbellTracker.WPF_DesktopClient.csproj -c Release --self-contained -r win-x64 -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+    - name: name Realse
+      uses: actions/create-release@v1
+      id: create_release
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+       tag_name: ${{ RealseTag }}
+       release_name: ${{Realse Name }}
+    - name: upload
+      uses: csexton/release-asset-action@v2
+      with:
+       github-token: ${{ secrets.GITHUB_TOKEN }}
+       pattern: src\BarbellTracker.WPF_DesktopClient\bin\Release\net6.0-windows\win-x64\publish\*.exe
+       release-url: ${{ steps.create_release.outputs.upload_url }}
