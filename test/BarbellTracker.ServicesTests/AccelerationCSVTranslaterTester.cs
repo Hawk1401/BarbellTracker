@@ -23,23 +23,25 @@ namespace BarbellTracker.ServicesTests
         [Fact]
         public void RequestCSVWithTheGetCSV_FromATrackedInformationObject_WillReturnTheRigthCSVObject()
         {
-            var tracked = new DomainCode.TrackedInformation() { Id = "myTestID"};
-            var FirstVector = new Vector2D() { X = 0, Y = 1 };
-            var SecondVector = new Vector2D() { X = 2, Y = 3 };
-            var ThirdVector = new Vector2D() { X = 4, Y = 5 };
-            var FPS = 1;
-
-            var acceleration = CreateVelocityObject(FPS, FirstVector, SecondVector, ThirdVector);
-
-
-            var expected = new VectorCSVModel();
-            expected.AddItem("00:00:", FirstVector.Length(), FirstVector.ToString());
-            expected.AddItem("00:01:", SecondVector.Length(), SecondVector.ToString());
-            expected.AddItem("00:02:", ThirdVector.Length(), ThirdVector.ToString());
-
-
             using (var mockAuto = AutoMock.GetLoose())
             {
+                //Arrange
+                var tracked = new DomainCode.TrackedInformation() { Id = "myTestID" };
+                var FirstVector = new Vector2D() { X = 0, Y = 1 };
+                var SecondVector = new Vector2D() { X = 2, Y = 3 };
+                var ThirdVector = new Vector2D() { X = 4, Y = 5 };
+                var FPS = 1;
+
+                var acceleration = CreateVelocityObject(FPS, FirstVector, SecondVector, ThirdVector);
+
+
+                var expected = new VectorCSVModel();
+                expected.AddItem("00:00:", FirstVector.Length(), FirstVector.ToString());
+                expected.AddItem("00:01:", SecondVector.Length(), SecondVector.ToString());
+                expected.AddItem("00:02:", ThirdVector.Length(), ThirdVector.ToString());
+
+
+
                 mockAuto.Mock<ICalculator<Acceleration>>()
                     .Setup(x => x.GetCalculatedValue(tracked))
                     .Returns(acceleration);
@@ -47,7 +49,10 @@ namespace BarbellTracker.ServicesTests
                 var VelocityCalculatorMock = mockAuto.Create<ICalculator<Acceleration>>();
                 var sut = new AccelerationCSVTranslater(VelocityCalculatorMock, new ServiceCache<AccelerationCSVModel>());
 
+                //Act
                 var CSV = sut.GetCSV(tracked);
+
+                //Assert
                 Assert.Equal(expected, CSV);
             }
 
@@ -57,18 +62,20 @@ namespace BarbellTracker.ServicesTests
         [Fact]
         public void Request_CachedAcceleration_WillReturnTheCachedObjcet()
         {
-            var tracked = new DomainCode.TrackedInformation() { Id = "myTestID" };
-            var FirstVector = new Vector2D() { X = 0, Y = 1 };
-            var SecondVector = new Vector2D() { X = 2, Y = 3 };
-            var ThirdVector = new Vector2D() { X = 4, Y = 5 };
-            var FPS = 1;
-
-            var acceleration = CreateVelocityObject(FPS, FirstVector, SecondVector, ThirdVector);
-
-
-
             using (var mockAuto = AutoMock.GetLoose())
             {
+                //Arrange
+                var tracked = new DomainCode.TrackedInformation() { Id = "myTestID" };
+                var FirstVector = new Vector2D() { X = 0, Y = 1 };
+                var SecondVector = new Vector2D() { X = 2, Y = 3 };
+                var ThirdVector = new Vector2D() { X = 4, Y = 5 };
+                var FPS = 1;
+
+                var acceleration = CreateVelocityObject(FPS, FirstVector, SecondVector, ThirdVector);
+
+
+
+
                 mockAuto.Mock<ICalculator<Acceleration>>()
                     .Setup(x => x.GetCalculatedValue(tracked))
                     .Returns(acceleration);
@@ -76,9 +83,11 @@ namespace BarbellTracker.ServicesTests
                 var VelocityCalculatorMock = mockAuto.Create<ICalculator<Acceleration>>();
                 var sut = new AccelerationCSVTranslater(VelocityCalculatorMock, new ServiceCache<AccelerationCSVModel>());
 
+                //Act
                 var expected = sut.GetCSV(tracked);
                 var CachedVersion = sut.GetCSV(tracked);
 
+                //Assert
                 Assert.StrictEqual(expected, CachedVersion);
             }
 
@@ -87,6 +96,7 @@ namespace BarbellTracker.ServicesTests
         [Fact]
         public void RequestCSVWithTheCreateCSV_FromAVelocityObject_WillReturnTheRigthCSVObject()
         {
+            //Arrange
             var sut = CreateSTU();
             var FirstVector = new Vector2D() { X = 0, Y = 1 };
             var SecondVector = new Vector2D() { X = 2, Y = 3 };
@@ -100,10 +110,13 @@ namespace BarbellTracker.ServicesTests
             expected.AddItem("00:01:", SecondVector.Length(), SecondVector.ToString());
             expected.AddItem("00:02:", ThirdVector.Length(), ThirdVector.ToString());
 
+
+            //Act
             var CSV = sut.CreateCSV(acceleration);
 
-            Assert.Equal(expected, CSV);
 
+            //Assert
+            Assert.Equal(expected, CSV);
         }
 
 

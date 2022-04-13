@@ -19,12 +19,11 @@ namespace BarbellTracker.AdapterTests
         [Fact]
         public void Add_Aplugin_WillSendTheAddedPluginOverTheEventsystem()
         {
-
-            var plugin = CreateIProcessingPlugin("pluginName");
-
-            
             using (var mockAuto = AutoMock.GetStrict())
             {
+                //Arrange
+                var plugin = CreateIProcessingPlugin("pluginName");
+            
                 var pluginLoaded = new PluginLoaded() { PluginName = plugin.Name };
                 mockAuto.Mock<IEventSystem>()
                     .Setup(x => x.Fire(pluginLoaded))
@@ -32,12 +31,14 @@ namespace BarbellTracker.AdapterTests
 
                 var repoMock = new Moq.Mock<IEventSystem>();
                 repoMock.Setup(x => x.Fire(Moq.It.Is<PluginLoaded>(x => x.PluginName == plugin.Name))).Returns(true);
-
                 var eventSystem = repoMock.Object;
-
                 var sut = new PluginManager(eventSystem);
 
+
+                //Act
                 sut.AddPlugin(plugin);
+
+                //Assert
                 repoMock.VerifyAll();
             }
         }
@@ -46,6 +47,7 @@ namespace BarbellTracker.AdapterTests
         [MemberData(nameof(ListsofIProcessingAndITrackerPlugin))]
         public void RequestAllProcessingPlugin_FromThePluginManager_WillReturnAllProcessingPluginsInstance(IProcessingPlugin[] processingPlugins, ITrackerPlugin[] ITrackerPlugins)
         {
+            //Arrange
             foreach (var processingPlugin in processingPlugins)
             {
                 SUT.AddPlugin(processingPlugin);
@@ -55,10 +57,14 @@ namespace BarbellTracker.AdapterTests
             {
                 SUT.AddPlugin(ITrackerPlugin);
             }
-
             var expected = processingPlugins;
+
+
+            //Act
             var actual = SUT.GetProcessingPlugins();
 
+
+            //Assert
             Assert.Equal(expected.Length, actual.Count);
 
             for (int i = 0; i < expected.Length; i++)
@@ -72,6 +78,7 @@ namespace BarbellTracker.AdapterTests
         [MemberData(nameof(ListsofIProcessingAndITrackerPlugin))]
         public void RequestAllTrackerPlugin_FromThePluginManager_WillReturnAllTrackerPluginsInstance(IProcessingPlugin[] processingPlugins, ITrackerPlugin[] ITrackerPlugins)
         {
+            //Arrange
             foreach (var processingPlugin in processingPlugins)
             {
                 SUT.AddPlugin(processingPlugin);
@@ -83,8 +90,13 @@ namespace BarbellTracker.AdapterTests
             }
 
             var expected = ITrackerPlugins;
+
+
+            //Act
             var actual = SUT.GetTrackerPlugins();
 
+
+            //Assert
             Assert.Equal(expected.Length, actual.Count);
 
             for (int i = 0; i < expected.Length; i++)
@@ -101,13 +113,17 @@ namespace BarbellTracker.AdapterTests
         [InlineData(5, 5)]
         public void Request_AExistingProcessingPlugin_WillReturnTrueAndThePlugin(int ProcessingPluginCount, int TrackerPluginCount)
         {
+            //Arrange
             FillPluginManagerWithPlugins(ProcessingPluginCount, TrackerPluginCount);
 
             var PluginName = "MySecretPluginName";
             var expected = CreateIProcessingPlugin(PluginName);
             SUT.AddPlugin(expected);
 
+            //Act
             var containsThePlugin = SUT.TryGetProcessingPluginByName(PluginName, out var actual);
+
+            //Assert
             Assert.True(containsThePlugin);
             Assert.StrictEqual(expected, actual);
         }
@@ -119,12 +135,14 @@ namespace BarbellTracker.AdapterTests
         [InlineData(5, 5)]
         public void Request_ANotExistingProcessingPlugin_WillReturnFalseAndNull(int ProcessingPluginCount, int TrackerPluginCount)
         {
+            //Arrange
             FillPluginManagerWithPlugins(ProcessingPluginCount, TrackerPluginCount);
-
             var PluginName = "MySecretPluginName";
 
+            //Act
             var containsThePlugin = SUT.TryGetProcessingPluginByName(PluginName, out var actual);
-
+            
+            //Assert
             Assert.False(containsThePlugin);
             Assert.Null(actual);
         }
@@ -137,13 +155,17 @@ namespace BarbellTracker.AdapterTests
         [InlineData(5, 5)]
         public void Request_AExistingTrackerPlugin_WillReturnTrueAndThePlugin(int ProcessingPluginCount, int TrackerPluginCount)
         {
+            //Arrange
             FillPluginManagerWithPlugins(ProcessingPluginCount, TrackerPluginCount);
 
             var PluginName = "MySecretPluginName";
             var expected = CreateITrackerPlugin(PluginName);
             SUT.AddPlugin(expected);
 
+            //Act
             var containsThePlugin = SUT.TryGetTrackerPluginByName(PluginName, out var actual);
+
+            //Assert
             Assert.True(containsThePlugin);
             Assert.StrictEqual(expected, actual);
         }
@@ -155,12 +177,16 @@ namespace BarbellTracker.AdapterTests
         [InlineData(5, 5)]
         public void Request_ANotExistingTrackerPlugin_WillReturnFalseAndNull(int ProcessingPluginCount, int TrackerPluginCount)
         {
+            //Arrange
             FillPluginManagerWithPlugins(ProcessingPluginCount, TrackerPluginCount);
 
             var PluginName = "MySecretPluginName";
 
+            //Act
             var containsThePlugin = SUT.TryGetTrackerPluginByName(PluginName, out var actual);
 
+
+            //Assert
             Assert.False(containsThePlugin);
             Assert.Null(actual);
         }

@@ -29,6 +29,8 @@ namespace BarbellTracker.ServicesTests
         [InlineData(42)]
         public void TestFrameRateoutput(int frameRate)
         {
+
+            //Arrange
             TrackedInformation trackedInfos = new TrackedInformation()
             {
                 FrameRate = frameRate,
@@ -38,17 +40,19 @@ namespace BarbellTracker.ServicesTests
                 Positions = new Vector2D[] { new Vector2D(0, 0), new Vector2D(1, 0) }
             };
 
-
+            //Act
             var velocity = _sut.GetCalculatedValue(trackedInfos);
 
 
+            //Assert
             Assert.Equal(velocity.FPS, frameRate);
         }
 
         [Theory]
-        [MemberData(nameof(TestDataForTestGetVelocity))]
+        [MemberData(nameof(PositionAndCorrespondingVelocityEnumerable))]
         public void TestGetVelocity(Vector2D[] Posions, Vector2D[] Velocity)
         {
+            //Arrange
             TrackedInformation trackedInfos = new TrackedInformation()
             {
                 FrameRate = 30,
@@ -59,9 +63,11 @@ namespace BarbellTracker.ServicesTests
             };
 
 
+            //Act
             var velocity = _sut.GetCalculatedValue(trackedInfos);
 
 
+            //Assert
             Assert.Equal(velocity.Vectors.Length, Velocity.Length);
             for (int i = 0; i < velocity.Vectors.Length; i++)
             {
@@ -70,9 +76,10 @@ namespace BarbellTracker.ServicesTests
         }
 
         [Theory]
-        [MemberData(nameof(TestDataForTestGetVelocity))]
+        [MemberData(nameof(PositionAndCorrespondingVelocityEnumerable))]
         public void Request_ACachedVelocity_WillReturnTheCachedVelocity(Vector2D[] Posions, Vector2D[] _)
         {
+            //Arrange
             TrackedInformation trackedInfos = new TrackedInformation()
             {
                 FrameRate = 30,
@@ -82,14 +89,18 @@ namespace BarbellTracker.ServicesTests
                 Positions = Posions
             };
 
-
             var expected = _sut.GetCalculatedValue(trackedInfos);
 
+
+            //Act
             var acuale = _sut.GetCalculatedValue(trackedInfos);
+
+
+            //Assert
             Assert.Same(expected, acuale);
         }
 
-        public static IEnumerable<object[]> TestDataForTestGetVelocity()
+        public static IEnumerable<object[]> PositionAndCorrespondingVelocityEnumerable()
         {
             var VerticalVectors = new AbstractionCode.Vector2D[]
             {

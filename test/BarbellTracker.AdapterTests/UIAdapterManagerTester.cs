@@ -18,13 +18,16 @@ namespace BarbellTracker.AdapterTests
         [Fact]
         public void Request_AExistingAdapterByName_WillRetrunTrueAndTheAdapter()
         {
+            //Arrange
             var AdapterName = "TestAdapterName";
-            var Adapter = GetAdapter(AdapterName);
+            var Adapter = CreateAdapter(AdapterName);
             SUT.AddNewAdapter(Adapter);
 
+
+            //Act
             var Exist = SUT.TryGetUIAdapterByName(AdapterName, out var RequestedAdapter);
 
-
+            //Assert
             Assert.True(Exist);
             Assert.Same(Adapter, RequestedAdapter);
         }
@@ -32,15 +35,17 @@ namespace BarbellTracker.AdapterTests
         [Fact]
         public void Request_ANotExistingAdapterByName_WillRetrunFalseAndNull()
         {
+            //Arrange
             var AdapterName = "TestAdapterName";
-            var Adapter = GetAdapter(AdapterName);
+            var Adapter = CreateAdapter(AdapterName);
             SUT.AddNewAdapter(Adapter);
-
 
             var NotExistingAdapterName = "NotExistingTestAdapterName";
 
+            //Act
             var Exist = SUT.TryGetUIAdapterByName(NotExistingAdapterName, out var RequestedAdapter);
 
+            //Assert
 
             Assert.False(Exist);
             Assert.Null(RequestedAdapter);
@@ -49,17 +54,18 @@ namespace BarbellTracker.AdapterTests
         [Fact]
         public void Add_AExistingAdapterName_WillReplaceTheAdapter()
         {
+            //Arrange
             var AdapterName = "TestAdapterName";
-            var Adapter = GetAdapter(AdapterName);
+            var Adapter = CreateAdapter(AdapterName);
             SUT.AddNewAdapter(Adapter);
 
-
-
-            var ReplacingAdapter = GetAdapter(AdapterName);
+            var ReplacingAdapter = CreateAdapter(AdapterName);
             SUT.AddNewAdapter(ReplacingAdapter);
 
+            //Act
             var Exist = SUT.TryGetUIAdapterByName(AdapterName, out var RequestedAdapter);
-
+            
+            //Assert
             Assert.True(Exist);
             Assert.NotSame(Adapter, RequestedAdapter);
             Assert.Same(ReplacingAdapter, RequestedAdapter);
@@ -68,15 +74,16 @@ namespace BarbellTracker.AdapterTests
         [Fact]
         public void TryIsType_WithTheRigthType_WillReturnTrue()
         {
+            //Arrange
             var AdapterName = "TestAdapterName";
-            var Adapter = GetAdapter(AdapterName);
+            var Adapter = CreateAdapter(AdapterName);
             var type = Adapter.GetType();
             SUT.AddNewAdapter(Adapter);
 
-
+            //Act
             var IsType = SUT.TryIsType(AdapterName, type);
 
-
+            //Assert
             Assert.True(IsType);
         }
 
@@ -84,37 +91,41 @@ namespace BarbellTracker.AdapterTests
 
         public void TryIsType_WithTheWongType_WillReturnFalse()
         {
+            //Arrange
             var AdapterName = "TestAdapterName";
-            var Adapter = GetAdapter(AdapterName);
+            var Adapter = CreateAdapter(AdapterName);
             var type = new object().GetType();
             SUT.AddNewAdapter(Adapter);
 
 
+            //Act
             var IsType = SUT.TryIsType(AdapterName, type);
 
+            //Assert
             Assert.False(IsType);
         }
 
         [Fact]
-
         public void TryIsType_WithNotExistingName_WillReturnFalse()
         {
+            //Arrange
             var AdapterName = "TestAdapterName";
-            var Adapter = GetAdapter(AdapterName);
+            var Adapter = CreateAdapter(AdapterName);
             var type = Adapter.GetType();
             SUT.AddNewAdapter(Adapter);
 
             var NotExistingAdapterName = "NotExistingTestAdapterName";
 
-
+            //Act
             var IsType = SUT.TryIsType(NotExistingAdapterName, type);
 
+            //Assert
             Assert.False(IsType);
 
 
         }
 
-        public IUIAdapter GetAdapter(string name)
+        public IUIAdapter CreateAdapter(string name)
         {
             using (var mockAuto = AutoMock.GetLoose())
             {

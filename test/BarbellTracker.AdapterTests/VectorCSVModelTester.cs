@@ -15,10 +15,13 @@ namespace BarbellTracker.AdapterTests
         [Fact]
         public void GetHeader_WillReturnTheHeader()
         {
-            var header = VectorCSVModel.GetHeader();
-
+            //Arrange
             var ExpectedHeader = "Time;Length;Vector";
 
+            //Act
+            var header = VectorCSVModel.GetHeader();
+
+            //Assert
             Assert.Equal(header, ExpectedHeader);
         }
 
@@ -27,8 +30,10 @@ namespace BarbellTracker.AdapterTests
         [MemberData(nameof(VectorCSVModelWithExpectedTabel))]
         public void GetTable_WillReturnTheTableWithAllAddedItems(VectorCSVModel vectorCSVModel, List<VectorCSVItem> ExpectedTabel)
         {
+            //Act
             var ActualTabel = vectorCSVModel.GetTable();
 
+            //Assert
             Assert.Equal(ExpectedTabel, ActualTabel);
         }
 
@@ -36,8 +41,10 @@ namespace BarbellTracker.AdapterTests
         [MemberData(nameof(VectorCSVModelWithExpectedTabelString))]
         public void ToString_WillReturnTheTableWithAllAddedItemsAsaString(VectorCSVModel vectorCSVModel, string ExpectedTabel)
         {
+            //Act
             var ActualTabel = vectorCSVModel.ToString();
 
+            //Assert
             Assert.Equal(ExpectedTabel, ActualTabel);
         }
 
@@ -45,26 +52,33 @@ namespace BarbellTracker.AdapterTests
         [Fact]
         public void Equal_OfVectorCSVModelAndNUll_WillReturnFalse()
         {
+            //Arrange
             VectorCSVModel vectorCSVModel = new VectorCSVModel();
 
+            //Act
             var IsEqual = vectorCSVModel.Equals(null);
 
+            //Assert
             Assert.False(IsEqual);
         }
 
         [Fact]
         public void Equal_OfVectorCSVModelAndObject_WillReturnFalse()
         {
+            //Arrange
             VectorCSVModel vectorCSVModel = new VectorCSVModel();
 
+            //Act
             var IsEqual = vectorCSVModel.Equals(new object());
 
+            //Assert
             Assert.False(IsEqual);
         }
 
         [Fact]
         public void Equal_OfTwoVectorCSVModelWithDifferentContentCount_WillReturnFalse()
         {
+            //Arrange
             var vectorCSVModelWithOneItem = new VectorCSVModel();
             vectorCSVModelWithOneItem.AddItem("00:00:01", 0, "{ x=0, y=1}");
 
@@ -73,14 +87,17 @@ namespace BarbellTracker.AdapterTests
             vectorCSVModelWithTwoItem.AddItem("00:00:02", 1, "{ x=1, y=2}");
 
 
+            //Act
             var IsEqual = vectorCSVModelWithOneItem.Equals(vectorCSVModelWithTwoItem);
 
+            //Assert
             Assert.False(IsEqual);
         }
 
         [Fact]
         public void Equal_OfTwoVectorCSVModelWithDifferentContent_WillReturnFalse()
         {
+            //Arrange
             var vectorCSVModelWithOneItem = new VectorCSVModel();
             vectorCSVModelWithOneItem.AddItem("00:00:01", 0, "{ x=0, y=1}");
             vectorCSVModelWithOneItem.AddItem("00:00:02", 1, "{ x=1, y=2}");
@@ -90,8 +107,10 @@ namespace BarbellTracker.AdapterTests
             vectorCSVModelWithTwoItem.AddItem("00:00:04", 3, "{ x=5, y=6}");
 
 
+            //Act
             var IsEqual = vectorCSVModelWithOneItem.Equals(vectorCSVModelWithTwoItem);
 
+            //Assert
             Assert.False(IsEqual);
         }
 
@@ -100,8 +119,7 @@ namespace BarbellTracker.AdapterTests
         [Fact]
         public void Equal_OfTwoVectorCSVModelWithSameContent_WillReturnTrue()
         {
-
-
+            //Arrange
             var vectorCSVModelWithOneItem = new VectorCSVModel();
             vectorCSVModelWithOneItem.AddItem("00:00:01", 0, "{ x=0, y=1}");
             vectorCSVModelWithOneItem.AddItem("00:00:02", 1, "{ x=1, y=2}");
@@ -111,8 +129,10 @@ namespace BarbellTracker.AdapterTests
             vectorCSVModelWithTwoItem.AddItem("00:00:02", 1, "{ x=1, y=2}");
 
 
+            //Act
             var IsEqual = vectorCSVModelWithOneItem.Equals(vectorCSVModelWithTwoItem);
 
+            //Assert
             Assert.True(IsEqual);
         }
 

@@ -29,6 +29,7 @@ namespace BarbellTracker.ServicesTests
         [InlineData(42)]
         public void TestFrameRateoutput(int frameRate)
         {
+            //Arrange
             TrackedInformation trackedInfos = new TrackedInformation()
             {
                 FrameRate = frameRate,
@@ -39,16 +40,18 @@ namespace BarbellTracker.ServicesTests
             };
 
 
+            //Act
             var velocity = _sut.GetCalculatedValue(trackedInfos);
 
-
+            //Assert
             Assert.Equal(velocity.FPS, frameRate);
         }
 
         [Theory]
-        [MemberData(nameof(GetPositionWithVelocityAndAcceleration))]
+        [MemberData(nameof(VelocityWithAccelerationArrayEnumerable))]
         public void TestGetVelocity(Vector2D[] Posions , Vector2D[] Acceleration)
         {
+            //Arrange
             TrackedInformation trackedInfos = new TrackedInformation()
             {
                 FrameRate = 30,
@@ -59,9 +62,11 @@ namespace BarbellTracker.ServicesTests
             };
 
 
+            //Act
             var CaledAcceleration = _sut.GetCalculatedValue(trackedInfos);
 
 
+            //Assert
             Assert.Equal(CaledAcceleration.Vectors.Length, Acceleration.Length);
             for (int i = 0; i < CaledAcceleration.Vectors.Length; i++)
             {
@@ -72,6 +77,7 @@ namespace BarbellTracker.ServicesTests
         [Fact]
         public void Request_CachedVelocity_WillReturnTheCachedVelocity()
         {
+            //Arrange
             TrackedInformation trackedInfos = new TrackedInformation()
             {
                 FrameRate = 30,
@@ -87,13 +93,15 @@ namespace BarbellTracker.ServicesTests
             };
 
 
+            //Act
             var Origanal = _sut.GetCalculatedValue(trackedInfos);
             var Cached = _sut.GetCalculatedValue(trackedInfos);
 
+            //Assert
             Assert.StrictEqual(Origanal, Cached);
 
         }
-        public static IEnumerable<object[]> GetPositionWithVelocityAndAcceleration()
+        public static IEnumerable<object[]> VelocityWithAccelerationArrayEnumerable()
         {
             var VerticalVectors = new Vector2D[]
             {
