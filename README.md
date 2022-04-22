@@ -3,7 +3,7 @@
 
 ### Inhat
 <ul>
-  <li>Entwurfsmuster/li>
+  <li>Entwurfsmuster</li>
   <li>Test Daten</li>
   <li>Program Code</li>
   <li>unit tests</li>
