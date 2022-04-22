@@ -14,7 +14,7 @@
 ## Download Akutelle Version
 Die aktuelle version kann man im Github Repo herunterladen, alternativ auch über diesen Link (https://github.com/Hawk1401/BarbellTracker/releases)
 
-##Nutz anleitung
+## Nutz anleitung
 Nach dem starten des programmes kann man an der linken seite auswählen welche plugins man aktivirt haben möchte, hierbei empfelen wir alle auszuwählen.
 Nach dme man seine netscheidung getroffen hat, kann man oben linksauf starten drücken, hiernach öffnet sich ein filedialoge, hier kann man nun die test daten aus unsern repo auswählen.
 Die test daten stehllen beispiel positionen einer hantelstange dar, da noch keine optische erkennung dieser implementirt wurde. 
