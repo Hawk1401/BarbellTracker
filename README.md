@@ -11,7 +11,7 @@
   <li>Die schriftliche ausarbeitung</li>
 </ul>
 
-##Download Akutelle Version
+## Download Akutelle Version
 Die aktuelle version kann man im Github Repo herunterladen, alternativ auch über diesen Link (https://github.com/Hawk1401/BarbellTracker/releases)
 
 ##Nutz anleitung
