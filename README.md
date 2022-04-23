@@ -1,23 +1,23 @@
 # Programmentwurf für Advanced Software-Engineering von Jan Metzger und Florian Koch
-## An der DHBW karlsruhe im studiengang Medizininformatik 5 & 6 Semester
+## An der DHBW Karlsruhe im Studiengang medizinische Informatik für das 5 & 6 Semester
 
-### Inhat
+### Inhalt
 <ul>
   <li>Entwurfsmuster</li>
   <li>Test Daten</li>
-  <li>Program Code</li>
-  <li>unit tests</li>
-  <li>Mutation Test ergebnisse</li>
-  <li>Die schriftliche ausarbeitung</li>
+  <li>Programm Code</li>
+  <li>Unit Tests</li>
+  <li>Mutation Testergebnisse</li>
+  <li>Die schriftliche Ausarbeitung</li>
 </ul>
 
 ## Download Akutelle Version
-Die aktuelle version kann man im Github Repo herunterladen, alternativ auch über diesen Link (https://github.com/Hawk1401/BarbellTracker/releases)
+Die aktuelle Version kann man im Github Repo herunterladen, alternativ auch über diesen Link (https://github.com/Hawk1401/BarbellTracker/releases)
 
 ## Nutz anleitung
-Nach dem starten des programmes kann man an der linken seite auswählen welche plugins man aktivirt haben möchte, hierbei empfelen wir alle auszuwählen.
-Nach dme man seine netscheidung getroffen hat, kann man oben linksauf starten drücken, hiernach öffnet sich ein filedialoge, hier kann man nun die test daten aus unsern repo auswählen.
-Die test daten stehllen beispiel positionen einer hantelstange dar, da noch keine optische erkennung dieser implementirt wurde. 
-Die daten werden nun aus dem file herausgellesen und weiter verarbeitet, jenachdem welche Plugins man ausgewählt hat, werden ein nun CSV tabellen angezeigt und oder es wurden auf der Festplatte gespeichert.
-Die app speichert alle daten in einen subfolder des Temp folder mit den nammen "BarbellTracker.
+Nach dem Starten des Programms kann man an der linken Seite auswählen, welche Plugins aktiviert werden sollen. Wir empfehlen alle auszuwählen.
+Nach dem die Plugins ausgewählt wurden startet das Programm in dem man auf Starten Button klickt. Anschließend öffnet sich ein Filedialog, bei dem Testdaten aus diesem Repo eingelesen kann.
+Die Testdaten beinhalten simmulierte Positionen einer Hantelstange da zum aktuellen Zeitpunkt noch keine optische Erkennung impementiert wurde.
+Die Daten werden aus der Datei ausgelesen und weiter verarbeitet. Abhängig von den aktivierten Plugins wird eine CSV Tabelle angezeigt und/oder auf die Festplatte gespeichert. 
+Die App speichert alle Daten in einen Unterordner des Temp Ordners mit den Namen "BarbellTracker".
 
