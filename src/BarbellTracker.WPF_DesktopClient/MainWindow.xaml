@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BarbellTracker.WPF_DesktopClient.View"
         xmlns:Converters="clr-namespace:BarbellTracker.WPF_HelperClasses;assembly=BarbellTracker.WPF_HelperClasses"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="BarbellTracker" Height="450" Width="800">
 
     <Window.Resources>
         <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>

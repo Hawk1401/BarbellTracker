@@ -182,7 +182,7 @@ namespace BarbellTracker.ApplicationCode
         {
             if (!File.Exists(totalPath))
             {
-                File.Create(totalPath);
+                File.Create(totalPath).Dispose();
             }
         }
 

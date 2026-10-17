@@ -14,8 +14,8 @@ namespace BarbellTracker.WPF_HelperClasses
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // YAGNI
-            throw new NotImplementedException();
+            // One-way converter, the visibility is never written back to the view model
+            return Binding.DoNothing;
         }
     }
 }

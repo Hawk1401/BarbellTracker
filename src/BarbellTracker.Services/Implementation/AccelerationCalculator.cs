@@ -14,7 +14,7 @@ namespace BarbellTracker.Services.Implementation
     {
         public string Name => "Acceleration Calculator";
 
-        public string Description => throw new NotImplementedException();
+        public string Description => "This service will calculate the acceleration of the moving barbell";
 
         private ServiceCache<Acceleration> cache;
         private ICalculator<Velocity> velocityCalculator;

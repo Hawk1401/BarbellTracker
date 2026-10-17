@@ -28,15 +28,21 @@ namespace BarbellTracker.ApplicationCode
         private bool FireAsync(object o)
         {
             var type = o.GetType();
+            HashSet<Delegate> Delegates;
 
-            if (Map.ContainsKey(type))
+            lock (_lock)
             {
-                var Delegates = Map[type];
+                if (!Map.TryGetValue(type, out var registered))
+                {
+                    return false;
+                }
 
-                EventQueue.Add(Delegates, o);
-                return true;
+                // Snapshot, so handlers can (un)subscribe while the event is being dispatched
+                Delegates = new HashSet<Delegate>(registered);
             }
-            return false;
+
+            EventQueue.Add(Delegates, o);
+            return true;
         }
 
 

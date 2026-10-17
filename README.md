@@ -19,5 +19,5 @@ Nach dem Starten des Programms kann man an der linken Seite auswählen, welche P
 Nach dem die Plugins ausgewählt wurden startet das Programm in dem man auf Starten Button klickt. Anschließend öffnet sich ein Filedialog, bei dem Testdaten aus diesem Repo eingelesen kann.
 Die Testdaten beinhalten simmulierte Positionen einer Hantelstange da zum aktuellen Zeitpunkt noch keine optische Erkennung impementiert wurde.
 Die Daten werden aus der Datei ausgelesen und weiter verarbeitet. Abhängig von den aktivierten Plugins wird eine CSV Tabelle angezeigt und/oder auf die Festplatte gespeichert. 
-Die App speichert alle Daten in einen Unterordner des Temp Ordners mit den Namen "BarbellTracker".
+Die App (jetzt .NET 8) speichert alle Daten in einen Unterordner des Temp Ordners mit den Namen "BarbellTracker".
 

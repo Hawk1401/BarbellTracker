@@ -24,8 +24,16 @@ namespace BarbellTracker.ConsoleClient
     public class Client
     {
         static IEventSystem eventSystem;
-        public static void Main(string[] args)
+        static string filePath;
+        public static int Main(string[] args)
         {
+            if (args.Length != 1)
+            {
+                Console.Error.WriteLine("Usage: BarbellTracker.ConsoleClient <path-to-tracking.json>");
+                return 1;
+            }
+            filePath = args[0];
+
             using IHost host = Host.CreateDefaultBuilder(new string[0])
                 .ConfigureServices((_, services) =>
                     services.AddSingleton<ServiceCache<Velocity>>()
@@ -76,12 +84,12 @@ namespace BarbellTracker.ConsoleClient
             eventSystem.Fire(new StartExtractVideoInfo() { StartExtractionInformation = startExtractionInformation });
 
             Console.WriteLine("done");
-            while (true) ;
+            return 0;
         }
 
         public static void handelFile(SelectFile SelectFile)
         {
-            eventSystem.Fire(new FileSelected() { FilePath = @"C:\Users\schal\Desktop\MyJson.json" });
+            eventSystem.Fire(new FileSelected() { FilePath = filePath });
         }
     }
 }

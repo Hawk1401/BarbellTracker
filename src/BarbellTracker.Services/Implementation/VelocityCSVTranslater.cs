@@ -11,8 +11,8 @@ namespace BarbellTracker.Services.Implementation
 {
     public class VelocityCSVTranslater : IService, ICSVTranslater<VectorCSVModel>
     {
-        public string Name => "Velocity Calculator";
-        public string Description => "This service will Calculat the Velocity of the Moving barbell";
+        public string Name => "Velocity CSV Translater";
+        public string Description => "This service will translate the velocity of the moving barbell into a CSV model";
 
         private ServiceCache<VelocityCSVModel> cache;
         private ICalculator<Velocity> velocityCalculator;

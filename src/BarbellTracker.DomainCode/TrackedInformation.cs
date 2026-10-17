@@ -13,7 +13,7 @@ namespace BarbellTracker.DomainCode
         public string Name { get; init; }
         public Vector2D[] Positions { get; init; }
         public int FrameRate { get; init; }
-        public int PixelPerCm { get; init; }
+        public double PixelPerCm { get; init; }
 
 
         public override bool Equals(object obj)

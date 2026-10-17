@@ -11,9 +11,9 @@ namespace BarbellTracker.Services.Implementation
 {
     public class AccelerationCSVTranslater : IService, ICSVTranslater<VectorCSVModel>
     {
-        public string Name => throw new NotImplementedException();
+        public string Name => "Acceleration CSV Translater";
 
-        public string Description => throw new NotImplementedException();
+        public string Description => "This service will translate the acceleration of the moving barbell into a CSV model";
 
         private ServiceCache<AccelerationCSVModel> cache;
         private ICalculator<Acceleration> accelerationCalculator;
