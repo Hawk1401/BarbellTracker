@@ -116,6 +116,32 @@
                         </DataGrid>
                         <TextBlock Foreground="Gray" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,8"
                                    Text="t in s, ROM und Abw. (seitliche Abweichung) in m, Geschwindigkeiten in m/s. Ø v = mittlere, MPV = mittlere propulsive Geschwindigkeit, Verl. = Geschwindigkeitsverlust zur schnellsten Wiederholung."/>
+                        <Expander Header="Session speichern" IsExpanded="True" Margin="0,0,0,8">
+                            <Grid Margin="0,6,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Name" Grid.Row="0" Margin="0,0,8,4" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" Margin="0,0,0,4" Text="{Binding SessionName, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="Übung" Grid.Row="1" Margin="0,0,8,4" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" Margin="0,0,0,4" IsEditable="True"
+                                          ItemsSource="{Binding KnownExercises}" Text="{Binding Exercise, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="Gewicht [kg]" Grid.Row="2" Margin="0,0,8,4" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,0,4" Width="80" HorizontalAlignment="Left"
+                                         Text="{Binding WeightKg, UpdateSourceTrigger=LostFocus}"/>
+                                <TextBlock Text="Notizen" Grid.Row="3" Margin="0,0,8,4" VerticalAlignment="Top"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,4" Height="44" AcceptsReturn="True" TextWrapping="Wrap"
+                                         VerticalScrollBarVisibility="Auto" Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}"/>
+                                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                                    <Button Content="{Binding SaveButtonText}" Command="{Binding SaveSessionCommand}"/>
+                                    <TextBlock Text="{Binding SaveStatus}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Expander>
                         <oxy:PlotView Model="{Binding VelocityPlot}" Height="230" Margin="0,0,0,8"/>
                         <oxy:PlotView Model="{Binding BarPathPlot}" Height="260"/>
                     </StackPanel>

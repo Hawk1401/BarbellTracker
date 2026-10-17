@@ -18,6 +18,9 @@
             <MenuItem Header="_Video"
                       Command="{Binding ClickCommandVideoMenu}">
             </MenuItem>
+            <MenuItem Header="V_erlauf"
+                      Command="{Binding ClickCommandHistoryMenu}">
+            </MenuItem>
             <MenuItem Header="_Start"
                       Command="{Binding ClickCommandStartMenu}">
             </MenuItem>
@@ -48,6 +51,11 @@
             <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2"
                   Visibility="{Binding IsVisibleVideoPage, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <local:VideoAnalysisView/>
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2"
+                  Visibility="{Binding IsVisibleHistoryPage, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <local:HistoryView/>
             </Grid>
 
             <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2"

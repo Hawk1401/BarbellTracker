@@ -90,10 +90,10 @@ Muss-Kriterien:
 - [x] Bugfix: Seitenumschaltung im Hauptfenster (die Sichtbarkeits-Bindung traf das falsche DataContext).
 
 ### M4 – Persistenz & Export
-- [ ] Sessions dauerhaft in `%AppData%\BarbellTracker` (statt Temp): Übung, Gewicht, Datum, Notizen, Satz-Ergebnisse (SQLite oder JSON-Ordner).
-- [ ] Historie-Ansicht: Sessions auflisten, öffnen, löschen, vergleichen (z. B. Velocity-Verlauf pro Übung).
-- [ ] Export: CSV, optional PDF/PNG-Report.
-- [ ] Einstellungen persistieren.
+- [x] Sessions dauerhaft in `%AppData%\BarbellTracker\sessions` (JSON-Ordner statt SQLite): Übung, Gewicht, Datum, Notizen, Positionsdaten + Kurzergebnis. Auch der CSV-Ausgabeordner liegt jetzt dort (`exports`).
+- [x] Verlauf-Seite: Sessions auflisten, filtern, öffnen (Doppelklick), löschen; Chart der besten Geschwindigkeit je Übung.
+- [x] Export: CSV (Wiederholungsmetriken) und JSON (wieder importierbar). [ ] PDF/PNG-Report optional.
+- [x] Einstellungen persistieren (`settings.json`: Glättung, Mindestbewegung, Ausgabeordner).
 
 ### M5 – Qualität & Release
 - [ ] Test-Coverage: Application-Layer, Plugins, ViewModels (ohne UI) abdecken; Ziel ≥ 80 % im Domain/Services-Bereich.

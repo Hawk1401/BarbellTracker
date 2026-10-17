@@ -21,6 +21,9 @@ namespace BarbellTracker.WPF_DesktopClient
         public static IServiceProvider provider { get; set; }
         public static void SetUP()
         {
+            var settingsStore = new JsonSettingsStore<UserSettings>(AppPaths.SettingsFile);
+            var userSettings = settingsStore.Load();
+
             var host = Host.CreateDefaultBuilder(new string[0])
                 .ConfigureServices((_, services) =>
                     services.AddSingleton<ServiceCache<Velocity>>()
@@ -30,8 +33,14 @@ namespace BarbellTracker.WPF_DesktopClient
                     .AddSingleton<ServiceCache<PhysicalMotion>>()
                     .AddSingleton<ServiceCache<SetAnalysis>>()
                     .AddSingleton<ServiceCache<SetCSVModel>>()
-                    .AddSingleton<AnalysisSettings>()
-                    .AddSingleton<FileManager>()
+                    .AddSingleton(settingsStore)
+                    .AddSingleton(userSettings)
+                    .AddSingleton(new AnalysisSettings() { SmoothingWindow = userSettings.SmoothingWindow, MinRangeOfMotion = userSettings.MinRangeOfMotion })
+                    .AddSingleton<ISessionRepository>(new JsonSessionRepository(AppPaths.SessionsFolder))
+                    .AddSingleton<FileManager>(sp => new FileManager(sp.GetRequiredService<IEventSystem>())
+                    {
+                        FolderPath = string.IsNullOrWhiteSpace(userSettings.OutputFolder) ? AppPaths.DefaultExportFolder : userSettings.OutputFolder
+                    })
                     .AddSingleton<IEventSystem, EventSystem>()
                     .AddSingleton<PluginManager>()
                     .AddSingleton<UIAdapterManager>()

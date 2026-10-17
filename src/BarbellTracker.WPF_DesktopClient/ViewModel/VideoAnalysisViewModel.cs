@@ -35,6 +35,15 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         private readonly IEventSystem eventSystem;
         private readonly ICalculator<SetAnalysis> analyzer;
         private readonly ICalculator<PhysicalMotion> motionCalculator;
+        private readonly ISessionRepository sessions;
+
+        private SetAnalysis lastAnalysis;
+        private Session currentSession;
+        private string sessionName = string.Empty;
+        private string exercise = string.Empty;
+        private double weightKg;
+        private string notes = string.Empty;
+        private string saveStatus = string.Empty;
 
         private string videoPath;
         private VideoInfo videoInfo;
@@ -70,7 +79,6 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         private PlotModel barPathPlot;
         private bool resultFromThisPage;
         private TrackedInformation shownInformation;
-        private int recalculation;
 
         private readonly record struct Vector2DPoint(double X, double Y);
 
@@ -80,6 +88,12 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             eventSystem = provider.GetRequiredService<IEventSystem>();
             analyzer = provider.GetRequiredService<ICalculator<SetAnalysis>>();
             motionCalculator = provider.GetRequiredService<ICalculator<PhysicalMotion>>();
+            sessions = provider.GetRequiredService<ISessionRepository>();
+            SaveSessionCommand = new RelayCommand(() => HasResult && shownInformation != null, SaveSession);
+            EventDelegate<SessionOpened> openedDelegate = OnSessionOpened;
+            eventSystem.Subscribe(openedDelegate);
+            EventDelegate<SessionSaved> savedDelegate = _ => OnPropertyChanged(nameof(KnownExercises));
+            eventSystem.Subscribe(savedDelegate);
 
             OpenVideoCommand = new RelayCommand(() => !IsTracking, OpenVideo);
             StartTrackingCommand = new RelayCommand(CanStartTracking, StartTracking);
@@ -94,6 +108,120 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
         public ICommand OpenVideoCommand { get; }
         public ICommand StartTrackingCommand { get; }
         public ICommand CancelTrackingCommand { get; }
+        public ICommand SaveSessionCommand { get; }
+
+        // ---------------- session (what the user can enter about the set) ----------------
+
+        public string SessionName
+        {
+            get => sessionName;
+            set => SetProperty(ref sessionName, value ?? string.Empty);
+        }
+
+        public string Exercise
+        {
+            get => exercise;
+            set => SetProperty(ref exercise, value ?? string.Empty);
+        }
+
+        public double WeightKg
+        {
+            get => weightKg;
+            set => SetProperty(ref weightKg, value);
+        }
+
+        public string Notes
+        {
+            get => notes;
+            set => SetProperty(ref notes, value ?? string.Empty);
+        }
+
+        public string SaveStatus
+        {
+            get => saveStatus;
+            private set => SetProperty(ref saveStatus, value);
+        }
+
+        /// <summary>The exercises of the saved sessions, for the auto completion</summary>
+        public string[] KnownExercises
+        {
+            get
+            {
+                try
+                {
+                    return sessions.GetAll().Select(s => s.Exercise).Where(e => !string.IsNullOrWhiteSpace(e)).Distinct().OrderBy(e => e).ToArray();
+                }
+                catch (IOException)
+                {
+                    return Array.Empty<string>();
+                }
+            }
+        }
+
+        public string SaveButtonText => currentSession == null ? "Session speichern" : "Session aktualisieren";
+
+        private void SaveSession()
+        {
+            if (shownInformation == null || lastAnalysis == null)
+            {
+                return;
+            }
+
+            var session = currentSession ?? new Session();
+            session.Name = string.IsNullOrWhiteSpace(sessionName) ? shownInformation.Name : sessionName.Trim();
+            session.Exercise = exercise.Trim();
+            session.WeightKg = weightKg;
+            session.Notes = notes;
+            session.VideoPath = videoPath;
+            session.RepetitionCount = lastAnalysis.Repetitions.Count;
+            session.BestMeanVelocity = lastAnalysis.Repetitions.Count == 0 ? 0 : lastAnalysis.Repetitions.Max(r => r.MeanVelocity);
+            session.VelocityLossPercent = lastAnalysis.VelocityLossPercent;
+            session.Tracked = shownInformation;
+
+            try
+            {
+                sessions.Save(session);
+            }
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+            {
+                SaveStatus = $"Speichern fehlgeschlagen: {ex.Message}";
+                return;
+            }
+
+            currentSession = session;
+            OnPropertyChanged(nameof(SaveButtonText));
+            SaveStatus = $"Gespeichert ({DateTime.Now:HH:mm:ss}).";
+            eventSystem.Fire(new SessionSaved() { Session = session });
+        }
+
+        private void OnSessionOpened(SessionOpened opened)
+        {
+            var dispatcher = Application.Current?.Dispatcher;
+            if (dispatcher != null && !dispatcher.CheckAccess())
+            {
+                dispatcher.Invoke(() => OnSessionOpened(opened));
+                return;
+            }
+
+            var session = opened.Session;
+            // the overlay belongs to the video of the last tracking, not to the session
+            overlayPositions = Array.Empty<Vector2DPoint>();
+            PathPoints = new PointCollection();
+            OnPropertyChanged(nameof(HasPath));
+            UpdateMarker();
+
+            // shown with a new id so it is calculated with the current settings, saved with the original data
+            ShowResult(session.Tracked.WithNewId(), remember: false);
+            shownInformation = session.Tracked;
+            currentSession = session;
+            SessionName = session.Name;
+            Exercise = session.Exercise;
+            WeightKg = session.WeightKg;
+            Notes = session.Notes;
+            SaveStatus = string.Empty;
+            OnPropertyChanged(nameof(SaveButtonText));
+            Status = $"Session '{session.Name}' vom {session.CreatedAt:g} geöffnet.";
+        }
 
         public ObservableCollection<Repetition> Repetitions { get; } = new();
 
@@ -555,6 +683,13 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
 
             ShowResult(extracted.trackedInformation);
+
+            // new data is a new session
+            currentSession = null;
+            SessionName = extracted.trackedInformation.Name;
+            Notes = string.Empty;
+            SaveStatus = string.Empty;
+            OnPropertyChanged(nameof(SaveButtonText));
         }
 
         private void OnSettingsChanged(AnalysisSettingsChanged changed)
@@ -572,14 +707,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
 
             // the services cache by id, so the same data needs a new id to be calculated with the new settings
-            ShowResult(new TrackedInformation()
-            {
-                Id = $"{shownInformation.Id}~{++recalculation}",
-                Name = shownInformation.Name,
-                Positions = shownInformation.Positions,
-                FrameRate = shownInformation.FrameRate,
-                PixelPerCm = shownInformation.PixelPerCm,
-            }, remember: false);
+            ShowResult(shownInformation.WithNewId(), remember: false);
         }
 
         public void ShowResult(TrackedInformation info, bool remember = true)
@@ -605,6 +733,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
                 Summary = analysis.Repetitions.Count == 0
                     ? $"{info.Name}: keine Wiederholung erkannt (siehe Einstellungen: Mindestbewegung)."
                     : $"{info.Name}: {analysis.Repetitions.Count} Wiederholungen, Geschwindigkeitsverlust {analysis.VelocityLossPercent:F1} %";
+                lastAnalysis = analysis;
                 HasResult = true;
             }
             catch (ArgumentException ex)

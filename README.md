@@ -14,10 +14,27 @@
 ## Download Akutelle Version
 Die aktuelle Version kann man im Github Repo herunterladen, alternativ auch über diesen Link (https://github.com/Hawk1401/BarbellTracker/releases)
 
-## Nutz anleitung
-Nach dem Starten des Programms kann man an der linken Seite auswählen, welche Plugins aktiviert werden sollen. Wir empfehlen alle auszuwählen.
-Nach dem die Plugins ausgewählt wurden startet das Programm in dem man auf Starten Button klickt. Anschließend öffnet sich ein Filedialog, bei dem Testdaten aus diesem Repo eingelesen kann.
-Die Testdaten beinhalten simmulierte Positionen einer Hantelstange da zum aktuellen Zeitpunkt noch keine optische Erkennung impementiert wurde.
-Die Daten werden aus der Datei ausgelesen und weiter verarbeitet. Abhängig von den aktivierten Plugins wird eine CSV Tabelle angezeigt und/oder auf die Festplatte gespeichert. 
-Die App (jetzt .NET 8) speichert alle Daten in einen Unterordner des Temp Ordners mit den Namen "BarbellTracker".
+## Nutzung
+Die App (.NET 8, Windows) hat vier Bereiche:
 
+**Video** – der Hauptweg
+1. *Video öffnen* und mit dem Slider einen Frame wählen, in dem die Hantel startet.
+2. *Hantelscheibe markieren*: Rechteck um die Scheibe ziehen.
+3. *Maßstab markieren*: eine Linie über eine bekannte Strecke ziehen (z. B. Scheibendurchmesser, 45 cm) und die Länge in cm eingeben.
+4. *Tracking starten*. Danach erscheinen Wiederholungen mit Dauer, Bewegungsumfang, mittlerer/maximaler/propulsiver Geschwindigkeit, seitlicher Abweichung und Geschwindigkeitsverlust, dazu der Geschwindigkeitsverlauf und die Hantelbahn.
+5. Optional Übung, Gewicht und Notizen eintragen und *Session speichern*.
+
+**Verlauf** – gespeicherte Sessions öffnen, löschen, als CSV oder JSON exportieren und die beste Geschwindigkeit je Übung über die Zeit vergleichen.
+
+**Start** – die Plugins (CSV-Dateien, Tabellen) aktivieren und Positionsdaten aus einer JSON-Datei laden (Beispiele in `Example Data`, z. B. `squat_set.json`).
+
+**Settings** – Glättung, Mindestbewegung für eine Wiederholung und Ausgabeordner der CSV-Dateien.
+
+### Wo liegen die Daten?
+In `%AppData%\BarbellTracker`: `settings.json`, `sessions\` (eine JSON-Datei je Session) und `exports\` (CSV-Dateien der aktivierten Plugins, Standard-Ausgabeordner).
+
+### Kommandozeile
+```
+BarbellTracker.ConsoleClient <tracking.json>
+BarbellTracker.ConsoleClient track <video> <x> <y> <breite> <hoehe> <pixelProCm>
+```

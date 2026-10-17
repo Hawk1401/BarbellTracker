@@ -28,7 +28,7 @@ namespace BarbellTracker.ApplicationCode
             EventDelegate<StartExtractVideoInfo> StartExtractVideoInfoDelegate = NewExtractionStarted;
 
             eventSystem.Subscribe(StartExtractVideoInfoDelegate);
-            FolderPath = Path.Join(Path.GetTempPath(), "BarbellTracker");
+            FolderPath = AppPaths.DefaultExportFolder;
         }
 
         /// <summary>

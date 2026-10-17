@@ -1,88 +1,62 @@
-﻿using BarbellTracker.WPF_HelperClasses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
+using BarbellTracker.ApplicationCode;
+using BarbellTracker.ApplicationCode.Event;
+using BarbellTracker.WPF_HelperClasses;
+using Microsoft.Extensions.DependencyInjection;
+using static BarbellTracker.ApplicationCode.IEventSystem;
 
 namespace BarbellTracker.WPF_DesktopClient.ViewModel
 {
     class MainWindowViewModel : ViewModelBase
     {
-        private bool _isVisibleSettingsControl;
-        private bool _isVisiblePluginPage;
-        private bool _isVisibleVideoPage = true;
+        private enum Page { Video, History, Plugins, Settings }
+
+        private Page page = Page.Video;
 
         public MainWindowViewModel()
         {
-            ClickCommandVideoMenu = new RelayCommand(() => true, VideoMenu);
-            ClickCommandStartMenu = new RelayCommand(() => true, StartMenu);
-            ClickCommandSettingsMenu = new RelayCommand(() => true, SettingsMenu);
+            ClickCommandVideoMenu = new RelayCommand(() => true, () => Show(Page.Video));
+            ClickCommandHistoryMenu = new RelayCommand(() => true, () => Show(Page.History));
+            ClickCommandStartMenu = new RelayCommand(() => true, () => Show(Page.Plugins));
+            ClickCommandSettingsMenu = new RelayCommand(() => true, () => Show(Page.Settings));
+
+            // an opened session is shown on the video page
+            var eventSystem = DependencyInjectionHelper.provider.GetRequiredService<IEventSystem>();
+            EventDelegate<SessionOpened> openedDelegate = _ => RunOnUiThread(() => Show(Page.Video));
+            eventSystem.Subscribe(openedDelegate);
         }
 
         public ICommand ClickCommandVideoMenu { get; }
+        public ICommand ClickCommandHistoryMenu { get; }
         public ICommand ClickCommandStartMenu { get; }
         public ICommand ClickCommandSettingsMenu { get; }
 
+        public bool IsVisibleVideoPage => page == Page.Video;
+        public bool IsVisibleHistoryPage => page == Page.History;
+        public bool IsVisiblePluginPage => page == Page.Plugins;
+        public bool IsVisibleSettingsControl => page == Page.Settings;
 
-        public bool IsVisibleSettingsControl
+        private void Show(Page newPage)
         {
-            get
-            {
-                return _isVisibleSettingsControl;
-            }
-            set
-            {
-                if(SetProperty(ref _isVisibleSettingsControl, value))
-                {
-                    _isVisibleSettingsControl = value;
-                }
-                
-            }
+            page = newPage;
+            OnPropertyChanged(nameof(IsVisibleVideoPage));
+            OnPropertyChanged(nameof(IsVisibleHistoryPage));
+            OnPropertyChanged(nameof(IsVisiblePluginPage));
+            OnPropertyChanged(nameof(IsVisibleSettingsControl));
         }
-        public bool IsVisiblePluginPage
+
+        private static void RunOnUiThread(System.Action action)
         {
-            get
+            var dispatcher = Application.Current?.Dispatcher;
+            if (dispatcher == null || dispatcher.CheckAccess())
             {
-                return _isVisiblePluginPage;
+                action();
             }
-            set
+            else
             {
-                if(SetProperty(ref _isVisiblePluginPage, value))
-                {
-                    _isVisiblePluginPage = value;
-                }
+                dispatcher.Invoke(action);
             }
         }
-
-        public bool IsVisibleVideoPage
-        {
-            get { return _isVisibleVideoPage; }
-            set { SetProperty(ref _isVisibleVideoPage, value); }
-        }
-
-        public void VideoMenu()
-        {
-            IsVisibleVideoPage = true;
-            IsVisiblePluginPage = false;
-            IsVisibleSettingsControl = false;
-        }
-
-        public void StartMenu()
-        {
-            IsVisibleVideoPage = false;
-            IsVisiblePluginPage = true;
-            IsVisibleSettingsControl = false;
-        }
-
-        public void SettingsMenu()
-        {
-            IsVisibleVideoPage = false;
-            IsVisibleSettingsControl = true;
-            IsVisiblePluginPage = false;
-        }
-
     }
 }

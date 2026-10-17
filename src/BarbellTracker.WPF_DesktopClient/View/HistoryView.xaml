@@ -1,0 +1,55 @@
+<UserControl x:Class="BarbellTracker.WPF_DesktopClient.View.HistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:oxy="http://oxyplot.org/wpf"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" MinHeight="120"/>
+            <RowDefinition Height="2*" MinHeight="200"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Grid.Row="0" Margin="0,0,0,6">
+            <TextBlock Text="Übung:" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <ComboBox Width="180" Margin="0,0,16,0" ItemsSource="{Binding Exercises}" SelectedItem="{Binding SelectedExercise}"/>
+            <Button Content="Öffnen" Command="{Binding OpenCommand}"/>
+            <Button Content="CSV exportieren …" Command="{Binding ExportCsvCommand}"/>
+            <Button Content="JSON exportieren …" Command="{Binding ExportJsonCommand}"/>
+            <Button Content="Löschen" Command="{Binding DeleteCommand}"/>
+            <Button Content="Aktualisieren" Command="{Binding RefreshCommand}"/>
+        </WrapPanel>
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Sessions}" SelectedItem="{Binding SelectedSession}"
+                  AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" CanUserAddRows="False"
+                  HeadersVisibility="Column" ColumnWidth="*">
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenCommand}"/>
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Datum" Binding="{Binding CreatedAt, StringFormat=g}" Width="130"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="1.5*"/>
+                <DataGridTextColumn Header="Übung" Binding="{Binding Exercise}"/>
+                <DataGridTextColumn Header="Gewicht [kg]" Binding="{Binding WeightKg, StringFormat=0.##}"/>
+                <DataGridTextColumn Header="Wdh." Binding="{Binding RepetitionCount}"/>
+                <DataGridTextColumn Header="Beste Ø v [m/s]" Binding="{Binding BestMeanVelocity, StringFormat=F2}"/>
+                <DataGridTextColumn Header="Verlust [%]" Binding="{Binding VelocityLossPercent, StringFormat=F1}"/>
+                <DataGridTextColumn Header="Notizen" Binding="{Binding Notes}" Width="2*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <oxy:PlotView Grid.Row="2" Model="{Binding TrendPlot}" Margin="0,8,0,0"/>
+
+        <TextBlock Grid.Row="3" Text="{Binding Status}" Margin="0,6,0,0" TextWrapping="Wrap"/>
+    </Grid>
+</UserControl>
