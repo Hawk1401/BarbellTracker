@@ -13,22 +13,72 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build
       run: dotnet build --no-restore -c Release
-    - name: Test
-      run: dotnet test --no-build -c Release
+
+    - name: Test (with coverage)
+      run: dotnet test --no-build -c Release --collect:"XPlat Code Coverage" --results-directory TestResults
+
+    - name: Upload test results and coverage
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: TestResults/**
+
+  # Only for tags like v1.0.0: self-contained build, zip, installer and GitHub release
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Version from tag
+      id: version
+      shell: pwsh
+      run: |
+        $version = "${{ github.ref_name }}".TrimStart('v')
+        "version=$version" >> $env:GITHUB_OUTPUT
+
     - name: Publish
-      if: startsWith(github.ref, 'refs/tags/v')
-      run: dotnet publish src\BarbellTracker.WPF_DesktopClient\BarbellTracker.WPF_DesktopClient.csproj -c Release --self-contained -r win-x64 -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+      run: >
+        dotnet publish src\BarbellTracker.WPF_DesktopClient\BarbellTracker.WPF_DesktopClient.csproj
+        -c Release -r win-x64 --self-contained
+        -p:Version=${{ steps.version.outputs.version }}
+        -o artifacts\publish
+
+    - name: Zip
+      shell: pwsh
+      run: Compress-Archive -Path artifacts\publish\* -DestinationPath artifacts\BarbellTracker-${{ steps.version.outputs.version }}-win-x64.zip
+
+    - name: Installer
+      shell: pwsh
+      run: |
+        $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+        if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress }
+        & $iscc "/DMyAppVersion=${{ steps.version.outputs.version }}" "/DPublishDir=..\artifacts\publish" installer\BarbellTracker.iss
+        if ($LASTEXITCODE -ne 0) { throw "Inno Setup failed" }
+
     - name: Release
-      if: startsWith(github.ref, 'refs/tags/v')
       uses: softprops/action-gh-release@v2
       with:
-        files: src/BarbellTracker.WPF_DesktopClient/bin/Release/net8.0-windows/win-x64/publish/*.exe
+        files: |
+          artifacts/BarbellTracker-Setup-${{ steps.version.outputs.version }}.exe
+          artifacts/BarbellTracker-${{ steps.version.outputs.version }}-win-x64.zip
         generate_release_notes: true

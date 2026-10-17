@@ -13,6 +13,7 @@ using BarbellTracker.Services.Implementation;
 using BarbellTracker.WPF_HelperClasses;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
+using Serilog;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -219,6 +220,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
             catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
             {
+                Log.Error(ex, "Deleting session {Id} failed", selectedSession.Id);
                 Status = $"Löschen fehlgeschlagen: {ex.Message}";
                 return;
             }
@@ -260,10 +262,12 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             try
             {
                 File.WriteAllText(dialog.FileName, createContent(selectedSession));
+                Log.Information("Session {Id} exported to {File}", selectedSession.Id, dialog.FileName);
                 Status = $"Exportiert nach {dialog.FileName}";
             }
             catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException || ex is ArgumentException)
             {
+                Log.Error(ex, "Export of session {Id} failed", selectedSession.Id);
                 Status = $"Export fehlgeschlagen: {ex.Message}";
             }
         }

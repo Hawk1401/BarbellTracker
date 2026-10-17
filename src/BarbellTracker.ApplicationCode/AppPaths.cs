@@ -9,6 +9,7 @@ namespace BarbellTracker.ApplicationCode
         public static string DataFolder => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BarbellTracker");
         public static string SessionsFolder => Path.Combine(DataFolder, "sessions");
         public static string SettingsFile => Path.Combine(DataFolder, "settings.json");
+        public static string LogsFolder => Path.Combine(DataFolder, "logs");
         public static string DefaultExportFolder => Path.Combine(DataFolder, "exports");
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows.Input;
 using BarbellTracker.ApplicationCode;
 using BarbellTracker.ApplicationCode.Event;
@@ -29,10 +31,29 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
 
             ChooseOutputFolderCommand = new RelayCommand(() => true, ChooseOutputFolder);
             ResetOutputFolderCommand = new RelayCommand(() => true, () => OutputFolder = string.Empty);
+            OpenLogFolderCommand = new RelayCommand(() => true, () => OpenFolder(AppPaths.LogsFolder));
+            OpenDataFolderCommand = new RelayCommand(() => true, () => OpenFolder(AppPaths.DataFolder));
         }
 
         public ICommand ChooseOutputFolderCommand { get; }
         public ICommand ResetOutputFolderCommand { get; }
+        public ICommand OpenLogFolderCommand { get; }
+        public ICommand OpenDataFolderCommand { get; }
+
+        public string VersionText => $"BarbellTracker {AppLogging.Version}";
+
+        private void OpenFolder(string folder)
+        {
+            try
+            {
+                Directory.CreateDirectory(folder);
+                Process.Start(new ProcessStartInfo("explorer.exe", $"\"{folder}\"") { UseShellExecute = true });
+            }
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException || ex is System.ComponentModel.Win32Exception)
+            {
+                SaveError = $"Der Ordner konnte nicht geöffnet werden: {ex.Message}";
+            }
+        }
 
         /// <summary>The allowed windows of the position smoothing, 0 = off</summary>
         public int[] SmoothingWindows { get; } = { 0, 5, 7, 9 };

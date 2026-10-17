@@ -17,6 +17,7 @@ using BarbellTracker.Tracking;
 using BarbellTracker.WPF_HelperClasses;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
+using Serilog;
 using OxyPlot;
 using static BarbellTracker.ApplicationCode.IEventSystem;
 
@@ -184,12 +185,14 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
             catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
             {
+                Log.Error(ex, "Saving session {Name} failed", session.Name);
                 SaveStatus = $"Speichern fehlgeschlagen: {ex.Message}";
                 return;
             }
 
             currentSession = session;
             OnPropertyChanged(nameof(SaveButtonText));
+            Log.Information("Session {Name} saved ({Reps} repetitions)", session.Name, session.RepetitionCount);
             SaveStatus = $"Gespeichert ({DateTime.Now:HH:mm:ss}).";
             eventSystem.Fire(new SessionSaved() { Session = session });
         }
@@ -491,6 +494,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             catch (Exception ex) when (ex is IOException || ex is InvalidDataException || ex is UnauthorizedAccessException || ex is OpenCvSharp.OpenCVException)
             {
                 videoInfo = null;
+                Log.Error(ex, "Video {Path} could not be opened", path);
                 Status = $"Das Video konnte nicht geöffnet werden: {ex.Message}";
                 OnVideoChanged();
                 return;
@@ -586,6 +590,7 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             IsTracking = true;
             Progress = 0;
             HasResult = false;
+            Log.Information("Tracking {Video} from frame {Frame}, region {Region}, {Scale:F2} px/cm", path, startFrame, trackingRegion, scale);
             Status = "Tracking läuft …";
 
             try
@@ -602,10 +607,12 @@ namespace BarbellTracker.WPF_DesktopClient.ViewModel
             }
             catch (OperationCanceledException)
             {
+                Log.Information("Tracking cancelled");
                 Status = "Tracking abgebrochen.";
             }
             catch (Exception ex) when (ex is IOException || ex is ArgumentException || ex is InvalidDataException || ex is OpenCvSharp.OpenCVException)
             {
+                Log.Error(ex, "Tracking of {Video} failed", path);
                 Status = $"Tracking fehlgeschlagen: {ex.Message}";
             }
             finally

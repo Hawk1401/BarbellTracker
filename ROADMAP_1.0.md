@@ -96,13 +96,13 @@ Muss-Kriterien:
 - [x] Einstellungen persistieren (`settings.json`: Glättung, Mindestbewegung, Ausgabeordner).
 
 ### M5 – Qualität & Release
-- [ ] Test-Coverage: Application-Layer, Plugins, ViewModels (ohne UI) abdecken; Ziel ≥ 80 % im Domain/Services-Bereich.
-- [ ] Integrationstest: JSON → Event-Kette → CSV-Output (Golden-File).
-- [ ] Logging (Serilog) in Datei, globaler Exception-Handler.
-- [ ] Performance: Tracking großer Videos (60 fps, 1080p) messen; Frames asynchron verarbeiten.
-- [ ] Installer (MSIX oder Inno Setup) + Versionierung (SemVer, `v1.0.0`-Tag → GitHub Release).
-- [ ] Nutzerdokumentation mit Screenshots, Beispielvideo, Lizenz (LICENSE) wählen.
-- [ ] Manuelle Testrunde mit echten Trainingsvideos (Bankdrücken, Kniebeuge, Kreuzheben), Genauigkeit gegen bekannte Referenz prüfen.
+- [x] Test-Coverage: Domain 100 %, Services 94 %, Plugins 92 %, Tracking 92 %, Application 87 % (gesamt ohne UI 87,5 %, siehe `docs/DEVELOPMENT.md`). ViewModels/UI sind nicht automatisiert getestet.
+- [x] Integrationstest: JSON → Event-Kette → CSV/Tabellen (Golden-File `squat_set.SetMetrics.golden.csv`), Fehlerfälle des JsonLoaders.
+- [x] Logging (Serilog, `%AppData%\BarbellTracker\logs`), globaler Exception-Handler mit Dialog.
+- [x] Performance gemessen: 1080p/60fps ≈ 21 Frames/s (10 s Video ≈ 28 s), 720p/30fps ≈ 30 Frames/s. Läuft im Hintergrund mit Abbruch. Keine Optimierung nötig für 1.0, mögliche Verbesserung: Verkleinern der Frames.
+- [x] Installer (Inno Setup, `installer/BarbellTracker.iss`) + Release-Pipeline (Tag `v*` → ZIP + Installer + GitHub-Release) + Version aus dem Tag. [ ] Pipeline und Installer-Skript sind noch nicht auf GitHub / mit Inno Setup gelaufen. Der Publish-Ordner wurde lokal gestartet.
+- [x] Nutzerdokumentation (README, `docs/DEVELOPMENT.md`). [ ] Screenshots und Beispielvideo fehlen. [ ] LICENSE: Entscheidung der Autoren (Florian Koch, Jan Metzger) offen.
+- [ ] Manuelle Testrunde mit echten Trainingsvideos (Bankdrücken, Kniebeuge, Kreuzheben), Genauigkeit gegen bekannte Referenz prüfen. Bisher nur synthetische Videos.
 
 ---
 

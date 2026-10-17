@@ -30,5 +30,12 @@
         <TextBlock Text="{Binding SaveError}" Foreground="Firebrick" Margin="0,14,0,0" TextWrapping="Wrap"/>
         <TextBlock Foreground="Gray" Margin="0,14,0,0" TextWrapping="Wrap"
                    Text="Die Einstellungen werden automatisch gespeichert."/>
+
+        <TextBlock Text="Info" FontSize="16" FontWeight="SemiBold" Margin="0,22,0,10"/>
+        <TextBlock Text="{Binding VersionText}"/>
+        <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+            <Button Content="Datenordner öffnen" Command="{Binding OpenDataFolderCommand}" Padding="10,4" Margin="0,0,8,0"/>
+            <Button Content="Log-Ordner öffnen" Command="{Binding OpenLogFolderCommand}" Padding="10,4"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

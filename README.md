@@ -12,7 +12,10 @@
 </ul>
 
 ## Download Akutelle Version
-Die aktuelle Version kann man im Github Repo herunterladen, alternativ auch über diesen Link (https://github.com/Hawk1401/BarbellTracker/releases)
+Die aktuelle Version kann man im Github Repo herunterladen, alternativ auch über diesen Link (https://github.com/Hawk1401/BarbellTracker/releases).
+Dort gibt es einen Installer (`BarbellTracker-Setup-<version>.exe`, ohne Administratorrechte) und ein ZIP zum Entpacken. Windows 10/11 (x64), .NET muss nicht installiert sein.
+
+Zum Selbstbauen, Testen und Veröffentlichen siehe [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
 
 ## Nutzung
 Die App (.NET 8, Windows) hat vier Bereiche:
@@ -32,6 +35,9 @@ Die App (.NET 8, Windows) hat vier Bereiche:
 
 ### Wo liegen die Daten?
 In `%AppData%\BarbellTracker`: `settings.json`, `sessions\` (eine JSON-Datei je Session) und `exports\` (CSV-Dateien der aktivierten Plugins, Standard-Ausgabeordner).
+
+### Probleme?
+Unerwartete Fehler zeigt die App in einem Dialog an und schreibt Details nach `%AppData%\BarbellTracker\logs` (Settings → „Log-Ordner öffnen“). Tipps für gutes Tracking: Kamera fest auf einem Stativ, Hantelscheibe gut sichtbar und von der Seite gefilmt, Rechteck eng um die Scheibe. Verliert das Tracking die Scheibe, meldet die App den Frame – dann einen früheren Startframe oder ein größeres Rechteck wählen.
 
 ### Kommandozeile
 ```

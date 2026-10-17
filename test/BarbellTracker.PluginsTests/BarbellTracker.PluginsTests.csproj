@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\BarbellTracker.Plugins\BarbellTracker.Plugins.csproj" />
+    <ProjectReference Include="..\..\src\BarbellTracker.Services\BarbellTracker.Services.csproj" />
+    <ProjectReference Include="..\..\src\BarbellTracker.Adapter\BarbellTracker.Adapter.csproj" />
+    <ProjectReference Include="..\..\src\BarbellTracker.ApplicationCode\BarbellTracker.ApplicationCode.csproj" />
+    <ProjectReference Include="..\..\src\BarbellTracker.DomainCode\BarbellTracker.DomainCode.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\Example Data\squat_set.json" Link="TestData\squat_set.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestData\*.csv" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

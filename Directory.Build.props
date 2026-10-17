@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- the release pipeline overrides this with the version of the tag: -p:Version=1.0.0 -->
+    <Version>1.0.0-dev</Version>
+  </PropertyGroup>
+</Project>

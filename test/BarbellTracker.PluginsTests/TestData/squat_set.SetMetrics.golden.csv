@@ -1,0 +1,4 @@
+Rep;Duration [s];Eccentric Duration [s];ROM [m];Mean Velocity [m/s];Peak Velocity [m/s];Mean Propulsive Velocity [m/s];Bar Path Deviation [m];Velocity Loss [%]
+1;0.8;1.533;1;1.25;1.959;1.199;0.008;0
+2;0.933;1.5;1;1.071;1.679;1.033;0.008;14.293
+3;1.133;1.5;1;0.882;1.385;0.858;0.008;29.413

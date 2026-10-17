@@ -386,3 +386,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
+# build output of the release pipeline
+artifacts/
+TestResults/
