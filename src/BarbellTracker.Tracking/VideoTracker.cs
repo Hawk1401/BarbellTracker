@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Threading;
 using BarbellTracker.AbstractionCode;
@@ -20,6 +20,9 @@ namespace BarbellTracker.Tracking
         public bool IsComplete => LostAtFrame == null;
     }
 
+    /// <summary>Basic properties of a video file</summary>
+    public record VideoInfo(int Width, int Height, int FrameRate, int FrameCount);
+
     /// <summary>Tracks an object through a video with the OpenCV CSRT tracker.</summary>
     public class VideoTracker
     {
@@ -33,19 +36,54 @@ namespace BarbellTracker.Tracking
             return pixelLength / realLengthInCm;
         }
 
+        public static VideoInfo GetInfo(string videoPath)
+        {
+            using var capture = OpenVideo(videoPath);
+            return new VideoInfo(capture.FrameWidth, capture.FrameHeight, (int)Math.Round(capture.Fps), capture.FrameCount);
+        }
+
+        /// <summary>Reads a single frame of the video as PNG, e.g. to show it in the UI</summary>
+        public static byte[] ReadFramePng(string videoPath, int frameIndex)
+        {
+            using var capture = OpenVideo(videoPath);
+            capture.PosFrames = Math.Max(0, frameIndex);
+            using var frame = new Mat();
+            if (!capture.Read(frame) || frame.Empty())
+            {
+                throw new ArgumentOutOfRangeException(nameof(frameIndex), $"The video has no frame {frameIndex}");
+            }
+            Cv2.ImEncode(".png", frame, out var png);
+            return png;
+        }
+
+        private static VideoCapture OpenVideo(string videoPath)
+        {
+            if (!File.Exists(videoPath)) throw new FileNotFoundException("The video does not exist", videoPath);
+            var capture = new VideoCapture(videoPath);
+            if (!capture.IsOpened())
+            {
+                capture.Dispose();
+                throw new InvalidDataException($"The video '{videoPath}' could not be opened");
+            }
+            return capture;
+        }
+
+        /// <param name="startFrame">The frame that contains the region, tracking starts there (time 0)</param>
         public TrackingResult Track(string videoPath, TrackingRegion region, double pixelPerCm, string name,
-            IProgress<double> progress = null, CancellationToken cancellationToken = default)
+            IProgress<double> progress = null, CancellationToken cancellationToken = default, int startFrame = 0)
         {
             if (!File.Exists(videoPath)) throw new FileNotFoundException("The video does not exist", videoPath);
             if (pixelPerCm <= 0) throw new ArgumentException("PixelPerCm has to be positive", nameof(pixelPerCm));
             if (region == null || region.Width <= 0 || region.Height <= 0) throw new ArgumentException("The region has to have a size", nameof(region));
 
-            using var capture = new VideoCapture(videoPath);
-            if (!capture.IsOpened()) throw new InvalidDataException($"The video '{videoPath}' could not be opened");
+            if (startFrame < 0) throw new ArgumentOutOfRangeException(nameof(startFrame));
+
+            using var capture = OpenVideo(videoPath);
+            if (startFrame > 0) capture.PosFrames = startFrame;
 
             var fps = (int)Math.Round(capture.Fps);
             if (fps <= 0) throw new InvalidDataException("The video has no valid frame rate");
-            var frameCount = capture.FrameCount;
+            var frameCount = capture.FrameCount - startFrame;
 
             using var frame = new Mat();
             if (!capture.Read(frame) || frame.Empty()) throw new InvalidDataException("The video has no frames");

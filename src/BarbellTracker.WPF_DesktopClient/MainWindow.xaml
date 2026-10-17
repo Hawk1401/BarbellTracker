@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BarbellTracker.WPF_DesktopClient.View"
         xmlns:Converters="clr-namespace:BarbellTracker.WPF_HelperClasses;assembly=BarbellTracker.WPF_HelperClasses"
         mc:Ignorable="d"
-        Title="BarbellTracker" Height="450" Width="800">
+        Title="BarbellTracker" Height="800" Width="1280" MinHeight="600" MinWidth="900">
 
     <Window.Resources>
         <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -15,6 +15,9 @@
     <DockPanel LastChildFill="True">
         
         <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Video"
+                      Command="{Binding ClickCommandVideoMenu}">
+            </MenuItem>
             <MenuItem Header="_Start"
                       Command="{Binding ClickCommandStartMenu}">
             </MenuItem>
@@ -42,27 +45,20 @@
                                  Grid.Row="0"/>
             <local:PluginSettingsControl Grid.Column="0"
                                          Grid.Row="1"/>
-            <local:SettingsControl Grid.Column="1"
-                                   Grid.ColumnSpan="3"
-                                   Grid.Row="1"
-                                   Grid.RowSpan="2"
-                                   Visibility="{Binding IsVisibleSettingsControl,
-                                                Mode=OneWay, 
-                                                UpdateSourceTrigger=PropertyChanged, 
-                                                FallbackValue=Hidden,
-                                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            
-            <local:AdapterControl Grid.Column="1"
-                              Grid.ColumnSpan="3"
-                              Grid.Row="1"
-                              Grid.RowSpan="2"
-                              Visibility="{Binding IsVisiblePluginPage, 
-                                            Mode=OneWay, 
-                                            UpdateSourceTrigger=PropertyChanged, 
-                                            FallbackValue=Visible,
-                                            Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            
+            <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2"
+                  Visibility="{Binding IsVisibleVideoPage, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <local:VideoAnalysisView/>
+            </Grid>
 
+            <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2"
+                  Visibility="{Binding IsVisibleSettingsControl, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <local:SettingsControl/>
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2"
+                  Visibility="{Binding IsVisiblePluginPage, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <local:AdapterControl/>
+            </Grid>
         </Grid>
     </DockPanel>
 </Window>

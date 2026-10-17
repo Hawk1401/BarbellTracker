@@ -1,0 +1,134 @@
+<UserControl x:Class="BarbellTracker.WPF_DesktopClient.View.VideoAnalysisView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:oxy="http://oxyplot.org/wpf"
+             xmlns:Converters="clr-namespace:BarbellTracker.WPF_HelperClasses;assembly=BarbellTracker.WPF_HelperClasses"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <Converters:BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- toolbar -->
+        <WrapPanel Grid.Row="0" Margin="0,0,0,6">
+            <Button Content="Video öffnen …" Command="{Binding OpenVideoCommand}"/>
+            <RadioButton Content="Hantelscheibe markieren" GroupName="Tool" Margin="0,4,12,0"
+                         IsChecked="{Binding IsRegionTool}" IsEnabled="{Binding HasVideo}"/>
+            <RadioButton Content="Maßstab markieren" GroupName="Tool" Margin="0,4,8,0"
+                         IsChecked="{Binding IsCalibrationTool}" IsEnabled="{Binding HasVideo}"/>
+            <TextBox Width="55" Margin="0,0,4,0" VerticalContentAlignment="Center"
+                     Text="{Binding CalibrationCm, UpdateSourceTrigger=PropertyChanged}"
+                     ToolTip="Länge der markierten Strecke in cm (Hantelscheibe: 45 cm)"/>
+            <TextBlock Text="cm" VerticalAlignment="Center" Margin="0,0,16,0"/>
+            <Button Content="Tracking starten" Command="{Binding StartTrackingCommand}"/>
+            <Button Content="Abbrechen" Command="{Binding CancelTrackingCommand}"/>
+        </WrapPanel>
+
+        <TextBlock Grid.Row="1" Text="{Binding Instruction}" TextWrapping="Wrap" Margin="0,0,0,6" FontStyle="Italic"/>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" MinWidth="300"/>
+                <ColumnDefinition Width="2*" MinWidth="280"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- video + overlay: the inner grid has the size of the video in pixels, so mouse positions are video pixels -->
+            <Grid Grid.Column="0" Margin="0,0,8,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Background="#202020" Grid.Row="0">
+                    <Viewbox Stretch="Uniform">
+                        <Grid x:Name="VideoSurface" Width="{Binding FrameWidth}" Height="{Binding FrameHeight}"
+                              Background="Transparent" Cursor="Cross"
+                              MouseLeftButtonDown="VideoSurface_MouseLeftButtonDown"
+                              MouseMove="VideoSurface_MouseMove"
+                              MouseLeftButtonUp="VideoSurface_MouseLeftButtonUp">
+                            <Image Source="{Binding FrameImage}" Stretch="Fill"/>
+                            <Canvas IsHitTestVisible="False">
+                                <Polyline Points="{Binding PathPoints}" Stroke="OrangeRed" StrokeThickness="{Binding OverlayThickness}"
+                                          Visibility="{Binding HasPath, Converter={StaticResource BoolToVis}}"/>
+                                <Rectangle Canvas.Left="{Binding RegionX}" Canvas.Top="{Binding RegionY}"
+                                           Width="{Binding RegionWidth}" Height="{Binding RegionHeight}"
+                                           Stroke="Lime" StrokeThickness="{Binding OverlayThickness}"
+                                           Visibility="{Binding HasRegion, Converter={StaticResource BoolToVis}}"/>
+                                <Line X1="{Binding CalibrationX1}" Y1="{Binding CalibrationY1}"
+                                      X2="{Binding CalibrationX2}" Y2="{Binding CalibrationY2}"
+                                      Stroke="Yellow" StrokeThickness="{Binding OverlayThickness}"
+                                      Visibility="{Binding HasCalibration, Converter={StaticResource BoolToVis}}"/>
+                                <Ellipse Width="{Binding OverlayThickness}" Height="{Binding OverlayThickness}" Fill="DeepSkyBlue"
+                                         Canvas.Left="{Binding MarkerX}" Canvas.Top="{Binding MarkerY}"
+                                         RenderTransformOrigin="0.5,0.5"
+                                         Visibility="{Binding HasMarker, Converter={StaticResource BoolToVis}}">
+                                    <Ellipse.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="4" ScaleY="4"/>
+                                        </TransformGroup>
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Canvas>
+                        </Grid>
+                    </Viewbox>
+                </Border>
+
+                <Slider Grid.Row="1" Margin="0,6,0,0" Minimum="0" Maximum="{Binding MaxFrame}"
+                        Value="{Binding CurrentFrame}" IsEnabled="{Binding HasVideo}"
+                        SmallChange="1" LargeChange="10" TickFrequency="1" IsSnapToTickEnabled="True"/>
+                <TextBlock Grid.Row="2" Text="{Binding FrameLabel}" HorizontalAlignment="Center"/>
+            </Grid>
+
+            <!-- results -->
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Text="{Binding ScaleText}" Margin="0,0,0,6"/>
+                    <StackPanel Visibility="{Binding HasResult, Converter={StaticResource BoolToVis}}">
+                        <TextBlock Text="{Binding Summary}" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,0,0,6"/>
+                        <DataGrid ItemsSource="{Binding Repetitions}" AutoGenerateColumns="False" IsReadOnly="True"
+                                  CanUserAddRows="False" HeadersVisibility="Column" MaxHeight="220"
+                                  ColumnWidth="*" Margin="0,0,0,6" HorizontalScrollBarVisibility="Disabled">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Rep" Binding="{Binding Number}"/>
+                                <DataGridTextColumn Header="t [s]" Binding="{Binding ConcentricDuration, StringFormat=F2}"/>
+                                <DataGridTextColumn Header="ROM" Binding="{Binding RangeOfMotion, StringFormat=F2}"/>
+                                <DataGridTextColumn Header="Ø v" Binding="{Binding MeanVelocity, StringFormat=F2}"/>
+                                <DataGridTextColumn Header="Peak v" Binding="{Binding PeakVelocity, StringFormat=F2}"/>
+                                <DataGridTextColumn Header="MPV" Binding="{Binding MeanPropulsiveVelocity, StringFormat=F2}"/>
+                                <DataGridTextColumn Header="Abw." Binding="{Binding BarPathDeviation, StringFormat=F3}"/>
+                                <DataGridTextColumn Header="Verl. %" Binding="{Binding VelocityLossPercent, StringFormat=F1}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBlock Foreground="Gray" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,8"
+                                   Text="t in s, ROM und Abw. (seitliche Abweichung) in m, Geschwindigkeiten in m/s. Ø v = mittlere, MPV = mittlere propulsive Geschwindigkeit, Verl. = Geschwindigkeitsverlust zur schnellsten Wiederholung."/>
+                        <oxy:PlotView Model="{Binding VelocityPlot}" Height="230" Margin="0,0,0,8"/>
+                        <oxy:PlotView Model="{Binding BarPathPlot}" Height="260"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <!-- status -->
+        <DockPanel Grid.Row="3" Margin="0,6,0,0">
+            <ProgressBar DockPanel.Dock="Right" Width="160" Height="14" Minimum="0" Maximum="100"
+                         Value="{Binding Progress, Mode=OneWay}"
+                         Visibility="{Binding IsTracking, Converter={StaticResource BoolToVis}}"/>
+            <TextBlock Text="{Binding Status}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,8,0"/>
+        </DockPanel>
+    </Grid>
+</UserControl>

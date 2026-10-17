@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="OxyPlot.Wpf" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,9 @@
     <ProjectReference Include="..\BarbellTracker.Plugins\BarbellTracker.Plugins.csproj" />
     <ProjectReference Include="..\BarbellTracker.Services\BarbellTracker.Services.csproj" />
     <ProjectReference Include="..\BarbellTracker.WPF_HelperClasses\BarbellTracker.WPF_HelperClasses.csproj" />
+    <ProjectReference Include="..\BarbellTracker.Tracking\BarbellTracker.Tracking.csproj" />
+    <ProjectReference Include="..\BarbellTracker.DomainCode\BarbellTracker.DomainCode.csproj" />
+    <ProjectReference Include="..\BarbellTracker.AbstractionCode\BarbellTracker.AbstractionCode.csproj" />
   </ItemGroup>
 
 </Project>

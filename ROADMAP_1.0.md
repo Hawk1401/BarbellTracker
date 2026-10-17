@@ -81,12 +81,13 @@ Muss-Kriterien:
 - [ ] `JsonLoader` bleibt als Import-/Test-Plugin erhalten.
 
 ### M3 – UI/UX
-- [ ] Video-Player-Tab fertigstellen (Play/Pause, Frame-Scrubbing) mit Overlay (Bar-Path, aktuelle Position).
-- [ ] Charts (z. B. LiveCharts2 oder OxyPlot): Geschwindigkeit/Beschleunigung über Zeit, Wiederholungen markiert, Bar-Path-Plot.
-- [ ] Workflow-Wizard: Video wählen → Kalibrieren → Tracken → Ergebnis.
-- [ ] Settings-Seite: Ausgabeordner, Einheiten, Glättung, Sprache, Theme.
-- [ ] Fehlermeldungen/Statusleiste statt stiller Fehler; Fenstertitel, Icon, Responsives Layout.
-- [ ] Lokalisierung (DE/EN) über Resource-Dateien.
+- [x] Video-Seite `Video & Analyse`: Video öffnen, Frame-Scrubbing, Rechteck um die Hantelscheibe, Maßstab-Linie + Länge in cm, Tracking mit Fortschritt/Abbrechen, Overlay (Bahn + aktuelle Position). [ ] Play/Pause fehlt noch (nur Scrubbing).
+- [x] Charts (OxyPlot): Geschwindigkeit über Zeit mit markierten Wiederholungen, Hantelbahn. [ ] Beschleunigungs-Chart optional.
+- [x] Workflow als Seite mit Hinweistext pro Schritt (kein eigener Wizard). Ergebnistabelle mit Metriken je Wiederholung; zeigt auch JSON-Importe.
+- [x] Settings-Seite: Glättungsfenster und Mindestbewegung (Ergebnis wird sofort neu berechnet). [ ] Ausgabeordner, Einheiten, Sprache, Theme; Einstellungen noch nicht gespeichert (M4).
+- [x] Fehlermeldungen in der Statusleiste, Fenstertitel, größeres Fenster. [ ] Icon, Plugins (CSV-Export) standardmäßig aktivieren?
+- [ ] Lokalisierung (DE/EN) über Resource-Dateien. (UI ist aktuell deutsch.)
+- [x] Bugfix: Seitenumschaltung im Hauptfenster (die Sichtbarkeits-Bindung traf das falsche DataContext).
 
 ### M4 – Persistenz & Export
 - [ ] Sessions dauerhaft in `%AppData%\BarbellTracker` (statt Temp): Übung, Gewicht, Datum, Notizen, Satz-Ergebnisse (SQLite oder JSON-Ordner).

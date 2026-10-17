@@ -179,6 +179,49 @@ namespace BarbellTracker.TrackingTests
         }
 
         [Fact]
+        public void GetInfo_ReturnsSizeFrameRateAndFrameCount()
+        {
+            var centers = TwoRepetitions();
+            var info = VideoTracker.GetInfo(CreateVideo(centers));
+
+            Assert.Equal(new VideoInfo(Width, Height, Fps, centers.Count), info);
+        }
+
+        [Fact]
+        public void ReadFramePng_ReturnsDecodableFrame()
+        {
+            var video = CreateVideo(TwoRepetitions());
+
+            var png = VideoTracker.ReadFramePng(video, 10);
+
+            using var image = Cv2.ImDecode(png, ImreadModes.Color);
+            Assert.Equal(Width, image.Width);
+            Assert.Equal(Height, image.Height);
+        }
+
+        [Fact]
+        public void ReadFramePng_FrameBehindTheEnd_Throws()
+        {
+            var video = CreateVideo(TwoRepetitions());
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => VideoTracker.ReadFramePng(video, 100000));
+        }
+
+        [Fact]
+        public void Track_WithStartFrame_StartsAtThatFrame()
+        {
+            var centers = TwoRepetitions();
+            var video = CreateVideo(centers);
+            const int start = 20;
+
+            var result = new VideoTracker().Track(video, RegionAround(centers[start]), 5, "s", startFrame: start);
+
+            Assert.Equal(centers.Count - start, result.Information.Positions.Length);
+            Assert.InRange(Math.Abs(result.Information.Positions[0].Y - centers[start].Y), 0, 6);
+            Assert.InRange(Math.Abs(result.Information.Positions[^1].Y - centers[^1].Y), 0, 8);
+        }
+
+        [Fact]
         public void CalculatePixelPerCm_DividesPixelsByRealLength()
         {
             // 45 cm plate that is 180 px wide in the video

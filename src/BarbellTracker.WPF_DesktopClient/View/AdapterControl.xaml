@@ -24,7 +24,7 @@
                     <local:AdapterVelocityTableView />
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:AdapterVideoPlayerViewModel}">
-                    <local:AdapterVelocityTableView />
+                    <local:AdapterVideoPlayerView />
                 </DataTemplate>
 
             </TabControl.Resources>

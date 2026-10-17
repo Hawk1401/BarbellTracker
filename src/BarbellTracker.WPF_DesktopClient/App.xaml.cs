@@ -20,7 +20,10 @@ namespace BarbellTracker.WPF_DesktopClient
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            // 
+            // Bindings use en-US by default, so a german "45,5" would not be accepted
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(System.Windows.Markup.XmlLanguage.GetLanguage(System.Globalization.CultureInfo.CurrentCulture.IetfLanguageTag)));
+
             DependencyInjectionHelper.SetUP();
             var provider = DependencyInjectionHelper.provider;
             var tacker = provider.GetRequiredService<JsonLoader>();
