@@ -71,10 +71,12 @@ Muss-Kriterien:
 - Beispieldaten: `Example Data/squat_set.json` (3 Wiederholungen, Geschwindigkeitsverlust).
 
 ### M2 – Video-Tracking (der größte Brocken)
-- [ ] Entscheidung zur Technik (Vorschlag: **OpenCvSharp** mit CSRT/KCF-Tracker; Alternativen: ML-Modell für Hantelscheiben, später).
-- [ ] Neues `ITrackerPlugin` `OpenCvTracker`: Video laden → Nutzer zieht ROI um Hantelscheibe im 1. Frame → Frame-für-Frame-Tracking → `TrackedInformation` (FPS aus Video).
-- [ ] Kalibrierung: Nutzer markiert bekannte Länge (z. B. Scheibendurchmesser 45 cm) → `PixelPerCm`.
-- [ ] Fortschrittsanzeige + Abbrechen (Tracking läuft im Hintergrund-Task).
+- [x] Entscheidung zur Technik: OpenCvSharp4 + CSRT-Tracker (Spike erfolgreich, Test mit synthetischem Video inkl. Analyse) (Vorschlag: **OpenCvSharp** mit CSRT/KCF-Tracker; Alternativen: ML-Modell für Hantelscheiben, später).
+- [x] Kern: `BarbellTracker.Tracking.VideoTracker` (Video + ROI → `TrackedInformation`, FPS aus Video, Tracking-Verlust wird als `LostAtFrame` gemeldet).
+- [ ] `ITrackerPlugin` `OpenCvTracker` + Events: Video wählen → ROI im 1. Frame (braucht UI, M3) → Tracking → `ExtracedVideoInfo`.
+- [x] ConsoleClient: `track <video> <x> <y> <w> <h> <pixelPerCm>` erzeugt `*.tracking.json` und startet die Auswertung.
+- [x] Kalibrierung: `VideoTracker.CalculatePixelPerCm(pixel, cm)`. [ ] UI zum Markieren der Strecke.
+- [x] Fortschritt (`IProgress`) + Abbruch (`CancellationToken`). [ ] Anbindung an die UI (Hintergrund-Task).
 - [ ] Manuelle Korrektur: Tracking-Verlust erkennen, Frame zurück, ROI neu setzen.
 - [ ] `JsonLoader` bleibt als Import-/Test-Plugin erhalten.
 

@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BarbellTracker.Plugins\BarbellTracker.Plugins.csproj" />
     <ProjectReference Include="..\BarbellTracker.Services\BarbellTracker.Services.csproj" />
+    <ProjectReference Include="..\BarbellTracker.Tracking\BarbellTracker.Tracking.csproj" />
   </ItemGroup>
 
 </Project>

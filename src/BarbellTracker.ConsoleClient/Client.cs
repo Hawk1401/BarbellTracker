@@ -15,6 +15,7 @@ using BarbellTracker.Plugins.Tracker;
 using BarbellTracker.Services;
 using BarbellTracker.Services.Implementation;
 using BarbellTracker.Services.Interface;
+using BarbellTracker.Tracking;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using static BarbellTracker.ApplicationCode.IEventSystem;
@@ -27,12 +28,33 @@ namespace BarbellTracker.ConsoleClient
         static string filePath;
         public static int Main(string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length == 7 && args[0] == "track")
+            {
+                // track <video> <x> <y> <width> <height> <pixelPerCm>
+                var region = new TrackingRegion(int.Parse(args[2]), int.Parse(args[3]), int.Parse(args[4]), int.Parse(args[5]));
+                var pixelPerCm = double.Parse(args[6], System.Globalization.CultureInfo.InvariantCulture);
+                var lastStep = 0;
+                var tracked = new VideoTracker().Track(args[1], region, pixelPerCm, System.IO.Path.GetFileNameWithoutExtension(args[1]),
+                    new Progress<double>(p => { var step = (int)(p * 10); if (step > lastStep) { lastStep = step; Console.WriteLine($"Tracking {step * 10}%"); } }));
+                Console.WriteLine();
+                if (!tracked.IsComplete)
+                {
+                    Console.Error.WriteLine($"Warning: the object was lost at frame {tracked.LostAtFrame}, only the frames before are used");
+                }
+                filePath = System.IO.Path.ChangeExtension(args[1], ".tracking.json");
+                System.IO.File.WriteAllText(filePath, System.Text.Json.JsonSerializer.Serialize(tracked.Information));
+                Console.WriteLine($"Tracking data written to {filePath}");
+            }
+            else if (args.Length == 1)
+            {
+                filePath = args[0];
+            }
+            else
             {
                 Console.Error.WriteLine("Usage: BarbellTracker.ConsoleClient <path-to-tracking.json>");
+                Console.Error.WriteLine("       BarbellTracker.ConsoleClient track <video> <x> <y> <width> <height> <pixelPerCm>");
                 return 1;
             }
-            filePath = args[0];
 
             using IHost host = Host.CreateDefaultBuilder(new string[0])
                 .ConfigureServices((_, services) =>
