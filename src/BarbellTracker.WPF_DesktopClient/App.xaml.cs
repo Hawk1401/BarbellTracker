@@ -28,6 +28,7 @@ namespace BarbellTracker.WPF_DesktopClient
             var Processing2 = provider.GetRequiredService<AccelerationToCSVFile>();
             var Processing3 = provider.GetRequiredService<VelocityToAdapterTable>();
             var Processing4 = provider.GetRequiredService<AccelerationToAdapterTable>();
+            var Processing5 = provider.GetRequiredService<SetMetricsToCSVFile>();
 
             
             base.OnStartup(e);

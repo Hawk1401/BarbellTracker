@@ -62,12 +62,13 @@ Muss-Kriterien:
 - [x] Neue Tests für `EventSystem` und `FileManager` (ApplicationCode hatte keine).
 
 ### M1 – Korrekte Physik & Metriken (Domain/Services)
-- [ ] Umrechnung: `v = Δs[px] / PixelPerCm / 100 · FPS` → m/s; Beschleunigung analog; Y-Achse (Bild unten = +) korrekt invertieren.
-- [ ] Glättung der Positionsdaten (z. B. Savitzky-Golay oder gleitender Mittelwert), da Pixel-Tracking rauscht.
-- [ ] Neuer Service `RepDetector`: Wiederholungen anhand Bewegungsumkehr (konzentrisch/exzentrisch) erkennen.
-- [ ] Metriken je Wiederholung: Mean-/Peak-Velocity, Mean Propulsive Velocity, ROM, Dauer, Bar-Path-Abweichung; je Satz: Velocity-Loss in %.
-- [ ] Unit-Tests mit synthetischen Bewegungen (Sinus) + Mutation-Test-Lauf.
-- [ ] Neue Processing-Plugins: `MetricsToAdapterTable`, `MetricsToCSVFile`.
+- [x] Umrechnung: `v = Δs[px] / PixelPerCm / 100 · FPS` → m/s; Beschleunigung analog; Y-Achse (Bild unten = +) korrekt invertieren.
+- [x] Glättung (Savitzky-Golay, `SignalSmoother`) der Positionsdaten (z. B. Savitzky-Golay oder gleitender Mittelwert), da Pixel-Tracking rauscht.
+- [x] Wiederholungserkennung (in `SetAnalyzer`, Zigzag-Wendepunkte mit Mindest-ROM): Wiederholungen anhand Bewegungsumkehr (konzentrisch/exzentrisch) erkennen.
+- [x] Metriken je Wiederholung: Mean-/Peak-Velocity, Mean Propulsive Velocity, ROM, Dauer, Bar-Path-Abweichung; je Satz: Velocity-Loss in %.
+- [x] Unit-Tests mit synthetischen Bewegungen. (Mutation-Test-Lauf steht noch aus.)
+- [x] Processing-Plugin `SetMetricsToCSVFile` (schreibt `SetMetrics.CSV`). `MetricsToAdapterTable` kommt mit der Tabellenansicht in M3.
+- Beispieldaten: `Example Data/squat_set.json` (3 Wiederholungen, Geschwindigkeitsverlust).
 
 ### M2 – Video-Tracking (der größte Brocken)
 - [ ] Entscheidung zur Technik (Vorschlag: **OpenCvSharp** mit CSRT/KCF-Tracker; Alternativen: ML-Modell für Hantelscheiben, später).

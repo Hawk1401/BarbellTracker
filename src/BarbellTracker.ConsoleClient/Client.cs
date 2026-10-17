@@ -40,6 +40,10 @@ namespace BarbellTracker.ConsoleClient
                     .AddSingleton<ServiceCache<Acceleration>>()
                     .AddSingleton<ServiceCache<VelocityCSVModel>>()
                     .AddSingleton<ServiceCache<AccelerationCSVModel>>()
+                    .AddSingleton<ServiceCache<PhysicalMotion>>()
+                    .AddSingleton<ServiceCache<SetAnalysis>>()
+                    .AddSingleton<ServiceCache<SetCSVModel>>()
+                    .AddSingleton<AnalysisSettings>()
                     .AddSingleton<FileManager>()
                     .AddSingleton<IEventSystem, EventSystem>()
                     .AddSingleton<PluginManager>()
@@ -52,6 +56,10 @@ namespace BarbellTracker.ConsoleClient
                     .AddTransient<AccelerationCSVTranslater>()
                     .AddTransient<AccelerationToCSVFile>()
                     .AddTransient<AccelerationToAdapterTable>()
+                    .AddTransient<ICalculator<PhysicalMotion>, PhysicalMotionCalculator>()
+                    .AddTransient<ICalculator<SetAnalysis>, SetAnalyzer>()
+                    .AddTransient<SetCSVTranslater>()
+                    .AddTransient<SetMetricsToCSVFile>()
                     .AddTransient<JsonLoader>()
                     )
                 .Build();
@@ -65,6 +73,7 @@ namespace BarbellTracker.ConsoleClient
             var Processing2 = provider.GetRequiredService<AccelerationToCSVFile>();
             var Processing3 = provider.GetRequiredService<VelocityToAdapterTable>();
             var Processing4 = provider.GetRequiredService<AccelerationToAdapterTable>();
+            var Processing5 = provider.GetRequiredService<SetMetricsToCSVFile>();
             eventSystem = provider.GetRequiredService<IEventSystem>();
             var manager = provider.GetRequiredService<PluginManager>();
             var Adaptermanager = provider.GetRequiredService<UIAdapterManager>();
